@@ -1,0 +1,23 @@
+@use "tailwindcss";
+
+@theme{
+  --color-primary : var(--color-emerald-500);
+  --color-primary-hover : var(--color-emerald-700);
+  --color-primary-subtle : var(--color-emerald-200);
+  --color-primary-foreground : hsl(0 0% 100%) ;
+
+  --color-background : var(--color-slate-50);
+  --color-surface :  hsl(0 0% 100%);
+
+  --color-text : var(--color-slate-900);
+  --color-text-secondary:var(--color-slate-500);
+  --color-text-inverse : hsl(0 0% 100%);
+
+  --color-border : var(--color-slate-400);
+  --color-border-thin : var(--color-slate-200);
+}
+@layer base{
+  body{
+    @apply bg-background text-text;
+  }
+}
