@@ -1,0 +1,111 @@
+
+<div
+  class="phone-input-wrapper"
+  [class.phone-input--disabled]="isDisabled()"
+  [class.phone-input--invalid]="invalid()"
+  [class.phone-input--touched]="isTouched()"
+  [class.phone-input--loading]="loading()"
+>
+  @if (label()) {
+    <label class="phone-input__label">{{ label() }}</label>
+  }
+
+
+  @if (loading()) {
+    <div class="phone-input-group phone-input-group--skeleton">
+     
+      <div class="phone-input__skeleton-country">
+        <p-skeleton width="2rem" height="1.5rem" borderRadius="4px" />
+        <p-skeleton width="3rem" height="1rem" borderRadius="4px" />
+      </div>
+
+      <div class="phone-input__divider"></div>
+
+      <div class="phone-input__skeleton-phone">
+        <p-skeleton width="100%" height="1rem" borderRadius="4px" />
+      </div>
+
+      <div class="phone-input__spinner-overlay">
+        <p-progressSpinner
+          strokeWidth="4"
+          class="phone-input__spinner"
+          [style]="{ width: '1.5rem', height: '1.5rem' }"
+        />
+        <span class="phone-input__loading-text">{{ loadingText() }}</span>
+      </div>
+    </div>
+  } @else {
+
+    <div class="phone-input-group">
+
+
+      <p-select
+        class="phone-input__country"
+        [options]="filteredCountries()"
+        optionLabel="name"
+        [ngModel]="selectedCountry()"
+       
+        (ngModelChange)="onCountryChange($event)"
+  
+     
+        [filter]="true"
+        filterBy="name,dialCode,code"
+        [disabled]="isInteractionBlocked()"
+        placeholder="Country"
+        appendTo="body"
+        scrollHeight="300px"
+      >
+        <ng-template #selectedItem let-country>
+          <div class="phone-input__selected">
+            <span class="phone-input__flag">{{ country.flag }}</span>
+            <span class="phone-input__dial-code">{{ country.dialCode }}</span>
+          </div>
+        </ng-template>
+
+        <ng-template #item let-country>
+          <div class="phone-input__option">
+            <span class="phone-input__flag">{{ country.flag }}</span>
+            <span class="phone-input__country-name">{{ country.name }}</span>
+            <span class="phone-input__dial-code-option">{{ country.dialCode }}</span>
+          </div>
+        </ng-template>
+
+        <ng-template #emptyfilter>
+          <div class="phone-input__empty">No countries found</div>
+        </ng-template>
+      </p-select>
+
+      <div class="phone-input__divider"></div>
+
+      @if (useMask() && currentMask()) {
+        <p-inputMask
+          class="phone-input__number"
+          [mask]="currentMask()"
+          [ngModel]="phoneNumber()"
+          (ngModelChange)="onPhoneInput($event)"
+          [placeholder]="currentPlaceholder()"
+          [disabled]="isInteractionBlocked()"
+          [readonly]="readonly()"
+          [autoClear]="true"
+          [unmask]="true"
+          (onBlur)="onBlur()"
+          slotChar="_"
+        />
+      } @else {
+        <input
+          pInputText
+          class="phone-input__number-plain"
+          type="tel"
+          [ngModel]="phoneNumber()"
+          (ngModelChange)="onPhoneInput($event)"
+          [placeholder]="placeholder()"
+          [disabled]="isInteractionBlocked()"
+          [readOnly]="readonly()"
+          (blur)="onBlur()"
+          maxlength="15"
+        />
+      }
+    </div>
+  }
+
+</div>

@@ -10,6 +10,7 @@ import { provideOnboardingFeature } from './features/onboarding/onboarding.featu
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader, TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {  provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,6 +37,7 @@ export const appConfig: ApplicationConfig = {
       }
 
     }),
+    provideAnimations(),
     providePrimeNG({
       theme: {
         preset: appThemePreset
