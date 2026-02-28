@@ -1,0 +1,9 @@
+@use "../../../../../styles/colors";
+
+:host ::ng-deep .p-progressbar{
+  height: .5rem;
+}
+
+:host ::ng-deep .p-progressbar-value{
+  background-color: var(--color-dark);
+}

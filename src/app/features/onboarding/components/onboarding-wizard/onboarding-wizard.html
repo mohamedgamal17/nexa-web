@@ -1,0 +1,24 @@
+<div class="max-w-4xl min-h-screen flex flex-col mx-auto gap-10 p-5">
+  <div class=" flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="p-3 text-text-inverse bg-primary rounded">
+        <i class="pi pi-wallet"></i>
+      </div>
+      <h6>NexaWallet</h6>
+    </div>
+    <div>
+      <p class="text-secondary">Step {{currentStepNumber()}} of {{totalSteps}}</p>
+    </div>
+  </div>
+  <div class="flex-1 flex items-center justify-center w-full">
+    <div class="space-y-14 max-w-xl w-full">
+      <p-progressBar showValue="false" value="10"></p-progressBar>
+      @switch (currentStepState()) {
+        @case(OnboardingStepState.Email){
+          <app-onboarding-email-step (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
+        }
+      }
+    </div>
+  </div>
+
+</div>
