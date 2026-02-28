@@ -1,18 +1,36 @@
 {
-  "forms":{
-    "onboarding":{
-      "email" : {
-        "label" : "Email",
-        "placeholder" : "Enter your email"
+  "forms": {
+    "onboarding": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
       },
-      "phone":{
-        "label" : "Phone",
-        "placeholder" :"Enter your phone"
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Enter your phone"
+      },
+      "profile": {
+        "firstName": {
+          "label": "First Name",
+          "placeholder": "Enter your first name"
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Enter your last name"
+        },
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Select your gender"
+        },
+        "birthDate" :{
+          "label" :"Birth date",
+          "placeholder": "Enter your birth date"
+        }
       }
     }
   },
-  "errors":{
-    "validation":{
+  "errors": {
+    "validation": {
       "required": "{{field}} is required.",
       "email": "Please enter a valid email address.",
       "minlength": "{{field}} must be at least {{requiredLength}} characters.",
@@ -20,11 +38,14 @@
       "min": "{{field}} must be greater than {{min}}.",
       "max": "{{field}} must be less than {{max}}.",
       "pattern": "{field}} format is invalid.",
-      "phoneRequired" :"Phone number is required.",
-      "phoneMinLength":"Phone number must be at least {{min}} digits.",
-      "phoneMaxLength" :"Phone number must max length is {{max}} ",
-      "phoneInvalid" :"Invalid phone number"
+      "phoneRequired": "Phone number is required.",
+      "phoneMinLength": "Phone number must be at least {{min}} digits.",
+      "phoneMaxLength": "Phone number must max length is {{max}} ",
+      "phoneInvalid": "Invalid phone number",
+      "invalidEnum" :"Invalid enum type.",
+      "invalidDate" :"Invalid date format.",
+      "invalidAge" :"Please enter a valid age.",
+      "minAge" :"Minumum age required is {{min}}."
     }
   }
-
 }

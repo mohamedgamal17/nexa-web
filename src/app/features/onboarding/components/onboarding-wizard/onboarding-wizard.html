@@ -20,6 +20,9 @@
         @case(OnboardingStepState.Phone){
           <app-onboarding-phone-step (submited)="handlePhoneSubmit($event)"></app-onboarding-phone-step>
         }
+        @case (OnboardingStepState.Profile) {
+          <app-onboarding-profile-step></app-onboarding-profile-step>
+        }
       }
     </div>
   </div>

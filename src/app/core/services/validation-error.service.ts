@@ -14,7 +14,10 @@ export class ValidationErrorService {
     phoneRequired : 'errors.validation.phoneRequired',
     phoneMinLength :'errors.validation.phoneMinLength',
     phoneMaxLength :'errors.validation.phoneMaxLength',
-    phoneInvalid  : 'errors.validation.phoneInvalid'
+    phoneInvalid  : 'errors.validation.phoneInvalid',
+    invalideEnum : 'errors.validation.invalideEnum',
+    invalidAge : 'errors.validation.invalidAge',
+    minAge : 'errors.validation.minAge'
   };
 
   constructor(private translate: TranslateService) { }
@@ -43,7 +46,6 @@ export class ValidationErrorService {
         return Object.entries(control.errors)
           .map(([key, value]) => {
 
-            console.log(key)
             const translationKey = this.errorMap[key];
 
             if (!translationKey) return null;
