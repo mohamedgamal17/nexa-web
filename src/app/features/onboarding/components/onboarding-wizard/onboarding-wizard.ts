@@ -3,11 +3,13 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { OnboardingEmailStep } from "../onboarding-email-step/onboarding-email-step";
 import { OnboardingStepStateService } from '../../services/onboarding-step-state.service';
 import { OnboardingStepState } from '../../enums/onboarding-state.enum';
+import { OnboardingPhoneStep } from '../onboarding-phone-step/onboarding-phone-step';
+import { PhoneValueModel } from '../../../../shared/components/phone-input/models/phone-value-model.interface';
 
 
 @Component({
   selector: 'app-onboarding-wizard',
-  imports: [ProgressBarModule, OnboardingEmailStep],
+  imports: [ProgressBarModule, OnboardingEmailStep , OnboardingPhoneStep],
   templateUrl: './onboarding-wizard.html',
   styleUrl: './onboarding-wizard.scss',
 })
@@ -23,6 +25,8 @@ export class OnboardingWizard implements OnInit  {
 
   emailSubmited = output<{email : string}>()
 
+  phoneSubmited = output<{phone : PhoneValueModel}>()
+
   constructor(private onboardingStepStateService : OnboardingStepStateService){
 
   }
@@ -37,4 +41,7 @@ export class OnboardingWizard implements OnInit  {
     this.emailSubmited.emit($value)
   }
 
+  handlePhoneSubmit($value : {phone : PhoneValueModel}){
+    this.phoneSubmited.emit($value);
+  }
 }
