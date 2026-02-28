@@ -1,5 +1,5 @@
 import { Component, Input, input, OnInit } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
@@ -16,13 +16,14 @@ type NewType = OnInit;
 export class AppFormErrors implements NewType {
 
   @Input() control : AbstractControl | null
+  @Input() form : FormGroup | null
   @Input() fieldKey : string  = ""
   errors$ : Observable<string[]>
   constructor(private validationErrorService : ValidationErrorService){
     
   }
   ngOnInit(): void {
-    this.errors$ = this.validationErrorService.getAllErrors$(this.control, this.fieldKey)
+    this.errors$ = this.validationErrorService.getAllErrors$(this.control,this.form , this.fieldKey)
   }
 
  
