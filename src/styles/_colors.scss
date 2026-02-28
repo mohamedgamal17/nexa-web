@@ -1,23 +1,59 @@
-@use "tailwindcss";
+@use 'tailwindcss';
 
-@theme{
-  --color-primary : var(--color-emerald-500);
-  --color-primary-hover : var(--color-emerald-700);
-  --color-primary-subtle : var(--color-emerald-200);
-  --color-primary-foreground : hsl(0 0% 100%) ;
-
-  --color-background : var(--color-slate-50);
-  --color-surface :  hsl(0 0% 100%);
-
-  --color-text : var(--color-slate-900);
-  --color-text-secondary:var(--color-slate-500);
-  --color-text-inverse : hsl(0 0% 100%);
-
-  --color-border : var(--color-slate-400);
-  --color-border-thin : var(--color-slate-200);
+//primitive
+@theme {
+  --color-netural-50: var(--color-slate-50);
+  --color-netural-100: var(--color-slate-100);
+  --color-netural-200: var(--color-slate-200);
+  --color-netural-300: var(--color-slate-300);
+  --color-netural-400: var(--color-slate-400);
+  --color-netural-500: var(--color-slate-500);
+  --color-netural-600: var(--color-slate-600);
+  --color-netural-700: var(--color-slate-700);
+  --color-netural-800: var(--color-slate-800);
+  --color-netural-900: var(--color-slate-900);
+  --color-netural-950: var(--color-slate-950);
+  --color-light: hsl(0, 0%, 100%);
+  --color-dark: hsl(0, 0%, 0%);
 }
-@layer base{
-  body{
-    @apply bg-background text-text;
+
+@theme {
+  //neutrals
+
+  --color-primary: var(--color-emerald-500);
+  --color-primary-hover: var(--color-emerald-700);
+  --color-primary-subtle: var(--color-emerald-200);
+  --color-primary-foreground: hsl(0 0% 100%);
+
+  --color-secondary: var(--color-neutral-500);
+  --color-secondary-hover: var(--color-neutral-700);
+
+  --color-info: var(--color-blue-500);
+  --color-info-hover: var(--color-blue-700);
+  --color-info-subtle: var(--color-blue-200);
+  --color-info-hover: var(--color-blue-700);
+  --color-info-subtle: var(--color-blue-200);
+
+  --color-warning: var(--color-orange-500);
+  --color-warning-hover: var(--color-orange-700);
+  --color-warning-subtle: var(--color-orange-200);
+
+  --color-bg: var(--color-neutral-50);
+  --color-bg-inverse: var(--color-neutral-900);
+
+  --color-surface: var(--color-light);
+  --color-surface-inverse : var(--color-netural-800);
+
+  --color-text: var(--color-netural-900);
+  --color-text-secondary: var(--color-netural-500);
+  --color-text-inverse: var(--color-light);
+
+  --color-border: var(--color-neutral-400);
+  --color-border-thin: var(--color-neutral-200);
+  --color-border-inverse: var(--color-neutral-700);
+}
+@layer base {
+  body {
+    @apply bg-bg text-text;
   }
 }

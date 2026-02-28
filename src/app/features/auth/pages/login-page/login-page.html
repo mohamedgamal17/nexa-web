@@ -1,0 +1,13 @@
+<div class="min-h-screen w-full flex items-center">
+  <div class="grid lg:grid-cols-2 grid-cols-1 w-full">
+    <div class="hidden lg:flex min-h-screen  items-center bg-bg-inverse">
+      <app-login-hero></app-login-hero>
+    </div>
+
+    <div class="min-h-screen w-full grid items-center justify-items-center">
+      <div class="w-full max-w-md">
+        <app-card-login [loading]="loginLoading()" (loginRequested)="handleLogin()"></app-card-login>
+      </div>
+    </div>
+  </div>
+</div>

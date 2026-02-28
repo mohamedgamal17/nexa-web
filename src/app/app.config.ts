@@ -3,17 +3,41 @@ import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { appThemePreset } from './ng-prime.theme';
-
+import { provideAuthFeature } from './features/auth/auth.feature';
+import { provideAuth0 } from '@auth0/auth0-angular';
+import { environemnt } from '../environments/environemnt';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+   provideAuth0({
+      domain: environemnt.auth0.domain,
+      clientId: environemnt.auth0.clientId,
+      authorizationParams: {
+        redirect_uri: window.location.origin,
+        audience: environemnt.auth0.audience
+      },
+      httpInterceptor: {
+        allowedList: [
+          {
+            uri: `${environemnt.apiUrl}/*`,
+            tokenOptions: {
+              authorizationParams: {
+                audience: environemnt.auth0.audience
+              }
+            }
+          }
+        ]
+      }
+
+    }),
     providePrimeNG({
       theme: {
         preset: appThemePreset
       }
-    })
+    }),
+    provideAuthFeature()
   ]
 };
