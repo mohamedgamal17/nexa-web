@@ -1,0 +1,22 @@
+{
+  "forms":{
+    "onboarding":{
+      "email" : {
+        "label" : "Email",
+        "placeholder" : "Enter your email"
+      }
+    }
+  },
+  "errors":{
+    "validation":{
+      "required": "{{field}} is required.",
+      "email": "Please enter a valid email address.",
+      "minlength": "{{field}} must be at least {requiredLength} characters.",
+      "maxlength": "{{field}} cannot exceed {requiredLength} characters.",
+      "min": "{field} must be greater than {min}.",
+      "max": "{field} must be less than {max}.",
+      "pattern": "{field} format is invalid."
+    }
+  }
+
+}

@@ -1,0 +1,9 @@
+@if ((errors$ | async); as errors) {
+  <div class="grid grid-cols w-full gap-2 text-danger">
+      @for (error of errors ; track error) {
+         <p class="form-error-item">
+          {{ error }}
+        </p>
+      }
+  </div>
+}
