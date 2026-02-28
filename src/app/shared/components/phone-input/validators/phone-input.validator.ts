@@ -95,9 +95,8 @@ export class PhoneNumberValidators {
       if (digits.length > 0 && digits.length < min) {
         return {
           phoneMinLength: {
-            required: min,
+            min: min,
             actual: digits.length,
-            message: `Phone number must be at least ${min} digits.`,
           },
         };
       }
@@ -116,7 +115,7 @@ export class PhoneNumberValidators {
       if (digits.length > max) {
         return {
           phoneMaxLength: {
-            required: max,
+            max: max,
             actual: digits.length,
           },
         };
