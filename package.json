@@ -26,6 +26,7 @@
     "@tailwindcss/postcss": "^4.2.1",
     "@types/google-libphonenumber": "^7.4.30",
     "google-libphonenumber": "^3.2.44",
+    "libphonenumber-js": "^1.12.38",
     "ngx-intl-tel-input": "^17.0.0",
     "postcss": "^8.5.6",
     "primeicons": "^7.0.0",

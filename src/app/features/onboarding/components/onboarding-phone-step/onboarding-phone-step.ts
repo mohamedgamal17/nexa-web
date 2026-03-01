@@ -8,6 +8,7 @@ import { PhoneInput } from "../../../../shared/components/phone-input/phone-inpu
 import { PhoneNumberValidators } from '../../../../shared/components/phone-input/validators/phone-input.validator';
 import { PhoneValueModel } from '../../../../shared/components/phone-input/models/phone-value-model.interface';
 import { COUNTRIES } from '../../../../core/constants/countries.data';
+import { parsePhoneNumber } from '../../../../shared/utils/phone-number.utils';
 
 @Component({
   selector: 'app-onboarding-phone-step',
@@ -18,8 +19,11 @@ import { COUNTRIES } from '../../../../core/constants/countries.data';
 export class OnboardingPhoneStep implements OnInit {
 
 
+  phone = input<string>("")
 
   loading = input<boolean>(false)
+
+  userPhoneNumber = signal<PhoneValueModel | null>(null)
 
   formSubmited = signal(false)
 
@@ -34,8 +38,13 @@ export class OnboardingPhoneStep implements OnInit {
 
   }
   ngOnInit(): void {
+
+    console.log(this.phone())
+   const phoneModal = parsePhoneNumber(this.phone())
+  
+  console.log(phoneModal)
     this.phoneForm = this.fb.group({
-      phone: [,
+      phone: [phoneModal,
         [
           Validators.required,
           PhoneNumberValidators.phoneRequired(),

@@ -7,7 +7,8 @@
     <div class="space-y-5">
       <div class="flex flex-col gap-2">
         <app-phone-input [label]="'forms.onboarding.phone.label' |translate"
-        [countries]="filterdCountries"
+           [countries]="filterdCountries"
+           
           [placeholder]="'forms.onboarding.phone.placeholder' | translate" formControlName="phone" defaultCountry="US"
           [invalid]="(!phoneForm.get('phone')!.valid && (phoneForm.dirty ))"></app-phone-input>
         <app-app-form-errors [form]="phoneForm" [control]="phoneForm.get('phone')"

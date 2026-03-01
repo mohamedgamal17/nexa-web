@@ -114,8 +114,11 @@ export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
 
 
   writeValue(value: PhoneValueModel | null): void {
+    console.log(value)
     if (value) {
+      console.log(value)
       const country = this.countries().find(c => c.code === value.countryCode);
+      console.log(country)
       this.selectedCountry.set(country ?? null);
       this.phoneNumber.set(value.number ?? '');
     } else {

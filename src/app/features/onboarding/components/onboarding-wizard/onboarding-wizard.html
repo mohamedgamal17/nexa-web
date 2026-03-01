@@ -14,21 +14,25 @@
     <div class="space-y-14 max-w-xl w-full">
       <p-progressBar showValue="false" [value]="getStepBarValue()"></p-progressBar>
       @switch (currentStepState()) {
-        @case(OnboardingStepState.Email){
-          <app-onboarding-email-step [email]="onboardCustomer()!.email" [loading]="isSubmiting()" (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
-        }
-        @case(OnboardingStepState.Phone){
-          <app-onboarding-phone-step (stepBack)="updateStepState(OnboardingStepState.Email)" (submited)="handlePhoneSubmit($event)" [loading]="isSubmiting()"></app-onboarding-phone-step>
-        }
-        @case (OnboardingStepState.Profile) {
-          <app-onboarding-profile-step></app-onboarding-profile-step>
-        }
-        @case (OnboardingStepState.Address) {
-          <app-onbaording-address-step></app-onbaording-address-step>
-        }
-        @case (OnboardingStepState.Completed){
-          <app-onboarding-kyc-step></app-onboarding-kyc-step>
-        }
+      @case(OnboardingStepState.Email){
+      <app-onboarding-email-step [email]="onboardCustomer()!.email" [loading]="isSubmiting()"
+        (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
+      }
+      @case(OnboardingStepState.Phone){
+      <app-onboarding-phone-step [phone]="onboardCustomer()?.phoneNumber ?? ''" [loading]="isSubmiting()"
+        (stepBack)="updateStepState(OnboardingStepState.Email)"
+        (submited)="handlePhoneSubmit($event)"></app-onboarding-phone-step>
+      }
+      @case (OnboardingStepState.Profile) {
+      <app-onboarding-profile-step [info]="onboardCustomer()!.info" [loading]="isSubmiting()"
+        (stepBack)="updateStepState(OnboardingStepState.Phone)"></app-onboarding-profile-step>
+      }
+      @case (OnboardingStepState.Address) {
+      <app-onbaording-address-step></app-onbaording-address-step>
+      }
+      @case (OnboardingStepState.Completed){
+      <app-onboarding-kyc-step></app-onboarding-kyc-step>
+      }
 
       }
 
