@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class OnboardingEmailStep implements OnInit  {
 
+  email = input("")
   loading = input<boolean>(false)
 
   submited = output<{email : string}>()
@@ -29,7 +30,7 @@ export class OnboardingEmailStep implements OnInit  {
   }
   ngOnInit(): void {
     this.emailForm = this.fb.group({
-      email : ['' , [Validators.required, Validators.maxLength(256), Validators.email]]
+      email : [this.email() , [Validators.required, Validators.maxLength(256), Validators.email]]
     })
   }
   

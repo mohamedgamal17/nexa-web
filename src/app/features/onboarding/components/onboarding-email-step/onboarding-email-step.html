@@ -12,12 +12,8 @@
         <app-app-form-errors [control]="emailForm.get('email')"
           [fieldKey]="'forms.onboarding.email.label'"></app-app-form-errors>
       </div>
-      <button type="sumbit" size="large" class="w-full text-sm" [loading]="loading()" pButton>
-        <span>Continue</span>
-        @if (!loading()) {
-        <i class="pi pi-angle-right"></i>
-        }
-      </button>
+      <p-button label="Continue" size="large" styleClass="w-full" icon="pi pi-angle-right" iconPos="right" [loading]="loading()" (onClick)="handleSubmit($event)" />
+     
 
     </div>
   </form>

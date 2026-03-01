@@ -12,10 +12,10 @@
   </div>
   <div class="flex-1 flex items-center justify-center w-full">
     <div class="space-y-14 max-w-xl w-full">
-      <p-progressBar showValue="false" value="10"></p-progressBar>
+      <p-progressBar showValue="false" [value]="getStepBarValue()"></p-progressBar>
       @switch (currentStepState()) {
         @case(OnboardingStepState.Email){
-          <app-onboarding-email-step (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
+          <app-onboarding-email-step [email]="onboardCustomer()?.emailAddress ?? ''" [loading]="isSubmiting()" (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
         }
         @case(OnboardingStepState.Phone){
           <app-onboarding-phone-step (submited)="handlePhoneSubmit($event)"></app-onboarding-phone-step>

@@ -30,7 +30,9 @@
   h6 {
     @apply text-lg;
   }
+
+ 
   body {
-    @apply text-base leading-4;
+    @apply text-base leading-normal;
   }
 }

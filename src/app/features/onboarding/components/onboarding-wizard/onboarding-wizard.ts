@@ -1,4 +1,4 @@
-import { Component, OnInit, output, Signal } from '@angular/core';
+import { Component, input, OnInit, output, Signal } from '@angular/core';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { OnboardingEmailStep } from "../onboarding-email-step/onboarding-email-step";
 import { OnboardingStepStateService } from '../../services/onboarding-step-state.service';
@@ -8,6 +8,7 @@ import { PhoneValueModel } from '../../../../shared/components/phone-input/model
 import { OnboardingProfileStep } from '../onboarding-profile-step/onboarding-profile-step';
 import { OnbaordingAddressStep } from '../onbaording-address-step/onbaording-address-step';
 import { OnboardingKycStep } from '../onboarding-kyc-step/onboarding-kyc-step';
+import { OnboardCustomer } from '../../interfaces/onboard-customer.interface';
 
 
 @Component({
@@ -26,6 +27,10 @@ export class OnboardingWizard implements OnInit  {
 
   totalSteps : number
 
+
+  onboardCustomer= input<OnboardCustomer | null>(null)
+  isSubmiting = input(false)
+  
   emailSubmited = output<{email : string}>()
 
   phoneSubmited = output<{phone : PhoneValueModel}>()
@@ -46,5 +51,11 @@ export class OnboardingWizard implements OnInit  {
 
   handlePhoneSubmit($value : {phone : PhoneValueModel}){
     this.phoneSubmited.emit($value);
+  }
+
+  getStepBarValue(){
+    return (100 / this.onboardingStepStateService.getTotalSteps()) * 
+      this.onboardingStepStateService.currentStepNumber()
+
   }
 }

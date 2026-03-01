@@ -1,4 +1,4 @@
-import { Entity } from "../../../core/interfaces/entity.interface"
+import { Entity } from "../../../core/models/entity.interface"
 
 export interface Document extends Entity{
   kycDocumentId: string

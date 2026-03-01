@@ -1,1 +1,19 @@
-<app-onboarding-wizard></app-onboarding-wizard>
+@if(onboardingLoading()){
+<ng-container>
+  <div class="min-h-screen flex flex-col">
+    <div class="flex flex-col items-center flex-1 h-full justify-center gap-3">
+      <div class="p-3 flex items-center rounded-full bg-primary-subtle">
+        <p-progress-spinner />
+      </div>
+      <div class=" text-center gap-1">
+        <h6 class="leading-normal">Retriving your data</h6>
+        <p class="text-secondary  max-w-xs">We're setting up your customer account. Just a moment.</p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+}
+
+@if(!onboardingLoading()){
+<app-onboarding-wizard [isSubmiting]="isubmiting()" [onboardCustomer]="onboardCustomer()" (emailSubmited)="handleEmailSubmit($event)"></app-onboarding-wizard>
+}
