@@ -41,6 +41,7 @@ export class OnboardingProfileStep implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.info())
     this.profileFormGroup = this.fb.group({
       firstName: [this.info()?.firstName, [Validators.required, Validators.max(256), Validators.min(2)]],
       lastName: [this.info()?.lastName, [Validators.required, Validators.max(256), Validators.min(2)]],

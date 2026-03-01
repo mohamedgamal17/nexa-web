@@ -10,6 +10,7 @@ import { OnbaordingAddressStep } from '../onbaording-address-step/onbaording-add
 import { OnboardingKycStep } from '../onboarding-kyc-step/onboarding-kyc-step';
 import { OnboardCustomer } from '../../interfaces/onboard-customer.interface';
 import { CustomerInfo } from '../../../customers/interfaces/customer-info.interface';
+import { Address } from '../../../customers/interfaces/address.interface';
 
 
 @Component({
@@ -39,6 +40,8 @@ export class OnboardingWizard implements OnInit  {
 
   infoSubmited = output<{info : CustomerInfo}>()
 
+  addressSubmited = output<{address : Address}>()
+
   constructor(private onboardingStepStateService : OnboardingStepStateService){
 
   }
@@ -60,6 +63,10 @@ export class OnboardingWizard implements OnInit  {
 
   handleInfoSumbit($value :{info : CustomerInfo}){
     this.infoSubmited.emit($value)
+  }
+
+  handleAddressSubmit($value : {address :Address}){
+    this.addressSubmited.emit($value)
   }
 
   getStepBarValue(){

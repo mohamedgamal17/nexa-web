@@ -28,7 +28,9 @@
         (stepBack)="updateStepState(OnboardingStepState.Phone)" (submited)="handleInfoSumbit($event)"></app-onboarding-profile-step>
       }
       @case (OnboardingStepState.Address) {
-      <app-onbaording-address-step></app-onbaording-address-step>
+      <app-onbaording-address-step [address]="onboardCustomer()!.address" [loading]="isSubmiting()" 
+        (stepBack)="updateStepState(OnboardingStepState.Profile)" (submited)="handleAddressSubmit($event)"
+      ></app-onbaording-address-step>
       }
       @case (OnboardingStepState.Completed){
       <app-onboarding-kyc-step></app-onboarding-kyc-step>

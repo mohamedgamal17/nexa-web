@@ -1,4 +1,4 @@
-import { Component, computed, input, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
@@ -9,6 +9,7 @@ import { getStatesByCountry } from '../../../../core/constants/states.data';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputMaskDirective } from "primeng/inputmask";
 import { ButtonModule } from 'primeng/button';
+import { Address } from '../../../customers/interfaces/address.interface';
 
 @Component({
   selector: 'app-onbaording-address-step',
@@ -20,7 +21,13 @@ import { ButtonModule } from 'primeng/button';
 export class OnbaordingAddressStep implements OnInit {
 
 
+  address = input<Address >()
+
   loading= input(false)
+
+  submited = output<{address : Address}>()
+
+  stepBack = output<void>()
 
   selectedCountry = signal<string | null>(null)
 
@@ -40,19 +47,23 @@ export class OnbaordingAddressStep implements OnInit {
   addressForm: FormGroup
 
   constructor(private fb: FormBuilder) {
-
+    effect(()=> {
+      if(this.address()){
+        this.selectedCountry.set(this.address()!.country)
+      }
+    })
   }
 
   ngOnInit(): void {
     this.addressForm = this.fb.group({
-      country: ['', [Validators.required, Validators.maxLength(2)]],
-      state: ['', [Validators.required, Validators.maxLength(2)]],
-      city: ['', [Validators.required, Validators.maxLength(50),
+      country: [this.address()?.country, [Validators.required, Validators.maxLength(2)]],
+      state: [this.address()?.state, [Validators.required, Validators.maxLength(2)]],
+      city: [this.address()?.city, [Validators.required, Validators.maxLength(50),
       AddressValidators.cityName(),
       AddressValidators.noWhitespaceOnly(),]],
-      streetLine: ['', [Validators.required, Validators.maxLength(256)]],
-      postalCode: ['', [Validators.required, Validators.maxLength(10), AddressValidators.postalCode(),]],
-      zipCode: ['', [Validators.required, Validators.maxLength(10), AddressValidators.zipCode()]]
+      streetLine: [this.address()?.streetLine, [Validators.required, Validators.maxLength(256)]],
+      postalCode: [this.address()?.streetLine, [Validators.required, Validators.maxLength(10), AddressValidators.postalCode(),]],
+      zipCode: [this.address()?.streetLine, [Validators.required, Validators.maxLength(10), AddressValidators.zipCode()]]
     })
   }
 
@@ -66,7 +77,12 @@ export class OnbaordingAddressStep implements OnInit {
     $event.preventDefault()
     this.addressForm.markAllAsTouched()
     if(this.addressForm.valid){
-
+      console.log("em")
+      this.submited.emit({address : this.addressForm.value})
     }
+  }
+
+  handleStepBack(){
+    this.stepBack.emit()
   }
 }

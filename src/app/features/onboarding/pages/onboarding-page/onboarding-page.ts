@@ -2,13 +2,14 @@ import { Component, OnInit, signal } from '@angular/core';
 import { OnboardingWizard } from "../../components/onboarding-wizard/onboarding-wizard";
 import { OnboardCustomerService } from '../../services/onboard-customer.service';
 import { OnboardCustomer } from '../../interfaces/onboard-customer.interface';
-import { Subscription } from 'rxjs';
+import { mergeMap, Subscription, tap } from 'rxjs';
 import { OnboardingStepState } from '../../enums/onboarding-state.enum';
 import { OnboardingStepStateService } from '../../services/onboarding-step-state.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AuthService } from '@auth0/auth0-angular';
 import { PhoneValueModel } from '../../../../shared/components/phone-input/models/phone-value-model.interface';
 import { CustomerInfo } from '../../../customers/interfaces/customer-info.interface';
+import { Address } from '../../../customers/interfaces/address.interface';
 
 @Component({
   selector: 'app-onboarding-page',
@@ -88,6 +89,23 @@ export class OnboardingPage implements OnInit {
         next: (value) => {
           this.onboardCustomer.set(value)
           this.onboardingStepStateService.update(OnboardingStepState.Profile)
+          this.isubmiting.set(false)
+        }
+      })
+
+    this.subscriptions.push(subscription)
+  }
+
+  handleAddressSubmit($event : {address : Address}){
+  this.isubmiting.set(true)
+    const subscription = this.onboardingCustomerService.updateOnboardCustomerAddress($event.address )
+      .pipe(
+        tap((v)=> this.onboardCustomer.set(v)),
+        mergeMap((_)=> this.onboardingCustomerService.completeOnboardCustomer())        
+      )
+      .subscribe({
+        next: (value) => {
+          this.onboardingStepStateService.update(OnboardingStepState.Completed)
           this.isubmiting.set(false)
         }
       })
