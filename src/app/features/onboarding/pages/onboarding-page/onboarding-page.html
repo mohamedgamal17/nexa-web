@@ -16,9 +16,14 @@
 
 @if(!onboardingLoading()){
 <app-onboarding-wizard [isSubmiting]="isubmiting()" [onboardCustomer]="onboardCustomer()"
-  (emailSubmited)="handleEmailSubmit($event)"
-  (phoneSubmited)="handlePhoneSubmit($event)"
-  (infoSubmited)="handleInfoSubmited($event)"
-  (addressSubmited)="handleAddressSubmit($event)"
-  ></app-onboarding-wizard>
+  (emailSubmited)="handleEmailSubmit($event)" (phoneSubmited)="handlePhoneSubmit($event)"
+  (infoSubmited)="handleInfoSubmited($event)" (addressSubmited)="handleAddressSubmit($event)"
+  (kycSybmited)="handleKycSubmit()"></app-onboarding-wizard>
+
+@if(onboardCustomer()){
+<ng-container>
+  <div id="comblycube-container"></div>
+</ng-container>
+}
+<p-toast />
 }

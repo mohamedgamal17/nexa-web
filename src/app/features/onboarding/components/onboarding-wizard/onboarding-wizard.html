@@ -33,7 +33,7 @@
       ></app-onbaording-address-step>
       }
       @case (OnboardingStepState.Completed){
-      <app-onboarding-kyc-step></app-onboarding-kyc-step>
+      <app-onboarding-kyc-step [loading]="isSubmiting()" (submited)="handleKycSubmit()" (stepBack)="updateStepState(OnboardingStepState.Address)"></app-onboarding-kyc-step>
       }
 
       }

@@ -31,7 +31,14 @@
               },
               "src/assets"
             ],
-            "styles": ["src/styles/styles.scss"],
+            
+            "styles": [
+              "src/assets/css/complycube.css",
+              "src/styles/styles.scss"
+            ],
+            "scripts": [
+              "src/assets/js/complycube.min.js"
+            ],
             "polyfills": ["@angular/localize/init"]
           },
           "configurations": {

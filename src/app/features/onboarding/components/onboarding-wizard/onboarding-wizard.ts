@@ -42,6 +42,8 @@ export class OnboardingWizard implements OnInit  {
 
   addressSubmited = output<{address : Address}>()
 
+  kycSybmited = output<void>()
+
   constructor(private onboardingStepStateService : OnboardingStepStateService){
 
   }
@@ -67,6 +69,10 @@ export class OnboardingWizard implements OnInit  {
 
   handleAddressSubmit($value : {address :Address}){
     this.addressSubmited.emit($value)
+  }
+
+  handleKycSubmit(){
+    this.kycSybmited.emit()
   }
 
   getStepBarValue(){

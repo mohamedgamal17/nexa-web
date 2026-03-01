@@ -62,8 +62,8 @@ export class OnbaordingAddressStep implements OnInit {
       AddressValidators.cityName(),
       AddressValidators.noWhitespaceOnly(),]],
       streetLine: [this.address()?.streetLine, [Validators.required, Validators.maxLength(256)]],
-      postalCode: [this.address()?.streetLine, [Validators.required, Validators.maxLength(10), AddressValidators.postalCode(),]],
-      zipCode: [this.address()?.streetLine, [Validators.required, Validators.maxLength(10), AddressValidators.zipCode()]]
+      postalCode: [this.address()?.postalCode, [Validators.required, Validators.maxLength(10), AddressValidators.postalCode(),]],
+      zipCode: [this.address()?.zipCode, [Validators.required, Validators.maxLength(10), AddressValidators.zipCode()]]
     })
   }
 
@@ -76,6 +76,7 @@ export class OnbaordingAddressStep implements OnInit {
   handleSubmit($event : SubmitEvent){
     $event.preventDefault()
     this.addressForm.markAllAsTouched()
+    console.log("em")
     if(this.addressForm.valid){
       console.log("em")
       this.submited.emit({address : this.addressForm.value})
