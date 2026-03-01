@@ -18,13 +18,17 @@ import { CustomerInfo } from '../../../customers/interfaces/customer-info.interf
 })
 export class OnboardingProfileStep implements OnInit {
 
+  info = input<CustomerInfo | null>(null)
+
   loading = input(false)
+
+  stepBack = output<void>()
 
   formSubmited = signal(false)
 
   profileFormGroup: FormGroup
 
-  submited = output<CustomerInfo>()
+  submited = output<{info : CustomerInfo}>()
   genderSelect: { label: string, value: number }[] = [
     { label: "Male", value: Gender.Male },
     { label: "Female", value: Gender.Female }
@@ -38,10 +42,10 @@ export class OnboardingProfileStep implements OnInit {
 
   ngOnInit(): void {
     this.profileFormGroup = this.fb.group({
-      firstName: ['', [Validators.required, Validators.max(256), Validators.min(2)]],
-      lastName: ['', [Validators.required, Validators.max(256), Validators.min(2)]],
-      birthDate: ['', [Validators.required, CustomValidator.verifyDate(), CustomValidator.verifyAge(), CustomValidator.minAge(18)]],
-      gender: [Gender.Male, [Validators.required, CustomValidator.enumValidator(Gender)]]
+      firstName: [this.info()?.firstName, [Validators.required, Validators.max(256), Validators.min(2)]],
+      lastName: [this.info()?.lastName, [Validators.required, Validators.max(256), Validators.min(2)]],
+      birthDate: [this.info()?.bithDate, [Validators.required, CustomValidator.verifyDate(), CustomValidator.verifyAge(), CustomValidator.minAge(18)]],
+      gender: [this.info()?.Gender ?? Gender.Male, [Validators.required, CustomValidator.enumValidator(Gender)]]
     })
   }
 
@@ -50,7 +54,11 @@ export class OnboardingProfileStep implements OnInit {
     this.formSubmited.set(true)
     this.profileFormGroup.markAllAsTouched()
     if (this.profileFormGroup.valid) {
-      this.submited.emit(this.profileFormGroup.value)
+      this.submited.emit({info : this.profileFormGroup.value})
     }
+  }
+
+  handleStepBack(){
+    this.stepBack.emit()
   }
 }

@@ -25,7 +25,7 @@
       }
       @case (OnboardingStepState.Profile) {
       <app-onboarding-profile-step [info]="onboardCustomer()!.info" [loading]="isSubmiting()"
-        (stepBack)="updateStepState(OnboardingStepState.Phone)"></app-onboarding-profile-step>
+        (stepBack)="updateStepState(OnboardingStepState.Phone)" (submited)="handleInfoSumbit($event)"></app-onboarding-profile-step>
       }
       @case (OnboardingStepState.Address) {
       <app-onbaording-address-step></app-onbaording-address-step>

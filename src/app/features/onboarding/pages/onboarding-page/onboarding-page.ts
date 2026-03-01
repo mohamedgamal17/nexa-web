@@ -8,6 +8,7 @@ import { OnboardingStepStateService } from '../../services/onboarding-step-state
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AuthService } from '@auth0/auth0-angular';
 import { PhoneValueModel } from '../../../../shared/components/phone-input/models/phone-value-model.interface';
+import { CustomerInfo } from '../../../customers/interfaces/customer-info.interface';
 
 @Component({
   selector: 'app-onboarding-page',
@@ -62,6 +63,21 @@ export class OnboardingPage implements OnInit {
       })
 
     this.subscriptions.push(subscription)
+  }
+
+  handleInfoSubmited($event: { info: CustomerInfo }) {
+    this.isubmiting.set(true)
+    const subscription = this.onboardingCustomerService.updateOnboardCustomerInfo($event.info)
+      .subscribe({
+        next: (value) => {
+          this.onboardCustomer.set(value)
+          this.onboardingStepStateService.update(OnboardingStepState.Address)
+          this.isubmiting.set(false)
+        }
+      })
+
+    this.subscriptions.push(subscription)
+
   }
 
 

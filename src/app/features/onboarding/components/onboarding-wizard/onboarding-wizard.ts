@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output, Signal } from '@angular/core';
+import { Component, input, OnInit, Output, output, Signal } from '@angular/core';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { OnboardingEmailStep } from "../onboarding-email-step/onboarding-email-step";
 import { OnboardingStepStateService } from '../../services/onboarding-step-state.service';
@@ -9,6 +9,7 @@ import { OnboardingProfileStep } from '../onboarding-profile-step/onboarding-pro
 import { OnbaordingAddressStep } from '../onbaording-address-step/onbaording-address-step';
 import { OnboardingKycStep } from '../onboarding-kyc-step/onboarding-kyc-step';
 import { OnboardCustomer } from '../../interfaces/onboard-customer.interface';
+import { CustomerInfo } from '../../../customers/interfaces/customer-info.interface';
 
 
 @Component({
@@ -36,6 +37,8 @@ export class OnboardingWizard implements OnInit  {
 
   phoneSubmited = output<{phone : PhoneValueModel}>()
 
+  infoSubmited = output<{info : CustomerInfo}>()
+
   constructor(private onboardingStepStateService : OnboardingStepStateService){
 
   }
@@ -53,6 +56,10 @@ export class OnboardingWizard implements OnInit  {
 
   handlePhoneSubmit($value : {phone : PhoneValueModel}){
     this.phoneSubmited.emit($value);
+  }
+
+  handleInfoSumbit($value :{info : CustomerInfo}){
+    this.infoSubmited.emit($value)
   }
 
   getStepBarValue(){
