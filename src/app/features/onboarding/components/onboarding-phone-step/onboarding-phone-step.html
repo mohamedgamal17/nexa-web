@@ -6,21 +6,23 @@
   <form (submit)="handleSubmit($event)" [formGroup]="phoneForm">
     <div class="space-y-5">
       <div class="flex flex-col gap-2">
-        <app-phone-input 
-          [label]="'forms.onboarding.phone.label' |translate"
-          [placeholder]="'forms.onboarding.phone.placeholder' | translate" formControlName="phone"
-          defaultCountry="US"
-          [invalid]="(!phoneForm.get('phone')!.valid && (phoneForm.touched ||formSubmited() ))"
-          ></app-phone-input>
+        <app-phone-input [label]="'forms.onboarding.phone.label' |translate"
+        [countries]="filterdCountries"
+          [placeholder]="'forms.onboarding.phone.placeholder' | translate" formControlName="phone" defaultCountry="US"
+          [invalid]="(!phoneForm.get('phone')!.valid && (phoneForm.dirty ))"></app-phone-input>
         <app-app-form-errors [form]="phoneForm" [control]="phoneForm.get('phone')"
           [fieldKey]="'forms.onboarding.phone.label'"></app-app-form-errors>
       </div>
-      <button type="sumbit" size="large" class="w-full text-sm" [loading]="loading()" pButton>
-        <span>Continue</span>
-        @if (!loading()) {
-        <i class="pi pi-angle-right"></i>
-        }
-      </button>
+
+      <div class="flex gap-2">
+        <p-button class="flex-1" styleClass="w-full  block" variant="outlined" severity="secondary" label="back"
+          icon="pi pi-angle-left" iconPos="left" type="button" (onClick)="handleStepBack()" ></p-button>
+        <p-button class="flex-2" styleClass="w-full block text-dark rounded-lg" label="Continue"
+      
+          icon="pi pi-angle-right" iconPos="right" type="submit" ></p-button>
+
+      </div>
+
 
     </div>
   </form>

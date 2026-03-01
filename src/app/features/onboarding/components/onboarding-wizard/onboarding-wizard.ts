@@ -29,8 +29,9 @@ export class OnboardingWizard implements OnInit  {
 
 
   onboardCustomer= input<OnboardCustomer | null>(null)
+
   isSubmiting = input(false)
-  
+
   emailSubmited = output<{email : string}>()
 
   phoneSubmited = output<{phone : PhoneValueModel}>()
@@ -43,6 +44,7 @@ export class OnboardingWizard implements OnInit  {
     this.currentStepState = this.onboardingStepStateService.currentState
     this.currentStepNumber = this.onboardingStepStateService.currentStepNumber
     this.totalSteps = this.onboardingStepStateService.getTotalSteps()
+
   }
 
   handleEmailSubmit($value : {email : string}){
@@ -56,6 +58,9 @@ export class OnboardingWizard implements OnInit  {
   getStepBarValue(){
     return (100 / this.onboardingStepStateService.getTotalSteps()) * 
       this.onboardingStepStateService.currentStepNumber()
+  }
 
+  updateStepState(state :OnboardingStepState){
+    this.onboardingStepStateService.update(state)
   }
 }

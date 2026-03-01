@@ -5,8 +5,8 @@ import { OnboardCustomerStatus } from "../enums/onboard-customer-status.enum"
 
 export interface OnboardCustomer extends Entity {
   userId: string
+  email:string
   phoneNumber: string
-  emailAddress: string
   info: CustomerInfo
   address: Address
   emailAddressProvided: boolean,

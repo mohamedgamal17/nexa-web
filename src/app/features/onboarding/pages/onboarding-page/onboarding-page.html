@@ -15,5 +15,9 @@
 }
 
 @if(!onboardingLoading()){
-<app-onboarding-wizard [isSubmiting]="isubmiting()" [onboardCustomer]="onboardCustomer()" (emailSubmited)="handleEmailSubmit($event)"></app-onboarding-wizard>
+<app-onboarding-wizard [isSubmiting]="isubmiting()" [onboardCustomer]="onboardCustomer()"
+  (emailSubmited)="handleEmailSubmit($event)"
+  (phoneSubmited)="handlePhoneSubmit($event)"
+  
+  ></app-onboarding-wizard>
 }

@@ -15,10 +15,10 @@
       <p-progressBar showValue="false" [value]="getStepBarValue()"></p-progressBar>
       @switch (currentStepState()) {
         @case(OnboardingStepState.Email){
-          <app-onboarding-email-step [email]="onboardCustomer()?.emailAddress ?? ''" [loading]="isSubmiting()" (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
+          <app-onboarding-email-step [email]="onboardCustomer()!.email" [loading]="isSubmiting()" (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
         }
         @case(OnboardingStepState.Phone){
-          <app-onboarding-phone-step (submited)="handlePhoneSubmit($event)"></app-onboarding-phone-step>
+          <app-onboarding-phone-step (stepBack)="updateStepState(OnboardingStepState.Email)" (submited)="handlePhoneSubmit($event)" [loading]="isSubmiting()"></app-onboarding-phone-step>
         }
         @case (OnboardingStepState.Profile) {
           <app-onboarding-profile-step></app-onboarding-profile-step>

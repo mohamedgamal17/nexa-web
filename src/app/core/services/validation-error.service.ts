@@ -45,7 +45,6 @@ export class ValidationErrorService {
         if (!control.errors || (!control.touched)) return [];
 
         const fieldLabel = this.translate.instant(fieldKey);
-
         return Object.entries(control.errors)
           .map(([key, value]) => {
 

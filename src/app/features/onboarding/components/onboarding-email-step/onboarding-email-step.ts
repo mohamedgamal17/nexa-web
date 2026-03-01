@@ -32,6 +32,8 @@ export class OnboardingEmailStep implements OnInit  {
     this.emailForm = this.fb.group({
       email : [this.email() , [Validators.required, Validators.maxLength(256), Validators.email]]
     })
+
+    console.log(this.email())
   }
   
   handleSubmit($event : any){
