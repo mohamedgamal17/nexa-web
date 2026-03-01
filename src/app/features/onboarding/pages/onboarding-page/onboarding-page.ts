@@ -18,11 +18,12 @@ import { ComplyCubeEventData } from '../../interfaces/comply-cube-event-data.int
 import { KycReviewService } from '../../../customers/services/kyc-reviews.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-onboarding-page',
   imports: [OnboardingWizard, ProgressSpinnerModule, ToastModule],
-  providers :[MessageService],
+  providers: [MessageService],
   templateUrl: './onboarding-page.html',
   styleUrl: './onboarding-page.scss',
 })
@@ -43,9 +44,10 @@ export class OnboardingPage implements OnInit {
     private onboardingCustomerService: OnboardCustomerService,
     private onboardingStepStateService: OnboardingStepStateService,
     private kycTokenService: KycTokenService,
-    private kycReviewService : KycReviewService,
+    private kycReviewService: KycReviewService,
     private complyCubeService: ComplyCubeService,
-    private messageService : MessageService
+    private messageService: MessageService,
+    private transalteService: TranslateService
   ) {
 
   }
@@ -77,6 +79,13 @@ export class OnboardingPage implements OnInit {
         next: (value) => {
           this.onboardCustomer.set(value)
           this.onboardingStepStateService.update(OnboardingStepState.Phone)
+          this.messageService.add(
+            {
+              severity: 'success',
+              summary: this.transalteService.instant("toast.emailSaved.summary"),
+              detail: this.transalteService.instant("toast.emailSaved.message"),
+            }
+          )
           this.isubmiting.set(false)
         }
       })
@@ -91,6 +100,13 @@ export class OnboardingPage implements OnInit {
         next: (value) => {
           this.onboardCustomer.set(value)
           this.onboardingStepStateService.update(OnboardingStepState.Address)
+          this.messageService.add(
+            {
+              severity: 'success',
+              summary: this.transalteService.instant("toast.customerInfoSaved.summary"),
+              detail: this.transalteService.instant("toast.customerInfoSaved.message"),
+            }
+          )
           this.isubmiting.set(false)
         }
       })
@@ -107,6 +123,13 @@ export class OnboardingPage implements OnInit {
         next: (value) => {
           this.onboardCustomer.set(value)
           this.onboardingStepStateService.update(OnboardingStepState.Profile)
+          this.messageService.add(
+            {
+              severity: 'success',
+              summary: this.transalteService.instant("toast.phoneSaved.summary"),
+              detail: this.transalteService.instant("toast.phoneSaved.message"),
+            }
+          )
           this.isubmiting.set(false)
         }
       })
@@ -125,6 +148,13 @@ export class OnboardingPage implements OnInit {
         next: (value) => {
           this.customer.set(value)
           this.onboardingStepStateService.update(OnboardingStepState.Completed)
+          this.messageService.add(
+            {
+              severity: 'success',
+              summary: this.transalteService.instant("toast.addressSaved.summary"),
+              detail: this.transalteService.instant("toast.addressSaved.message"),
+            }
+          )
           this.isubmiting.set(false)
         }
       })
@@ -160,18 +190,23 @@ export class OnboardingPage implements OnInit {
 
         mergeMap(({ event, customer }) => {
           return forkJoin({
-            customer : of(customer),
-            review : this.kycReviewService.createReview()
+            customer: of(customer),
+            review: this.kycReviewService.createReview()
           })
-        })  
+        })
       )
-    .subscribe({
-      next : ({customer , review})=>{
-        this.isubmiting.set(false)
-        this.messageService.add({severity : 'success', summary:"Kyc completed."  , 
-          detail :'Your have submited your kyc verification info the verification process in progress.'})
-        this.customer.set(customer)
-      }
-    })
+      .subscribe({
+        next: ({ customer, review }) => {
+          this.isubmiting.set(false)
+          this.messageService.add(
+            {
+              severity: 'success',
+              summary: this.transalteService.instant("toast.kycCompleted.summary"),
+              detail: this.transalteService.instant("toast.kycCompleted.message"),
+            }
+          )
+          this.customer.set(customer)
+        }
+      })
   }
 }
