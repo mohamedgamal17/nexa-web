@@ -22,9 +22,36 @@
           "label": "Gender",
           "placeholder": "Select your gender"
         },
-        "birthDate" :{
-          "label" :"Birth date",
+        "birthDate": {
+          "label": "Birth date",
           "placeholder": "Enter your birth date"
+        }
+      },
+
+      "address": {
+        "country": {
+          "label": "Country",
+          "placeholder": "Select your country"
+        },
+        "state": {
+          "label": "State",
+          "placeholder": "Select your state"
+        },
+        "city":{
+          "label" : "City",
+          "placeholder" :"Enter your city"
+        },
+        "streetLine": {
+          "label": "Steet line",
+          "placeholder": "Enter your street line"
+        },
+        "postalCode": {
+          "label": "Postal code",
+          "placeholder": "Enter your postal code"
+        },
+        "zipCode" : {
+          "label" : "Zip code",
+          "placeholder":"Enter your zip code"
         }
       }
     }
@@ -33,8 +60,8 @@
     "validation": {
       "required": "{{field}} is required.",
       "email": "Please enter a valid email address.",
-      "minlength": "{{field}} must be at least {{requiredLength}} characters.",
-      "maxlength": "{{field}} cannot exceed {{requiredLength}} characters.",
+      "minLength": "{{field}} must be at least {{requiredLength}} characters.",
+      "maxLength": "{{field}} cannot exceed {{requiredLength}} characters.",
       "min": "{{field}} must be greater than {{min}}.",
       "max": "{{field}} must be less than {{max}}.",
       "pattern": "{field}} format is invalid.",
@@ -42,10 +69,13 @@
       "phoneMinLength": "Phone number must be at least {{min}} digits.",
       "phoneMaxLength": "Phone number must max length is {{max}} ",
       "phoneInvalid": "Invalid phone number",
-      "invalidEnum" :"Invalid enum type.",
-      "invalidDate" :"Invalid date format.",
-      "invalidAge" :"Please enter a valid age.",
-      "minAge" :"Minumum age required is {{min}}."
+      "invalidEnum": "Invalid enum type.",
+      "invalidDate": "Invalid date format.",
+      "invalidAge": "Please enter a valid age.",
+      "minAge": "Minumum age required is {{min}}.",
+      "invalidCityName" :"Please enter a valid city name.",
+      "invalidPostalCode" :"Please enter a valid postal code.",
+      "invalidZipCode" :"Please enter a valid zip code"
     }
   }
 }

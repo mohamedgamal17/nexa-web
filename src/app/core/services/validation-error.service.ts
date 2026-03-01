@@ -17,7 +17,10 @@ export class ValidationErrorService {
     phoneInvalid  : 'errors.validation.phoneInvalid',
     invalideEnum : 'errors.validation.invalideEnum',
     invalidAge : 'errors.validation.invalidAge',
-    minAge : 'errors.validation.minAge'
+    minAge : 'errors.validation.minAge',
+    invalidCityName :'errors.validation.invalidCityName',
+    invalidPostalCode :'errors.validation.invalidPostalCode',
+    invalidZipCode :'errors.validation.invalidZipCode'
   };
 
   constructor(private translate: TranslateService) { }

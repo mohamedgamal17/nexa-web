@@ -6,11 +6,12 @@ import { OnboardingStepState } from '../../enums/onboarding-state.enum';
 import { OnboardingPhoneStep } from '../onboarding-phone-step/onboarding-phone-step';
 import { PhoneValueModel } from '../../../../shared/components/phone-input/models/phone-value-model.interface';
 import { OnboardingProfileStep } from '../onboarding-profile-step/onboarding-profile-step';
+import { OnbaordingAddressStep } from '../onbaording-address-step/onbaording-address-step';
 
 
 @Component({
   selector: 'app-onboarding-wizard',
-  imports: [ProgressBarModule, OnboardingEmailStep , OnboardingPhoneStep , OnboardingProfileStep],
+  imports: [ProgressBarModule, OnboardingEmailStep , OnboardingPhoneStep , OnboardingProfileStep, OnbaordingAddressStep],
   templateUrl: './onboarding-wizard.html',
   styleUrl: './onboarding-wizard.scss',
 })
