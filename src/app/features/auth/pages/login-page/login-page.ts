@@ -9,19 +9,23 @@ import { AuthService } from '@auth0/auth0-angular';
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
 })
-export class LoginPage  {
+export class LoginPage {
 
   loginLoading = signal(false)
 
-  constructor(private authService : AuthService){
+  constructor(private authService: AuthService) {
 
   }
 
 
-  handleLogin(){
+  handleLogin() {
     this.loginLoading.set(true)
-    this.authService.loginWithRedirect()
-      .subscribe(()=> this.loginLoading.set(false))
- 
+    this.authService.loginWithRedirect({
+      authorizationParams: {
+        redirect_uri: window.location.origin +"/auth/callback"
+      }
+    })
+      .subscribe(() => this.loginLoading.set(false))
+
   }
 }

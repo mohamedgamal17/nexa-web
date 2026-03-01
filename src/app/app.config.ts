@@ -4,23 +4,27 @@ import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import { appThemePreset } from './ng-prime.theme';
 import { provideAuthFeature } from './features/auth/auth.feature';
-import { provideAuth0 } from '@auth0/auth0-angular';
+import { authHttpInterceptorFn, provideAuth0 } from '@auth0/auth0-angular';
 import { environemnt } from '../environments/environemnt';
 import { provideOnboardingFeature } from './features/onboarding/onboarding.feature';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader, TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {  provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+    provideHttpClient(
+      withInterceptors([
+        authHttpInterceptorFn
+      ])),
     provideAuth0({
       domain: environemnt.auth0.domain,
       clientId: environemnt.auth0.clientId,
       authorizationParams: {
-        redirect_uri: window.location.origin,
+        redirect_uri: window.location.origin + '/',
         audience: environemnt.auth0.audience
       },
       httpInterceptor: {
@@ -37,7 +41,6 @@ export const appConfig: ApplicationConfig = {
       }
 
     }),
-    provideAnimations(),
     providePrimeNG({
       theme: {
         preset: appThemePreset
@@ -52,7 +55,7 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'en',
       lang: 'en'
     }),
-    
+
     provideAuthFeature(),
     provideOnboardingFeature()
   ]
