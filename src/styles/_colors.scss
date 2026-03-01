@@ -13,12 +13,15 @@
   --color-netural-800: var(--color-slate-800);
   --color-netural-900: var(--color-slate-900);
   --color-netural-950: var(--color-slate-950);
-  --color-light: hsl(0, 0%, 100%);
-  --color-dark: hsl(0, 0%, 0%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-black: hsl(0, 0%, 0%);
 }
 
 @theme {
   //neutrals
+
+  --color-light : var(--color-neutral-50);
+  --color-dark : var(--color-neutral-900);
 
   --color-primary: var(--color-emerald-600);
   --color-primary-hover: var(--color-emerald-500);
@@ -42,19 +45,19 @@
   --color-danger-hover: var(--color-danger-700);
   --color-danger-subtle: var(--color-danger-200);
 
-  --color-bg: var(--color-neutral-50);
-  --color-bg-inverse: var(--color-neutral-900);
+  --color-bg: var(--color-light);
+  --color-bg-inverse: var(  --color-dark);
 
-  --color-surface: var(--color-light);
+  --color-surface: var(--color-white);
   --color-surface-inverse : var(--color-netural-800);
 
-  --color-input: var(--color-light);
+  --color-input: var(--color-white);
   --color-input-border-focus: var(--color-primary);
   --color-input-border:var(--color-neutral-400);
 
-  --color-text: var(--color-netural-900);
-  --color-text-secondary: var(--color-netural-500);
-  --color-text-inverse: var(--color-light);
+  --color-text: var(--color-dark);
+  --color-text-secondary: var(--color-secondary);
+  --color-text-inverse: var(--color-white);
 
   --color-border: var(--color-neutral-400);
   --color-border-thin: var(--color-neutral-200);
