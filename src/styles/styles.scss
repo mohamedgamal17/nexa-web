@@ -3,35 +3,3 @@
 @use 'intl-tel-input/build/css/intlTelInput.css';
 @use 'typography';
 @use 'colors';
-
-.iti {
-  width: 100%;
-}
-
-/* Input styling */
-.iti input {
-  @apply p-3 
-      bg-input
-      text-text
-      border
-      border-input-border
-      w-full 
-      rounded border
-      transition
-      duration-200
-      ease-in-out
-      focus:outline-none
-      focus:ring-1
-      focus:ring-primary
-      focus:border-primary;
-
-}
-
-.iti input:focus {
-  border-color: var(--color-input-border-focus);
-}
-
-/* Fix dropdown z-index */
-.iti__country-list {
-  z-index: 9999;
-}

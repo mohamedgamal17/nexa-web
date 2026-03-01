@@ -7,11 +7,12 @@ import { OnboardingPhoneStep } from '../onboarding-phone-step/onboarding-phone-s
 import { PhoneValueModel } from '../../../../shared/components/phone-input/models/phone-value-model.interface';
 import { OnboardingProfileStep } from '../onboarding-profile-step/onboarding-profile-step';
 import { OnbaordingAddressStep } from '../onbaording-address-step/onbaording-address-step';
+import { OnboardingKycStep } from '../onboarding-kyc-step/onboarding-kyc-step';
 
 
 @Component({
   selector: 'app-onboarding-wizard',
-  imports: [ProgressBarModule, OnboardingEmailStep , OnboardingPhoneStep , OnboardingProfileStep, OnbaordingAddressStep],
+  imports: [ProgressBarModule, OnboardingEmailStep , OnboardingPhoneStep , OnboardingProfileStep, OnbaordingAddressStep, OnboardingKycStep],
   templateUrl: './onboarding-wizard.html',
   styleUrl: './onboarding-wizard.scss',
 })

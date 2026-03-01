@@ -6,7 +6,7 @@ import { OnboardingStepState } from "../enums/onboarding-state.enum";
 })
 export class OnboardingStepStateService {
 
-  private _currentState = signal<OnboardingStepState>(OnboardingStepState.Address);
+  private _currentState = signal<OnboardingStepState>(OnboardingStepState.Completed);
 
   currentState = this._currentState.asReadonly()
 

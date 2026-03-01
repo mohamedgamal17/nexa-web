@@ -1,10 +1,10 @@
 <div class="max-w-4xl min-h-screen flex flex-col mx-auto gap-10 p-5">
   <div class=" flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="p-3 text-text-inverse bg-primary rounded">
+      <div class="p-3 flex items-center text-text-inverse bg-primary rounded-lg text-sm">
         <i class="pi pi-wallet"></i>
       </div>
-      <h6>NexaWallet</h6>
+      <h3 class="font-bold text-xl">NexaWallet</h3>
     </div>
     <div>
       <p class="text-secondary">Step {{currentStepNumber()}} of {{totalSteps}}</p>
@@ -24,11 +24,14 @@
           <app-onboarding-profile-step></app-onboarding-profile-step>
         }
         @case (OnboardingStepState.Address) {
+          <app-onbaording-address-step></app-onbaording-address-step>
         }
-        
+        @case (OnboardingStepState.Completed){
+          <app-onboarding-kyc-step></app-onboarding-kyc-step>
+        }
+
       }
 
-                <app-onbaording-address-step></app-onbaording-address-step>
 
     </div>
   </div>
