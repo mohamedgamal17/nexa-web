@@ -1,6 +1,6 @@
 import { Component, input, OnInit, Output, output, Signal } from '@angular/core';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { OnboardingEmailStep } from "../onboarding-email-step/onboarding-email-step";
+import { OnboardingEmailStep } from '../onboarding-email-step/onboarding-email-step';
 import { OnboardingStepStateService } from '../../services/onboarding-step-state.service';
 import { OnboardingStepState } from '../../enums/onboarding-state.enum';
 import { OnboardingPhoneStep } from '../onboarding-phone-step/onboarding-phone-step';
@@ -11,76 +11,73 @@ import { OnboardingKycStep } from '../onboarding-kyc-step/onboarding-kyc-step';
 import { OnboardCustomer } from '../../interfaces/onboard-customer.interface';
 import { CustomerInfo } from '../../../customers/interfaces/customer-info.interface';
 import { Address } from '../../../customers/interfaces/address.interface';
-
+import { FormError } from '../../../../shared/components/form-error/form-error';
+import { ErrorModel } from '../../../../core/models/error-model.interface';
 
 @Component({
   selector: 'app-onboarding-wizard',
-  imports: [ProgressBarModule, OnboardingEmailStep , OnboardingPhoneStep , OnboardingProfileStep, OnbaordingAddressStep, OnboardingKycStep],
+  imports: [ProgressBarModule, OnboardingEmailStep, OnboardingPhoneStep, OnboardingProfileStep, OnbaordingAddressStep, OnboardingKycStep, FormError],
   templateUrl: './onboarding-wizard.html',
   styleUrl: './onboarding-wizard.scss',
 })
-export class OnboardingWizard implements OnInit  {
+export class OnboardingWizard implements OnInit {
+  OnboardingStepState = OnboardingStepState;
 
-  OnboardingStepState = OnboardingStepState
+  currentStepState: Signal<OnboardingStepState>;
 
-  currentStepState :Signal<OnboardingStepState>
+  currentStepNumber: Signal<number>;
 
-  currentStepNumber : Signal<number>
+  totalSteps: number;
 
-  totalSteps : number
+  onboardCustomer = input<OnboardCustomer | null>(null);
 
+  isSubmiting = input(false);
 
-  onboardCustomer= input<OnboardCustomer | null>(null)
+  submitError = input<ErrorModel | null>(null);
 
-  isSubmiting = input(false)
+  emailSubmited = output<{ email: string }>();
 
-  emailSubmited = output<{email : string}>()
+  phoneSubmited = output<{ phone: PhoneValueModel }>();
 
-  phoneSubmited = output<{phone : PhoneValueModel}>()
+  infoSubmited = output<{ info: CustomerInfo }>();
 
-  infoSubmited = output<{info : CustomerInfo}>()
+  addressSubmited = output<{ address: Address }>();
 
-  addressSubmited = output<{address : Address}>()
+  kycSybmited = output<void>();
 
-  kycSybmited = output<void>()
-
-  constructor(private onboardingStepStateService : OnboardingStepStateService){
-
-  }
+  constructor(private onboardingStepStateService: OnboardingStepStateService) {}
 
   ngOnInit(): void {
-    this.currentStepState = this.onboardingStepStateService.currentState
-    this.currentStepNumber = this.onboardingStepStateService.currentStepNumber
-    this.totalSteps = this.onboardingStepStateService.getTotalSteps()
-
+    this.currentStepState = this.onboardingStepStateService.currentState;
+    this.currentStepNumber = this.onboardingStepStateService.currentStepNumber;
+    this.totalSteps = this.onboardingStepStateService.getTotalSteps();
   }
 
-  handleEmailSubmit($value : {email : string}){
-    this.emailSubmited.emit($value)
+  handleEmailSubmit($value: { email: string }) {
+    this.emailSubmited.emit($value);
   }
 
-  handlePhoneSubmit($value : {phone : PhoneValueModel}){
+  handlePhoneSubmit($value: { phone: PhoneValueModel }) {
     this.phoneSubmited.emit($value);
   }
 
-  handleInfoSumbit($value :{info : CustomerInfo}){
-    this.infoSubmited.emit($value)
+  handleInfoSumbit($value: { info: CustomerInfo }) {
+    this.infoSubmited.emit($value);
   }
 
-  handleAddressSubmit($value : {address :Address}){
-    this.addressSubmited.emit($value)
+  handleAddressSubmit($value: { address: Address }) {
+    this.addressSubmited.emit($value);
   }
 
-  handleKycSubmit(){
-    this.kycSybmited.emit()
+  handleKycSubmit() {
+    this.kycSybmited.emit();
   }
 
-  getStepBarValue(){
-    return (100 / this.onboardingStepStateService.getTotalSteps()) * 
-      this.onboardingStepStateService.currentStepNumber()
+  getStepBarValue() {
+    return (100 / this.onboardingStepStateService.getTotalSteps()) * this.onboardingStepStateService.currentStepNumber();
   }
 
-  updateStepState(state :OnboardingStepState){
-    this.onboardingStepStateService.update(state)
+  updateStepState(state: OnboardingStepState) {
+    this.onboardingStepStateService.update(state);
   }
 }

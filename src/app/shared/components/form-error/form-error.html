@@ -1,0 +1,33 @@
+<p-message severity="error">
+  <div class="p-3 text-sm">
+    <div class="flex gap-3 items-start">
+      <div class="">
+        <div class="text-4xl">
+          <ng-icon name="featherAlertTriangle"></ng-icon>
+        </div>
+      </div>
+      <div class="flex-col flex flex-col gap-1.5">
+        <h5>{{ error()?.title }}</h5>
+        <p>The application could not be processed due to specific regulatory and data validation failures.</p>
+
+        @if (error()?.validationErrors) {
+          <div class="space-y-3">
+            @for (key of getObjectKeys(error()!.validationErrors)!; track $index) {
+              <div>
+                <!-- Field name label -->
+                <span class="text-sm font-semibold capitalize px-3 py-0.5 bg-warning-subtle"> {{ key }} : </span>
+
+                <!-- All messages for this field -->
+                <ul class="mt-1 list-disc list-unstyled space-y-0.5 ps-10">
+                  @for (message of error()!.validationErrors![key]; track $index) {
+                    <li class="text-sm text-red-700">{{ message }}</li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</p-message>

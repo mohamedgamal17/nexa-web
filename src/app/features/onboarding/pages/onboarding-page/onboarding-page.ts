@@ -36,6 +36,7 @@ export class OnboardingPage implements OnInit {
   onboardingError = signal<ErrorModel | null>(null);
   hasLoadingError = computed(() => this.onboardingError() != null);
   isubmiting = signal(false);
+  submitError = signal<ErrorModel | null>(null);
   subscriptions: Subscription[] = [];
 
   @ViewChild('complyCubeContainer') complyCubeContainer: HTMLElement;
@@ -68,6 +69,7 @@ export class OnboardingPage implements OnInit {
       error: (err: ErrorModel) => {
         this.onboardingLoading.set(false);
         this.onboardingError.set(err);
+        this.messageService.add({ severity: 'error', summary: err.title, detail: err.message });
       },
     });
     this.subscriptions.push(subscription);
@@ -85,6 +87,12 @@ export class OnboardingPage implements OnInit {
           detail: this.transalteService.instant('toast.emailSaved.message'),
         });
         this.isubmiting.set(false);
+      },
+
+      error: (err) => {
+        this.submitError.set(err);
+        this.isubmiting.set(false);
+        this.messageService.add({ severity: 'error', summary: err.title, detail: err.message });
       },
     });
 
@@ -104,6 +112,12 @@ export class OnboardingPage implements OnInit {
         });
         this.isubmiting.set(false);
       },
+
+      error: (err) => {
+        this.submitError.set(err);
+        this.isubmiting.set(false);
+        this.messageService.add({ severity: 'error', summary: err.title, detail: err.message });
+      },
     });
 
     this.subscriptions.push(subscription);
@@ -121,6 +135,12 @@ export class OnboardingPage implements OnInit {
           detail: this.transalteService.instant('toast.phoneSaved.message'),
         });
         this.isubmiting.set(false);
+      },
+
+      error: (err) => {
+        this.submitError.set(err);
+        this.isubmiting.set(false);
+        this.messageService.add({ severity: 'error', summary: err.title, detail: err.message });
       },
     });
 
@@ -145,6 +165,11 @@ export class OnboardingPage implements OnInit {
             detail: this.transalteService.instant('toast.addressSaved.message'),
           });
           this.isubmiting.set(false);
+        },
+        error: (err) => {
+          this.submitError.set(err);
+          this.isubmiting.set(false);
+          this.messageService.add({ severity: 'error', summary: err.title, detail: err.message });
         },
       });
 
@@ -194,6 +219,11 @@ export class OnboardingPage implements OnInit {
             detail: this.transalteService.instant('toast.kycCompleted.message'),
           });
           this.customer.set(customer);
+        },
+        error: (err) => {
+          this.submitError.set(err);
+          this.isubmiting.set(false);
+          this.messageService.add({ severity: 'error', summary: err.title, detail: err.message });
         },
       });
   }

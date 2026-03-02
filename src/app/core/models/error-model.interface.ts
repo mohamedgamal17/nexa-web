@@ -1,14 +1,6 @@
-import { ApiProblemDetails } from "./api-problem-details.interface";
+import { ApiProblemDetails } from './api-problem-details.interface';
 
-export type ErrorType =
-  | 'connection'
-  | 'not-found'
-  | 'server'
-  | 'validation'
-  | 'forbidden'
-  | 'unauthorized'
-  | 'generic';
-
+export type ErrorType = 'connection' | 'not-found' | 'server' | 'bad-request' | 'forbidden' | 'unauthorized' | 'generic';
 
 export interface ErrorModel {
   type: ErrorType;

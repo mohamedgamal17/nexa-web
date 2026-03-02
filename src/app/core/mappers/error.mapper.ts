@@ -18,7 +18,7 @@ export function mapToErrorModel(error: HttpErrorResponse): ErrorModel {
     case 400:
       if (problem?.errors) {
         return {
-          type: 'validation',
+          type: 'bad-request',
           title: problem.title ?? 'Validation Error',
           message: 'Please fix the highlighted fields.',
           status: 400,

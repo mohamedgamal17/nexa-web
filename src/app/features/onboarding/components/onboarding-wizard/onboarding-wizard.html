@@ -1,5 +1,5 @@
 <div class="max-w-4xl min-h-screen flex flex-col mx-auto gap-10 p-5">
-  <div class=" flex items-center justify-between">
+  <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="p-3 flex items-center text-text-inverse bg-primary rounded-lg text-sm">
         <i class="pi pi-wallet"></i>
@@ -7,39 +7,33 @@
       <h3 class="font-bold text-xl">NexaWallet</h3>
     </div>
     <div>
-      <p class="text-secondary">Step {{currentStepNumber()}} of {{totalSteps}}</p>
+      <p class="text-secondary">Step {{ currentStepNumber() }} of {{ totalSteps }}</p>
     </div>
   </div>
+
   <div class="flex-1 flex items-center justify-center w-full">
-    <div class="space-y-14 max-w-xl w-full">
+    <div class="flex flex-col gap-14 max-w-xl w-full">
       <p-progressBar showValue="false" [value]="getStepBarValue()"></p-progressBar>
+      @if (submitError()) {
+        <app-form-error [error]="submitError()"></app-form-error>
+      }
       @switch (currentStepState()) {
-      @case(OnboardingStepState.Email){
-      <app-onboarding-email-step [email]="onboardCustomer()!.email" [loading]="isSubmiting()"
-        (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
+        @case (OnboardingStepState.Email) {
+          <app-onboarding-email-step [email]="onboardCustomer()!.email" [loading]="isSubmiting()" (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
+        }
+        @case (OnboardingStepState.Phone) {
+          <app-onboarding-phone-step [phone]="onboardCustomer()?.phoneNumber ?? ''" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Email)" (submited)="handlePhoneSubmit($event)"></app-onboarding-phone-step>
+        }
+        @case (OnboardingStepState.Profile) {
+          <app-onboarding-profile-step [info]="onboardCustomer()!.info" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Phone)" (submited)="handleInfoSumbit($event)"></app-onboarding-profile-step>
+        }
+        @case (OnboardingStepState.Address) {
+          <app-onbaording-address-step [address]="onboardCustomer()!.address" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Profile)" (submited)="handleAddressSubmit($event)"></app-onbaording-address-step>
+        }
+        @case (OnboardingStepState.Completed) {
+          <app-onboarding-kyc-step [loading]="isSubmiting()" (submited)="handleKycSubmit()" (stepBack)="updateStepState(OnboardingStepState.Address)"></app-onboarding-kyc-step>
+        }
       }
-      @case(OnboardingStepState.Phone){
-      <app-onboarding-phone-step [phone]="onboardCustomer()?.phoneNumber ?? ''" [loading]="isSubmiting()"
-        (stepBack)="updateStepState(OnboardingStepState.Email)"
-        (submited)="handlePhoneSubmit($event)"></app-onboarding-phone-step>
-      }
-      @case (OnboardingStepState.Profile) {
-      <app-onboarding-profile-step [info]="onboardCustomer()!.info" [loading]="isSubmiting()"
-        (stepBack)="updateStepState(OnboardingStepState.Phone)" (submited)="handleInfoSumbit($event)"></app-onboarding-profile-step>
-      }
-      @case (OnboardingStepState.Address) {
-      <app-onbaording-address-step [address]="onboardCustomer()!.address" [loading]="isSubmiting()" 
-        (stepBack)="updateStepState(OnboardingStepState.Profile)" (submited)="handleAddressSubmit($event)"
-      ></app-onbaording-address-step>
-      }
-      @case (OnboardingStepState.Completed){
-      <app-onboarding-kyc-step [loading]="isSubmiting()" (submited)="handleKycSubmit()" (stepBack)="updateStepState(OnboardingStepState.Address)"></app-onboarding-kyc-step>
-      }
-
-      }
-
-
     </div>
   </div>
-
 </div>
