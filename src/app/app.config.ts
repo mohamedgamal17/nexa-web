@@ -12,6 +12,7 @@ import { provideTranslateHttpLoader, TranslateHttpLoader } from '@ngx-translate/
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { errorHandlerInterceptorFn } from './core/interceptors/error-handler.interceptor';
+import { provideCustomers as provideCustomersFeature } from './features/customers/customers.feature';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -55,5 +56,6 @@ export const appConfig: ApplicationConfig = {
 
     provideAuthFeature(),
     provideOnboardingFeature(),
+    provideCustomersFeature(),
   ],
 };
