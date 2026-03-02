@@ -2,88 +2,81 @@ import { Component, computed, effect, input, OnInit, output, signal } from '@ang
 import { FormBuilder, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
-import { AppFormErrors } from '../../../../shared/components/app-form-errors/app-form-errors';
+import { InputError } from '../../../../shared/components/input-error/Input-error';
 import { AddressValidators } from '../../../../shared/validators/address-validators.validator';
 import { COUNTRIES } from '../../../../core/constants/countries.data';
 import { getStatesByCountry } from '../../../../core/constants/states.data';
 import { TranslateModule } from '@ngx-translate/core';
-import { InputMaskDirective } from "primeng/inputmask";
+import { InputMaskDirective } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { Address } from '../../../customers/interfaces/address.interface';
 
 @Component({
   selector: 'app-onbaording-address-step',
   standalone: true,
-  imports: [ReactiveFormsModule, InputTextModule, SelectModule, AppFormErrors, TranslateModule, ButtonModule],
+  imports: [ReactiveFormsModule, InputTextModule, SelectModule, InputError, TranslateModule, ButtonModule],
   templateUrl: './onbaording-address-step.html',
   styleUrl: './onbaording-address-step.scss',
 })
 export class OnbaordingAddressStep implements OnInit {
+  address = input<Address>();
 
+  loading = input(false);
 
-  address = input<Address >()
+  submited = output<{ address: Address }>();
 
-  loading= input(false)
+  stepBack = output<void>();
 
-  submited = output<{address : Address}>()
+  selectedCountry = signal<string | null>(null);
 
-  stepBack = output<void>()
+  selectedState = signal<string | null>(null);
 
-  selectedCountry = signal<string | null>(null)
-
-  selectedState = signal<string | null>(null)
-
-  filteredCountries = COUNTRIES.filter(x => x.code == "US")
+  filteredCountries = COUNTRIES.filter((x) => x.code == 'US');
 
   filteredStates = computed(() => {
     if (this.selectedCountry()) {
-      return getStatesByCountry(this.selectedCountry()!)
+      return getStatesByCountry(this.selectedCountry()!);
     }
-    return []
-  })
+    return [];
+  });
 
-  
-
-  addressForm: FormGroup
+  addressForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    effect(()=> {
-      if(this.address()){
-        this.selectedCountry.set(this.address()!.country)
+    effect(() => {
+      if (this.address()) {
+        this.selectedCountry.set(this.address()!.country);
       }
-    })
+    });
   }
 
   ngOnInit(): void {
     this.addressForm = this.fb.group({
       country: [this.address()?.country, [Validators.required, Validators.maxLength(2)]],
       state: [this.address()?.state, [Validators.required, Validators.maxLength(2)]],
-      city: [this.address()?.city, [Validators.required, Validators.maxLength(50),
-      AddressValidators.cityName(),
-      AddressValidators.noWhitespaceOnly(),]],
+      city: [this.address()?.city, [Validators.required, Validators.maxLength(50), AddressValidators.cityName(), AddressValidators.noWhitespaceOnly()]],
       streetLine: [this.address()?.streetLine, [Validators.required, Validators.maxLength(256)]],
-      postalCode: [this.address()?.postalCode, [Validators.required, Validators.maxLength(10), AddressValidators.postalCode(),]],
-      zipCode: [this.address()?.zipCode, [Validators.required, Validators.maxLength(10), AddressValidators.zipCode()]]
-    })
+      postalCode: [this.address()?.postalCode, [Validators.required, Validators.maxLength(10), AddressValidators.postalCode()]],
+      zipCode: [this.address()?.zipCode, [Validators.required, Validators.maxLength(10), AddressValidators.zipCode()]],
+    });
   }
 
-
-  handleCountryChange(value : any){
-    console.log(value)
-    this.selectedCountry.set(value)
+  handleCountryChange(value: any) {
+    console.log(value);
+    this.selectedCountry.set(value);
   }
 
-  handleSubmit($event : SubmitEvent){
-    $event.preventDefault()
-    this.addressForm.markAllAsTouched()
-    console.log("em")
-    if(this.addressForm.valid){
-      console.log("em")
-      this.submited.emit({address : this.addressForm.value})
+  handleSubmit($event: SubmitEvent) {
+    $event.preventDefault();
+    this.addressForm.markAllAsTouched();
+    console.log('em');
+    if (this.addressForm.valid) {
+      console.log('em');
+      this.submited.emit({ address: this.addressForm.value });
     }
   }
 
-  handleStepBack(){
-    this.stepBack.emit()
+  handleStepBack() {
+    this.stepBack.emit();
   }
 }
