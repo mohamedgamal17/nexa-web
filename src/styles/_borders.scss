@@ -1,0 +1,8 @@
+@use 'tailwindcss';
+
+@theme {
+  --rounded-sm: var(--radius-xl);
+  --rounded-md: var(--radius-2xl);
+  --rounded-lg: var(--radius-3xl);
+  --rounded-xl: var(--radius-4xl);
+}

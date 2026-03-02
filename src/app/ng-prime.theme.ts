@@ -1,8 +1,17 @@
 import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
+import Laura from '@primeuix/themes/lara';
+import Materiel from '@primeuix/themes/material';
 
-export const appThemePreset = definePreset(Aura, {
+export const appThemePreset = definePreset(Laura, {
   semantic: {
+    border: {
+      radius: {
+        sm: 'var(--radius-xl)',
+        md: 'var(--radius-2xl)', // Applies broadly to components like buttons, cards
+        lg: 'var(--radius-3xl)',
+      },
+    },
     primary: {
       50: '{emerald.50}',
       100: '{emerald.100}',
@@ -14,7 +23,7 @@ export const appThemePreset = definePreset(Aura, {
       700: '{emerald.700}',
       800: '{emerald.800}',
       900: '{emerald.900}',
-      950: '{emerald.950}'
+      950: '{emerald.950}',
     },
     colorScheme: {
       light: {
@@ -30,9 +39,9 @@ export const appThemePreset = definePreset(Aura, {
           700: '{slate.700}',
           800: '{slate.800}',
           900: '{slate.900}',
-          950: '{slate.950}'
-        }
+          950: '{slate.950}',
+        },
       },
-    }
-  }
-})
+    },
+  },
+});

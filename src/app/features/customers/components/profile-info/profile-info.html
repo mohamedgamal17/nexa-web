@@ -1,4 +1,4 @@
-<p-card>
+<p-card class="w-full h-full">
   <div class="flex flex-col gap-5">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -7,12 +7,13 @@
       </div>
       <div>
         @if (editProfile()) {
-          <div class="flex items-center gap-3">
-            <p-button icon="pi pi-times" size="small" variant="text" severity="danger" (onClick)="toggleEditProfile()"></p-button>
-            <p-button icon="pi pi-check" size="small" variant="text" severity="primary"></p-button>
-          </div>
+        <div class="flex items-center gap-3">
+          <p-button icon="pi pi-times" size="small" variant="text" severity="danger"
+            (onClick)="toggleEditProfile()"></p-button>
+          <p-button icon="pi pi-check" size="small" variant="text" severity="primary"></p-button>
+        </div>
         } @else {
-          <p-button icon="pi pi-pencil" variant="text" severity="contrast" (onClick)="toggleEditProfile()"></p-button>
+        <p-button icon="pi pi-pencil" variant="text" severity="contrast" (onClick)="toggleEditProfile()"></p-button>
         }
       </div>
     </div>
@@ -21,50 +22,50 @@
         <div class="flex flex-col gap-1">
           <label class="text-sm" for="firstName">First Name</label>
           @if (editProfile()) {
-            <input id="firstName" pInputText [value]="dummy().firstName" />
+          <input id="firstName" pInputText [value]="dummy().firstName" />
           } @else {
-            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-              <p class="text-sm">{{ dummy().firstName }}</p>
-            </div>
+          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+            <p class="text-sm">{{ dummy().firstName }}</p>
+          </div>
           }
         </div>
 
         <div class="flex flex-col gap-1">
           <label class="text-sm" for="lastName">Last Name</label>
           @if (editProfile()) {
-            <input id="lastName" pInputText [value]="dummy().lastName" />
+          <input id="lastName" pInputText [value]="dummy().lastName" />
           } @else {
-            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-              <p class="text-sm">{{ dummy().lastName }}</p>
-            </div>
+          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+            <p class="text-sm">{{ dummy().lastName }}</p>
+          </div>
           }
         </div>
 
         <div class="flex flex-col gap-1">
           <label class="text-sm uppercase" for="birthDate">Birth date</label>
           @if (editProfile()) {
-            <input id="birthDate" pInputText [value]="dummy().birthDate" />
+          <input id="birthDate" pInputText [value]="dummy().birthDate" />
           } @else {
-            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-              <ng-icon name="featherCalendar" />
-              <p class="text-sm">{{ dummy().birthDate | date }}</p>
-            </div>
+          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+            <ng-icon name="featherCalendar" />
+            <p class="text-sm">{{ dummy().birthDate | date }}</p>
+          </div>
           }
         </div>
 
         <div class="flex flex-col gap-1">
           <label class="text-sm uppercase" for="gender">Gender</label>
           @if (editProfile()) {
-            <input id="gender" pInputText [value]="dummy().gender" />
+          <input id="gender" pInputText [value]="dummy().gender" />
           } @else {
-            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-              <p class="text-sm">{{ dummy().gender }}</p>
-            </div>
+          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+            <p class="text-sm">{{ dummy().gender }}</p>
+          </div>
           }
         </div>
       </div>
       @if (editProfile()) {
-        <p-button styleClass="w-full mt-8" severity="primary" size="small" label="Save changes" />
+      <p-button styleClass="w-full mt-8" severity="primary" size="small" label="Save changes" />
       }
     </form>
   </div>
