@@ -13,6 +13,10 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { errorHandlerInterceptorFn } from './core/interceptors/error-handler.interceptor';
 import { provideCustomers as provideCustomersFeature } from './features/customers/customers.feature';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { CUSTOMER_KEY_FEAUTRE, customerReducer } from './features/customers/state/customer.reducer';
+import { CustomerEffect } from './features/customers/state/customer.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -53,9 +57,12 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'en',
       lang: 'en',
     }),
-
     provideAuthFeature(),
     provideOnboardingFeature(),
     provideCustomersFeature(),
+    provideStore({
+      [CUSTOMER_KEY_FEAUTRE]: customerReducer,
+    }),
+    provideEffects([CustomerEffect]),
   ],
 };

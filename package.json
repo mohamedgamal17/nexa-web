@@ -21,6 +21,7 @@
     "@ng-icons/core": "^33.1.0",
     "@ng-icons/feather-icons": "^33.1.0",
     "@ng-icons/heroicons": "^33.1.0",
+    "@ngrx/store": "^21.0.1",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
     "@primeuix/themes": "^2.0.3",
@@ -34,13 +35,16 @@
     "primeng": "^21.1.1",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.2.1",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@ngrx/effects": "^21.0.1"
   },
   "devDependencies": {
     "@angular/build": "^21.2.0",
     "@angular/cli": "^21.2.0",
     "@angular/compiler-cli": "^21.2.0",
     "@angular/localize": "^21.2.0",
+    "@ngrx/effects": "^21.0.1",
+    "@ngrx/store": "^21.0.1",
     "@tailwindcss/typography": "^0.5.19",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
