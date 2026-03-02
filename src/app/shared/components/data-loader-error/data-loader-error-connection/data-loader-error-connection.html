@@ -1,0 +1,14 @@
+<div class="p-8 flex flex-col items-center justfiy-center gap-8">
+  <div class="flex flex-col items-center gap-5">
+    <div class=" flex items-center p-5 rounded-full bg-warning-subtle text-warning text-4xl">
+      <ng-icon name="featherWifiOff" />
+    </div>
+    <div class="text-center space-y-3">
+      <h5>{{'errors.http.connection.title' | translate}}</h5>
+      <p class="text-secondary max-w-lg">{{'errors.http.connection.message' | translate}}</p>
+    </div>
+  </div>
+  <div class="flex w-full flex-col gap-3">
+    <p-button styleClass="flex-1 w-full" label="Try again" icon="pi pi-sync" (onClick)="refresh.emit()" />
+  </div>
+</div>

@@ -1,26 +1,26 @@
 {
-  "toast":{
-    "addressSaved":{
-      "summary":"Address saved.",
-      "message":"Your address has been saved successfully."
+  "toast": {
+    "addressSaved": {
+      "summary": "Address saved.",
+      "message": "Your address has been saved successfully."
     },
-    "emailSaved" :{
-      "summary" :"Email saved.",
-      "message" :"Your email has been saved successfully"
-    },
-
-    "phoneSaved" :{
-      "summary" :"Phone saved.",
-      "message":"Your phone has been saved successfully."
+    "emailSaved": {
+      "summary": "Email saved.",
+      "message": "Your email has been saved successfully"
     },
 
-    "customerInfoSaved" :{
-      "summary" :"Info saved.",
-      "message":"Your info has been saved successfully."
+    "phoneSaved": {
+      "summary": "Phone saved.",
+      "message": "Your phone has been saved successfully."
     },
-    "kycCompleted":{
-      "summary":"Kyc completed.",
-      "message":"Your have submited your kyc verification info the verification process in progress."
+
+    "customerInfoSaved": {
+      "summary": "Info saved.",
+      "message": "Your info has been saved successfully."
+    },
+    "kycCompleted": {
+      "summary": "Kyc completed.",
+      "message": "Your have submited your kyc verification info the verification process in progress."
     }
   },
   "forms": {
@@ -61,9 +61,9 @@
           "label": "State",
           "placeholder": "Select your state"
         },
-        "city":{
-          "label" : "City",
-          "placeholder" :"Enter your city"
+        "city": {
+          "label": "City",
+          "placeholder": "Enter your city"
         },
         "streetLine": {
           "label": "Steet line",
@@ -73,14 +73,28 @@
           "label": "Postal code",
           "placeholder": "Enter your postal code"
         },
-        "zipCode" : {
-          "label" : "Zip code",
-          "placeholder":"Enter your zip code"
+        "zipCode": {
+          "label": "Zip code",
+          "placeholder": "Enter your zip code"
         }
       }
     }
   },
   "errors": {
+    "http": {
+      "connection": {
+        "title": "Connection Lost",
+        "message": "It looks like you're offline or your connection is unstable. Please check your network."
+      },
+      "server": {
+        "title" :"Internal Server Error",
+        "message" : "We're having trouble reaching our servers right now. Our team has been notified."
+      },
+      "notFound":{
+        "title" : "Not Found",
+        "message" :"The resource you're looking for doesn't exist or has been moved."
+      }
+    },
     "validation": {
       "required": "{{field}} is required.",
       "email": "Please enter a valid email address.",
@@ -97,9 +111,9 @@
       "invalidDate": "Invalid date format.",
       "invalidAge": "Please enter a valid age.",
       "minAge": "Minumum age required is {{min}}.",
-      "invalidCityName" :"Please enter a valid city name.",
-      "invalidPostalCode" :"Please enter a valid postal code.",
-      "invalidZipCode" :"Please enter a valid zip code"
+      "invalidCityName": "Please enter a valid city name.",
+      "invalidPostalCode": "Please enter a valid postal code.",
+      "invalidZipCode": "Please enter a valid zip code"
     }
   }
 }

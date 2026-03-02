@@ -11,21 +11,19 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader, TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { errorHandlerInterceptorFn } from './core/interceptors/error-handler.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(
-      withInterceptors([
-        authHttpInterceptorFn
-      ])),
+    provideHttpClient(withInterceptors([errorHandlerInterceptorFn, authHttpInterceptorFn])),
     provideAuth0({
       domain: environemnt.auth0.domain,
       clientId: environemnt.auth0.clientId,
       authorizationParams: {
         redirect_uri: window.location.origin + '/',
-        audience: environemnt.auth0.audience
+        audience: environemnt.auth0.audience,
       },
       httpInterceptor: {
         allowedList: [
@@ -33,30 +31,29 @@ export const appConfig: ApplicationConfig = {
             uri: `${environemnt.apiUrl}/*`,
             tokenOptions: {
               authorizationParams: {
-                audience: environemnt.auth0.audience
-              }
-            }
-          }
-        ]
-      }
-
+                audience: environemnt.auth0.audience,
+              },
+            },
+          },
+        ],
+      },
     }),
     providePrimeNG({
       theme: {
-        preset: appThemePreset
-      }
+        preset: appThemePreset,
+      },
     }),
     provideHttpClient(),
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: '/assets/i18n/',
-        suffix: '.json'
+        suffix: '.json',
       }),
       fallbackLang: 'en',
-      lang: 'en'
+      lang: 'en',
     }),
 
     provideAuthFeature(),
-    provideOnboardingFeature()
-  ]
+    provideOnboardingFeature(),
+  ],
 };

@@ -1,0 +1,21 @@
+@if (error()) {
+  <div class="min-h-screen flex flex-col">
+    <div class="flex-1 flex items-center justify-center">
+      <div class="max-w-md">
+        <p-card>
+          @switch (error()?.type) {
+            @case ('connection') {
+              <app-data-loader-error-connection (refresh)="handleRefresh()"></app-data-loader-error-connection>
+            }
+            @case ('server') {
+              <app-data-loader-error-server-error (back)="handleGoBack()" (refresh)="handleRefresh()"></app-data-loader-error-server-error>
+            }
+            @case ('not-found') {
+              <app-data-loader-error-not-found [error]="error()" (back)="handleGoBack()"></app-data-loader-error-not-found>
+            }
+          }
+        </p-card>
+      </div>
+    </div>
+  </div>
+}
