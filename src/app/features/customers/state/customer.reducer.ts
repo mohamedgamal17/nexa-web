@@ -45,4 +45,9 @@ export const customerReducer = createReducer(
     isLoading: false,
     error: error,
   })),
+
+  on(customerActions.updateCustomer, (state, { customer }) => ({
+    ...state,
+    customer,
+  })),
 );

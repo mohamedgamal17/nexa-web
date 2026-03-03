@@ -8,5 +8,6 @@ export const customerActions = createActionGroup({
     'Load Customer': emptyProps(),
     'Load Customer Succeeded': props<{ customer: Customer | null }>(),
     'Load Customer Failure': props<{ error: any }>(),
+    'Update Customer': props<{ customer: Customer }>(),
   },
 });
