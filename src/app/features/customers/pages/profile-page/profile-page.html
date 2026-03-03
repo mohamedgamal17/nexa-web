@@ -16,7 +16,7 @@
         </div>
         <div class="lg:col-span-8 grid grid-cols-1 gap-5">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <app-profile-info />
+            <app-profile-info [info]="customer()!.info" [isSubmiting]="isSubmitingInfo()" (submited)="handleInfoSubmit($event)" />
             <app-profile-address />
           </div>
           <div>

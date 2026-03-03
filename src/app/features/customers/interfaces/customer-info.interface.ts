@@ -1,8 +1,8 @@
-import { Gender } from "../enums/gender.enum";
+import { Gender } from '../enums/gender.enum';
 
-export interface CustomerInfo{
-  firstName : string,
-  lastName : string,
-  Gender : Gender ,
-  bithDate : Date
+export interface CustomerInfo {
+  firstName: string;
+  lastName: string;
+  gender: Gender;
+  birthDate: string;
 }

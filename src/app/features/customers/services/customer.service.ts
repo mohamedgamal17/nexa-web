@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Customer } from '../interfaces/customer.interface';
 import { environemnt } from '../../../../environments/environemnt';
+import { CustomerInfo } from '../interfaces/customer-info.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +26,9 @@ export class CustomerService {
 
   updatePhone(req: { phoneNumber: string }) {
     return this.httpClient.post<Customer>(this.apiUrl + '/phone', req);
+  }
+
+  updateInfo(req: CustomerInfo) {
+    return this.httpClient.post<Customer>(this.apiUrl + '/info', req);
   }
 }

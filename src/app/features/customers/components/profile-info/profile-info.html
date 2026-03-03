@@ -1,72 +1,78 @@
 <p-card class="w-full h-full">
-  <div class="flex flex-col gap-5">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <ng-icon class="text-secondary" name="heroUserCircle" />
-        <h6 class="text-secondary text-sm uppercase font-medium">Profile info</h6>
-      </div>
-      <div>
-        @if (editProfile()) {
+  <form [formGroup]="infoForm" (submit)="handleSubmit($event)">
+    <div class="flex flex-col gap-5">
+      <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <p-button icon="pi pi-times" size="small" variant="text" severity="danger"
-            (onClick)="toggleEditProfile()"></p-button>
-          <p-button icon="pi pi-check" size="small" variant="text" severity="primary"></p-button>
+          <ng-icon class="text-secondary" name="heroUserCircle" />
+          <h6 class="text-secondary text-sm uppercase font-medium">Profile info</h6>
         </div>
-        } @else {
-        <p-button icon="pi pi-pencil" variant="text" severity="contrast" (onClick)="toggleEditProfile()"></p-button>
-        }
-      </div>
-    </div>
-    <form>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-6">
-        <div class="flex flex-col gap-1">
-          <label class="text-sm" for="firstName">First Name</label>
+        <div>
           @if (editProfile()) {
-          <input id="firstName" pInputText [value]="dummy().firstName" />
+            <div class="flex items-center gap-3">
+              <p-button icon="pi pi-times" size="small" variant="text" [disabled]="isSubmiting()" severity="danger" (onClick)="toggleEditProfile()"></p-button>
+              <p-button icon="pi pi-check" size="small" variant="text" [loading]="isSubmiting()" type="'submit'" severity="primary"></p-button>
+            </div>
           } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ dummy().firstName }}</p>
-          </div>
-          }
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label class="text-sm" for="lastName">Last Name</label>
-          @if (editProfile()) {
-          <input id="lastName" pInputText [value]="dummy().lastName" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ dummy().lastName }}</p>
-          </div>
-          }
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label class="text-sm uppercase" for="birthDate">Birth date</label>
-          @if (editProfile()) {
-          <input id="birthDate" pInputText [value]="dummy().birthDate" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <ng-icon name="featherCalendar" />
-            <p class="text-sm">{{ dummy().birthDate | date }}</p>
-          </div>
-          }
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label class="text-sm uppercase" for="gender">Gender</label>
-          @if (editProfile()) {
-          <input id="gender" pInputText [value]="dummy().gender" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ dummy().gender }}</p>
-          </div>
+            <p-button icon="pi pi-pencil" variant="text" severity="contrast" (onClick)="toggleEditProfile()"></p-button>
           }
         </div>
       </div>
+
+      <div class="grid grid-cols-1 gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-6">
+          <div class="flex flex-col gap-1">
+            <label class="text-sm" for="firstName">{{ 'forms.customer.profile.firstName.label' | translate }}</label>
+            @if (editProfile()) {
+              <input id="firstName" pInputText formControlName="firstName" />
+              <app-input-error [control]="infoForm.get('firstName')" fieldKey="forms.customer.profile.firstName.label" />
+            } @else {
+              <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+                <p class="text-sm">{{ info()?.firstName }}</p>
+              </div>
+            }
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label class="text-sm" for="lastName">{{ 'forms.customer.profile.lastName.label' | translate }}</label>
+            @if (editProfile()) {
+              <input id="lastName" pInputText formControlName="lastName" />
+              <app-input-error [control]="infoForm.get('lastName')" fieldKey="forms.customer.profile.lastName.label" />
+            } @else {
+              <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+                <p class="text-sm">{{ info()?.lastName }}</p>
+              </div>
+            }
+          </div>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-sm uppercase" for="birthDate">{{ 'forms.customer.profile.birthDate.label' | translate }}</label>
+          @if (editProfile()) {
+            <p-date-picker id="birthDate" formControlName="birthDate" />
+            <app-input-error [control]="infoForm.get('birthDate')" fieldKey="forms.customer.profile.birthDate.label" />
+          } @else {
+            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+              <ng-icon name="featherCalendar" />
+              <p class="text-sm">{{ info()?.birthDate | date }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-sm uppercase" for="gender">{{ 'forms.customer.profile.gender.label' | translate }}</label>
+          @if (editProfile()) {
+            <p-select [options]="genderSelect" optionLabel="label" optionValue="value" formControlName="gender" />
+            <app-input-error [control]="infoForm.get('gender')" fieldKey="forms.customer.profile.gender.label" />
+          } @else {
+            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+              <p class="text-sm">{{ getGenderLabel(info()?.gender ?? 0) }}</p>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-6"></div>
       @if (editProfile()) {
-      <p-button styleClass="w-full mt-8" severity="primary" size="small" label="Save changes" />
+        <p-button styleClass="w-full mt-8" [loading]="isSubmiting()" severity="primary" size="small" type="submit" label="Save changes" />
       }
-    </form>
-  </div>
+    </div>
+  </form>
 </p-card>

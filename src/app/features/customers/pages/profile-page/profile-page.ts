@@ -17,6 +17,7 @@ import { CustomerService } from '../../services/customer.service';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastModule } from 'primeng/toast';
+import { CustomerInfo } from '../../interfaces/customer-info.interface';
 
 @Component({
   selector: 'app-profile-page',
@@ -37,6 +38,7 @@ export class ProfilePage implements OnInit {
 
   isSubmitingPhone = signal(false);
   isSubmitingEmail = signal(false);
+  isSubmitingInfo = signal(false);
 
   constructor() {}
   ngOnInit(): void {
@@ -92,6 +94,29 @@ export class ProfilePage implements OnInit {
           severity: 'error',
         });
         this.isSubmitingPhone.set(false);
+      },
+    });
+  }
+
+  handleInfoSubmit($event: { info: CustomerInfo }) {
+    this.isSubmitingInfo.set(true);
+    this.customerService.updateInfo($event.info).subscribe({
+      next: (value) => {
+        this.messageService.add({
+          summary: this.translateSevice.instant('toast.customerInfoSaved.summary'),
+          detail: this.translateSevice.instant('toast.customerInfoSaved.message'),
+          severity: 'success',
+        });
+        this.store.dispatch(customerActions.updateCustomer({ customer: value }));
+        this.isSubmitingInfo.set(false);
+      },
+      error: (err: ErrorModel) => {
+        this.messageService.add({
+          summary: err.title,
+          detail: err.message,
+          severity: 'error',
+        });
+        this.isSubmitingInfo.set(false);
       },
     });
   }

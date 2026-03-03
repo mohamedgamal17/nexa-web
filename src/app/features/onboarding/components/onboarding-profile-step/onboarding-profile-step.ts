@@ -40,8 +40,8 @@ export class OnboardingProfileStep implements OnInit {
     this.profileFormGroup = this.fb.group({
       firstName: [this.info()?.firstName, [Validators.required, Validators.max(256), Validators.min(2)]],
       lastName: [this.info()?.lastName, [Validators.required, Validators.max(256), Validators.min(2)]],
-      birthDate: [this.info()?.bithDate, [Validators.required, CustomValidator.verifyDate(), CustomValidator.verifyAge(), CustomValidator.minAge(18)]],
-      gender: [this.info()?.Gender ?? Gender.Male, [Validators.required, CustomValidator.enumValidator(Gender)]],
+      birthDate: [this.info()?.birthDate, [Validators.required, CustomValidator.verifyDate(), CustomValidator.verifyAge(), CustomValidator.minAge(18)]],
+      gender: [this.info()?.gender ?? Gender.Male, [Validators.required, CustomValidator.enumValidator(Gender)]],
     });
   }
 
