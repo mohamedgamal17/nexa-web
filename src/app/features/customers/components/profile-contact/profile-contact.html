@@ -1,51 +1,54 @@
 <p-card>
   <div class="flex flex-col gap-5">
     <h6 class="text-secondary text-sm uppercase font-medium">Security & Contact</h6>
-    <form>
+    <form (submit)="handleEmailSumbit($event)" [formGroup]="emailForm">
       <div class="flex flex-col gap-1.5">
         <div class="flex items-center justify-between">
-          <label class="uppercase text-secondary text-sm">Email Address</label>
+          <label class="uppercase text-secondary text-sm">{{ 'forms.customer.email.label' | translate }}</label>
           @if (editEmail()) {
             <div class="flex items-center gap-3">
-              <p-button icon="pi pi-check" variant="text" severity="primary"></p-button>
-              <p-button icon="pi pi-times" variant="text" severity="danger" (onClick)="toggleEditEmail()"></p-button>
+              <p-button icon="pi pi-check" variant="text" severity="primary" type="submit" [loading]="emailSubmiting()"></p-button>
+              <p-button icon="pi pi-times" variant="text" severity="danger" (onClick)="toggleEditEmail()" [disabled]="emailSubmiting()"></p-button>
             </div>
           } @else {
             <p-button icon="pi pi-pencil" variant="text" severity="contrast" (onClick)="toggleEditEmail()"></p-button>
           }
         </div>
         @if (editEmail()) {
-          <input pInputText id="email" [value]="dummy().email" />
-          <p-button label="Save email address" size="small" styleClass="w-full mt-3" />
+          <input pInputText id="email" formControlName="email" [placeholder]="'forms.customer.email.label' | translate" />
+          <app-input-error [fieldKey]="'forms.customer.email.label'" [control]="emailForm.get('email')!" />
+          <p-button label="Save email address" size="small" styleClass="w-full mt-3" type="submit" [loading]="emailSubmiting()" />
         } @else {
           <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
             <ng-icon name="featherMail" />
-            <p class="text-sm">{{ dummy().email }}</p>
+            <p class="text-sm">{{ contact()?.email }}</p>
           </div>
         }
       </div>
     </form>
 
-    <form>
+    <form (submit)="handlePhoneSubmit($event)" [formGroup]="phoneForm">
       <div class="flex flex-col gap-1.5">
         <div class="flex items-center justify-between">
-          <label for="phone" class="uppercase text-secondary text-sm">Phone number</label>
+          <label for="phone" class="uppercase text-secondary text-sm">{{ 'customer.phone.label' | translate }}</label>
           @if (editPhone()) {
             <div class="flex items-center gap-3">
-              <p-button icon="pi pi-check" variant="text" severity="primary"></p-button>
-              <p-button icon="pi pi-times" variant="text" severity="danger" (onClick)="toggleEditPhone()"></p-button>
+              <p-button icon="pi pi-check" variant="text" severity="primary" type="sumbit" [loading]="phoneSubmiting()"></p-button>
+              <p-button icon="pi pi-times" variant="text" severity="danger" [disabled]="phoneSubmiting()" (onClick)="toggleEditPhone()"></p-button>
             </div>
           } @else {
             <p-button icon="pi pi-pencil" variant="text" severity="contrast" (onClick)="toggleEditPhone()"></p-button>
           }
         </div>
         @if (editPhone()) {
-          <input pInputText id="phone" [value]="dummy().phone" />
-          <p-button label="Save phone number" styleClass="w-full mt-3" />
+          <app-phone-input [label]="'customer.phoneNumber.label' | translate" [placeholder]="'customer.phoneNumber.placeHolder' | translate" formControlName="phoneNumber" />
+
+          <app-input-error [control]="phoneForm.get('phoneNumber')" [fieldKey]="'customer.phoneNumber.label'" />
+          <p-button label="Save phone number" styleClass="w-full mt-3" type="sumbit" [loading]="phoneSubmiting()" />
         } @else {
           <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
             <ng-icon name="heroPhone" />
-            <p class="text-sm">{{ dummy().phone }}</p>
+            <p class="text-sm">{{ contact()?.phoneNumber }}</p>
           </div>
         }
       </div>
