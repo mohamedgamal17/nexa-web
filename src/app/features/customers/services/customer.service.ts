@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Customer } from '../interfaces/customer.interface';
 import { environemnt } from '../../../../environments/environemnt';
 import { CustomerInfo } from '../interfaces/customer-info.interface';
+import { Address } from '../interfaces/address.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +31,9 @@ export class CustomerService {
 
   updateInfo(req: CustomerInfo) {
     return this.httpClient.post<Customer>(this.apiUrl + '/info', req);
+  }
+
+  updateAddress(req: Address) {
+    return this.httpClient.post<Customer>(this.apiUrl + '/address', req);
   }
 }

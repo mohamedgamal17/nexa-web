@@ -1,92 +1,98 @@
 <p-card>
-  <div class="flex flex-col gap-5">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <ng-icon class="text-secondary" name="featherMapPin" />
-        <h6 class="text-secondary text-sm uppercase font-medium">Address</h6>
-      </div>
-      <div>
-        @if (editAddress()) {
+  <form [formGroup]="addressForm" (submit)="handleSubmit($event)">
+    <div class="flex flex-col gap-5">
+      <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <p-button icon="pi pi-times" size="small" variant="text" severity="danger"
-            (onClick)="toggleEditAddress()"></p-button>
-          <p-button icon="pi pi-check" size="small" variant="text" severity="primary"></p-button>
+          <ng-icon class="text-secondary" name="featherMapPin" />
+          <h6 class="text-secondary text-sm uppercase font-medium">Address</h6>
         </div>
-        } @else {
-        <p-button icon="pi pi-pencil" variant="text" severity="contrast" (onClick)="toggleEditAddress()"></p-button>
+        <div>
+          @if (editAddress()) {
+            <div class="flex items-center gap-3">
+              <p-button icon="pi pi-times" size="small" variant="text" severity="danger" [disabled]="isSubmiting()" (onClick)="toggleEditAddress()"></p-button>
+              <p-button icon="pi pi-check" size="small" variant="text" severity="primary" type="submit" [loading]="isSubmiting()"></p-button>
+            </div>
+          } @else {
+            <p-button icon="pi pi-pencil" variant="text" severity="contrast" (onClick)="toggleEditAddress()"></p-button>
+          }
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-6">
+        <div class="flex flex-col gap-1">
+          <label class="text-sm" for="country">{{ 'forms.customer.address.country.label' | translate }}</label>
+          @if (editAddress()) {
+            <p-select id="country" [options]="countries" optionLabel="name" optionValue="code" formControlName="country" (onChange)="handleCountryChange($event)" />
+            <app-input-error [control]="addressForm.get('country')" [fieldKey]="'forms.customer.address.country.label'" />
+          } @else {
+            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+              <p class="text-sm">{{ currentCountry()?.name }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-sm" for="state">{{ 'forms.customer.address.state.label' | translate }}</label>
+          @if (editAddress()) {
+            <p-select id="state" formControlName="state" [options]="states()" optionLabel="name" optionValue="code" />
+            <app-input-error [control]="addressForm.get('state')" [fieldKey]="'forms.customer.address.state.label'" />
+          } @else {
+            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+              <p class="text-sm">{{ currentState()?.name }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="flex flex-col col-span-2 gap-1">
+          <label class="text-sm uppercase" for="city">{{ 'forms.customer.address.city.label' | translate }}</label>
+          @if (editAddress()) {
+            <input id="city" pInputText formControlName="city" />
+            <app-input-error [control]="addressForm.get('city')" [fieldKey]="'forms.customer.address.city.label'" />
+          } @else {
+            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+              <p class="text-sm">{{ address()?.city }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="flex flex-col col-span-2 gap-1">
+          <label class="text-sm uppercase" for="streetLine">{{ 'forms.customer.address.streetLine.label' | translate }}</label>
+          @if (editAddress()) {
+            <input id="streetLine" pInputText formControlName="streetLine" />
+            <app-input-error [control]="addressForm.get('streetLine')" [fieldKey]="'forms.customer.address.streetLine.label'" />
+          } @else {
+            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+              <p class="text-sm">{{ address()?.streetLine }}</p>
+            </div>
+          }
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-sm uppercase" for="postalCode">{{ 'forms.customer.address.postalCode.label' | translate }}</label>
+          @if (editAddress()) {
+            <input id="postalCode" pInputText formControlName="postalCode" />
+            <app-input-error [control]="addressForm.get('postalCode')" [fieldKey]="'forms.customer.address.postalCode.label'" />
+          } @else {
+            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+              <p class="text-sm">{{ address()?.postalCode }}</p>
+            </div>
+          }
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-sm uppercase" for="zipCode">{{ 'forms.customer.address.zipCode.label' | translate }}</label>
+          @if (editAddress()) {
+            <input id="zipCode" pInputText formControlName="zipCode" />
+            <app-input-error [control]="addressForm.get('zipCode')" [fieldKey]="'forms.customer.address.zipCode.label'" />
+          } @else {
+            <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
+              <p class="text-sm">{{ address()?.zipCode }}</p>
+            </div>
+          }
+        </div>
+
+        @if (editAddress()) {
+          <p-button styleClass="w-full mt-8" [loading]="isSubmiting()" type="submit" severity="primary" size="small" label="Save changes" />
         }
       </div>
     </div>
-    <form>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-6">
-        <div class="flex flex-col gap-1">
-          <label class="text-sm" for="firstName">Country</label>
-          @if (editAddress()) {
-          <p-select [options]="countries" optionLabel="name" optionValue="code" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ currentCountry()?.name }}</p>
-          </div>
-          }
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label class="text-sm" for="lastName">State</label>
-          @if (editAddress()) {
-          <p-select [options]="states()" optionLabel="name" optionValue="code" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ currentState()?.name }}</p>
-          </div>
-          }
-        </div>
-
-        <div class="flex flex-col col-span-2 gap-1">
-          <label class="text-sm uppercase" for="birthDate">City</label>
-          @if (editAddress()) {
-          <input id="birthDate" pInputText [value]="dummy().city" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ dummy().city }}</p>
-          </div>
-          }
-        </div>
-
-        <div class="flex flex-col col-span-2 gap-1">
-          <label class="text-sm uppercase" for="birthDate">Street line</label>
-          @if (editAddress()) {
-          <input id="birthDate" pInputText [value]="dummy().streetLine" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ dummy().streetLine }}</p>
-          </div>
-          }
-        </div>
-        <div class="flex flex-col gap-1">
-          <label class="text-sm uppercase" for="birthDate">Postal code</label>
-          @if (editAddress()) {
-          <input id="birthDate" pInputText [value]="dummy().postalCode" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ dummy().postalCode }}</p>
-          </div>
-          }
-        </div>
-        <div class="flex flex-col gap-1">
-          <label class="text-sm uppercase" for="birthDate">Zip code</label>
-          @if (editAddress()) {
-          <input id="birthDate" pInputText [value]="dummy().zipCode" />
-          } @else {
-          <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
-            <p class="text-sm">{{ dummy().zipCode }}</p>
-          </div>
-          }
-        </div>
-
-        @if (editAddress()) {
-        <p-button styleClass="w-full mt-8" severity="primary" size="small" label="Save changes" />
-        }
-      </div>
-    </form>
-  </div>
+  </form>
 </p-card>
