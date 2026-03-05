@@ -1,6 +1,17 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ApiProblemDetails } from '../models/api-problem-details.interface';
 import { ErrorModel } from '../models/error-model.interface';
+
+export function mapObjectToHttpParam(req: Object) {
+  var params = new HttpParams();
+
+  if (isObject(req)) {
+    for (const [key, value] of Object.entries(req)) {
+      params = params.set(key, value);
+    }
+  }
+  return params;
+}
 
 export function mapToErrorModel(error: HttpErrorResponse): ErrorModel {
   if (error.status === 0) {
@@ -52,3 +63,7 @@ export function mapToErrorModel(error: HttpErrorResponse): ErrorModel {
     status: error.status,
   };
 }
+
+export const isObject = (value: any) => {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+};
