@@ -17,6 +17,7 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { CUSTOMER_KEY_FEAUTRE, customerReducer } from './features/customers/state/customer.reducer';
 import { CustomerEffect } from './features/customers/state/customer.effect';
+import { provideLanding } from './features/landing/landing.feature';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -60,6 +61,7 @@ export const appConfig: ApplicationConfig = {
     provideAuthFeature(),
     provideOnboardingFeature(),
     provideCustomersFeature(),
+    provideLanding(),
     provideStore({
       [CUSTOMER_KEY_FEAUTRE]: customerReducer,
     }),

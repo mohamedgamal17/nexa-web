@@ -21,6 +21,7 @@
     "@ng-icons/core": "^33.1.0",
     "@ng-icons/feather-icons": "^33.1.0",
     "@ng-icons/heroicons": "^33.1.0",
+    "@ngrx/effects": "^21.0.1",
     "@ngrx/store": "^21.0.1",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
@@ -29,14 +30,14 @@
     "@types/google-libphonenumber": "^7.4.30",
     "google-libphonenumber": "^3.2.44",
     "libphonenumber-js": "^1.12.38",
+    "lucide-angular": "^0.577.0",
     "ngx-intl-tel-input": "^17.0.0",
     "postcss": "^8.5.6",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.1",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.2.1",
-    "tslib": "^2.3.0",
-    "@ngrx/effects": "^21.0.1"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@angular/build": "^21.2.0",
