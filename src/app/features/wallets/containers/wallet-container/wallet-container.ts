@@ -6,15 +6,16 @@ import { selectIsWalletStateLoaded, selectWalletPaging, walletState } from '../.
 import { walletActions } from '../../state/wallet.actions';
 import { ErrorModel } from '../../../../core/models/error-model.interface';
 import { PagingState } from '../../../../core/models/paging-state.interface';
-import { WalletCard } from '../../component/wallet-card/wallet-card';
+import { WalletCard } from '../../components/wallet-card/wallet-card';
 import { DataLoaderError } from '../../../../shared/components/data-loader-error/data-loader-error';
 import { provideIcons } from '@ng-icons/core';
 import { heroExclamationCircle } from '@ng-icons/heroicons/outline';
 import { AlertError } from '../../../../shared/components/alert-error/alert-error';
+import { WalletList } from '../../components/wallet-list/wallet-list';
 
 @Component({
   selector: 'app-wallet-container',
-  imports: [WalletCard, DataLoaderError, AlertError],
+  imports: [WalletCard, DataLoaderError, AlertError, WalletList],
   templateUrl: './wallet-container.html',
   styleUrl: './wallet-container.scss',
   viewProviders: [provideIcons({ heroExclamationCircle })],

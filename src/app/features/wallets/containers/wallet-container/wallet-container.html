@@ -1,4 +1,4 @@
-<div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-5">
   @if (hasError()) {
     <div class="col-span-12">
       <div class="flex items-center justify-center w-full">
@@ -8,7 +8,9 @@
       </div>
     </div>
   } @else {
-    <div class="sm:col-span-4"></div>
-    <app-wallet-card class="sm:col-span-8" [wallet]="activeWallet() ?? undefined" [loading]="isLoading()" />
+    <div class="sm:col-span-3">
+      <app-wallet-list [wallets]="wallets()" [activeWallet]="activeWallet() ?? undefined" />
+    </div>
+    <app-wallet-card class="sm:col-span-9" [wallet]="activeWallet() ?? undefined" [loading]="isLoading()" />
   }
 </div>

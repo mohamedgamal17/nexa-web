@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { WalletCard } from '../../../wallets/component/wallet-card/wallet-card';
+import { WalletCard } from '../../../wallets/components/wallet-card/wallet-card';
 import { WalletContainer } from '../../../wallets/containers/wallet-container/wallet-container';
 
 @Component({

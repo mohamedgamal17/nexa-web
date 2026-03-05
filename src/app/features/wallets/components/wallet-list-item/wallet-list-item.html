@@ -1,0 +1,20 @@
+<div class="p-3 rounded-2xl border transition-all cursor-pointer" [ngClass]="active() ? 'border-primary-elevated bg-primary-subtle' : 'bg-surface border-secondary-subtle hover:border-secondary-elevated'">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="p-3 rounded-lg flex items-center bg-primary text-primary-foreground">
+        <lucide-icon [img]="WalletIcon" [size]="20" [strokeWidth]="2"></lucide-icon>
+      </div>
+      <div class="grid grid-cols-1 gap-1 text-sm">
+        <div class="text-secondary">
+          <h6 class="text-secondary text-sm">Wallet</h6>
+          <p class="text-secondary text-sm">{{ wallet()?.number | walletNumber }}</p>
+        </div>
+
+        <h6 class="text-sm">{{ wallet()?.balance | currency }}</h6>
+      </div>
+    </div>
+    <div class="p-1 bg-primary text-primary-foreground flex items-center rounded-full">
+      <ng-icon name="hero-check" />
+    </div>
+  </div>
+</div>
