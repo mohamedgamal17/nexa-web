@@ -1,0 +1,14 @@
+<p-card>
+  <div class="flex flex-col sm:flex-row sm:justify-between w-full gap-5 sm:items-center">
+    <div class="flex sm:flex-row l gap-5">
+      <div class="p-3 flex items-center bg-danger-subtle text-danger rounded-full text-4xl">
+        <ng-icon name="heroExclamationCircle" />
+      </div>
+      <div class="grid grid-cols-1 gap-3">
+        <h6>{{ error()!.title }}</h6>
+        <p class="text-secondary">{{ error()!.message }}</p>
+      </div>
+    </div>
+    <p-button severity="danger" label="Retry Update" icon="pi pi-sync" ]></p-button>
+  </div>
+</p-card>
