@@ -1,5 +1,11 @@
 <div class="grid grid-cols-1 gap-3">
-  @for (wallet of wallets(); track $index) {
-    <app-wallet-list-item [wallet]="wallet" [active]="wallet.id == activeWallet()?.id" />
+  @if (loading()) {
+    @for (skeleton of skeletonSize; track $index) {
+      <app-wallet-list-item-skeleton />
+    }
+  } @else {
+    @for (wallet of wallets(); track $index) {
+      <app-wallet-list-item [wallet]="wallet" [active]="wallet.id == activeWallet()?.id" />
+    }
   }
 </div>

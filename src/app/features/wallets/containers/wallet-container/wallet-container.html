@@ -9,7 +9,7 @@
     </div>
   } @else {
     <div class="sm:col-span-3">
-      <app-wallet-list [wallets]="wallets()" [activeWallet]="activeWallet() ?? undefined" />
+      <app-wallet-list [loading]="isLoading()" [wallets]="wallets()" [activeWallet]="activeWallet() ?? undefined" />
     </div>
     <app-wallet-card class="sm:col-span-9" [wallet]="activeWallet() ?? undefined" [loading]="isLoading()" />
   }

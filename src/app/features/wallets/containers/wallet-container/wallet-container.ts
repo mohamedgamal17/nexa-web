@@ -35,11 +35,12 @@ export class WalletContainer implements OnInit {
   pagingLength = 10;
 
   constructor() {
-    this.subscribeToWalletState();
     this.loadWalletsIfNotLoaded();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscribeToWalletState();
+  }
 
   private loadWalletsIfNotLoaded() {
     effect(() => {
