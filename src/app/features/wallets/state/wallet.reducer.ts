@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { Wallet } from '../interfaces/wallet.interface';
 import { walletActions } from './wallet.actions';
 import { PagingState } from '../../../core/models/paging-state.interface';
+import { ErrorModel } from '../../../core/models/error-model.interface';
 
 export interface WalletState {
   loaded: boolean;
@@ -9,6 +10,7 @@ export interface WalletState {
   wallets: Wallet[];
   paging: PagingState;
   isLoading: boolean;
+  error: ErrorModel | null;
 }
 
 export const WALLET_FEATURE_KEY = 'wallets';
@@ -18,6 +20,7 @@ const initialState: WalletState = {
   activeWallet: null,
   wallets: [],
   isLoading: false,
+  error: null,
   paging: {
     skip: 0,
     length: 0,
