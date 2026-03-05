@@ -10,7 +10,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <div class="lg:col-span-4">
           <div class="flex flex-col gap-5">
-            <app-profile-hero />
+            <app-profile-hero [customer]="customer()!" />
             <app-profile-contact [contact]="extractContact()" [phoneSubmiting]="isSubmitingPhone()" [emailSubmiting]="isSubmitingEmail()" (emailSubmited)="handleEmailSubmit($event)" (phoneSubmited)="handlePhoneSubmit($event)" />
           </div>
         </div>

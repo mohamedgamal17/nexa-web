@@ -15,7 +15,9 @@
         </div>
       </div>
 
-      <div><h5>John Doe</h5></div>
+      <div>
+        <h5>{{ customer()?.info!.firstName + ' ' + customer()?.info!.lastName }}</h5>
+      </div>
     </div>
     <div class="flex flex-col gap-3">
       <div class="p-3 bg-secondary-subtle rounded-lg flex justify-between items-center">
@@ -25,10 +27,10 @@
           </div>
           <h6 class="text-sm">Account Status</h6>
         </div>
-        <div class="px-3 py-0.5 rounded bg-primary-subtle text-primary">
+        <div class="px-3 py-0.5 rounded bg-primary-subtle text-primary" [ngClass]="getBadgeStateClass()">
           <div class="flex gap-3 items-center">
-            <div class="w-1.5 h-1.5 bg-primary rounded animate-pulse"></div>
-            <div class="text-sm">Active</div>
+            <div class="w-1.5 h-1.5 bg-primary rounded animate-pulse" [ngClass]="getDotStateClass()"></div>
+            <div class="text-sm">{{ getAccountStatus() }}</div>
           </div>
         </div>
       </div>
