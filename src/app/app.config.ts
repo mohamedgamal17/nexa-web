@@ -18,6 +18,8 @@ import { provideEffects } from '@ngrx/effects';
 import { CUSTOMER_KEY_FEAUTRE, customerReducer } from './features/customers/state/customer.reducer';
 import { CustomerEffect } from './features/customers/state/customer.effect';
 import { provideLanding } from './features/landing/landing.feature';
+import { WALLET_FEATURE_KEY, walletReducer } from './features/wallets/state/wallet.reducer';
+import { WalletEffects } from './features/wallets/state/wallet.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -64,7 +66,8 @@ export const appConfig: ApplicationConfig = {
     provideLanding(),
     provideStore({
       [CUSTOMER_KEY_FEAUTRE]: customerReducer,
+      [WALLET_FEATURE_KEY]: walletReducer,
     }),
-    provideEffects([CustomerEffect]),
+    provideEffects([CustomerEffect, WalletEffects]),
   ],
 };
