@@ -1,6 +1,6 @@
 <p-card class="w-full h-full">
   <div class="p-3">
-    <div class="grid grid-cols-1 gap-5">
+    <div class="grid grid-cols-1 gap-8">
       <div class="flex justify-between">
         <div class="grid grid-cols gap-1">
           <div class="flex items-center gap-3 text-secondary">
@@ -9,75 +9,80 @@
           </div>
           <p class="text-secondary text-sm">Manage your KYC documents and identity proof.</p>
         </div>
+        @if (hasDocument()) {
+          <div>
+            <p-button size="small" icon="pi pi-user-edit" label="Update Document" [loading]="loading()" (onClick)="handleSubmit()" />
+          </div>
+        }
       </div>
-      @if (!hasDocument()) {
-      <div class="flex flex-col sm:flex-row  gap-5">
-        <div class="flex flex-col gap-3 flex-1">
-          <p class="text-secondary text-sm">Active Credentials</p>
-          <div class="px-3 py-5 bg-primary-subtle border-1 border-primary-elevated rounded-3xl">
-            <div class="w-full flex  justify-between items-center">
-              <div class="flex gap-5 flex-row items-center">
-                <div class="bg-primary text-primary-foreground p-3 items-center rounded-lg flex">
-                  <ng-icon class="text-xl" name="featherFileText" />
+      @if (hasDocument()) {
+        <div class="flex flex-col sm:flex-row gap-5">
+          <div class="flex flex-col gap-3 flex-1">
+            <p class="text-secondary uppercase">{{ getDocumentTypeName(document()!.type) }}</p>
+            <div class="px-3 py-5 bg-primary-subtle border-1 border-primary-elevated rounded-3xl">
+              <div class="w-full flex justify-between items-center">
+                <div class="flex gap-5 flex-row items-center">
+                  <div class="bg-primary text-primary-foreground p-3 items-center rounded-lg flex">
+                    <ng-icon class="text-xl" name="featherFileText" />
+                  </div>
+                  <div class="flex flex-col text-sm">
+                    <h6 class="text-text">{{ getDocumentTypeName(document()!.type) }}</h6>
+                    @if (document()?.issuingCountry) {
+                      <ng-container>
+                        <p class="text-secondary">
+                          Issued by <span class="text-text"> {{ getDocumentIssuedCountry(document()!.issuingCountry)?.name }} </span>
+                        </p>
+                      </ng-container>
+                    }
+                  </div>
                 </div>
-                <div class="flex flex-col  text-sm">
-                  <h6 class="text-text">{{dummy().type}}</h6>
-                  <p class="text-secondary">Issued by {{dummy().issuedCountry}}</p>
-                </div>
-              </div>
-              <div>
-                <div class="px-3 py-1 rounded-lg text-xs bg-primary-subtle border-1 border-primary flex items-center">
-                  <p>{{dummy().status}}</p>
-                </div>
-
               </div>
             </div>
           </div>
-        </div>
-        <div class="flex flex-col gap-1 flex-1  ">
-          <p class="text-secondary"> Supporting Files</p>
-          <div
-            class="px-3 py-5 bg-transparent border-1 border-secondary-elevated rounded-3xl group  transition-colors  hover:border-primary-subtle-hover  cursor-pointer">
-            <div class="flex justify-between items-center">
-              <div class="flex gap-5 items-center">
-                <div
-                  class="bg-secondary-elevated text-secondary p-3 flex items-center rounded-lg  group group-hover:bg-primary-subtle group-hover:text-primary transition-colors">
-                  <ng-icon class="text-xl" name="featherFileText" />
-                </div>
-                <div class="flex flex-col  text-sm">
-                  <h6 class="text-text">{{dummy().type}}</h6>
-                  <p class="text-secondary text-sm">Issued by {{dummy().issuedCountry}}</p>
-                </div>
-              </div>
-              <div>
-                <button
-                  class="border-1 border-secondary-elevated rounded-3xl text-sm bg-transparent hover:bg-secondary-subtle  py-1 px-3 cursor-pointer">
-                  View file
-                </button>
+          <div class="flex flex-col gap-1 flex-1">
+            <div class="flex justify-end">
+              <div class="px-3 py-1 rounded-3xl text-xs border-1 flex items-center" [ngClass]="getDocumentStatusClass(document()!.status)">
+                <p>{{ getDocumentStatusName(document()!.status) }}</p>
               </div>
             </div>
-          </div>
 
+            @if (document()?.attachements && document()!.attachements!.length > 0) {
+              <div class="flex flex-col gap-3">
+                @for (attachment of document()?.attachements; track $index) {
+                  <div class="px-3 py-5 bg-transparent border-1 border-secondary-elevated rounded-3xl transition-colors">
+                    <div class="flex justify-between items-center">
+                      <div class="flex gap-5 items-center">
+                        <div class="bg-secondary-elevated text-secondary p-3 flex items-center rounded-lg transition-colors">
+                          <ng-icon class="text-xl" name="featherFileText" />
+                        </div>
+                        <div class="flex flex-col text-sm">
+                          <h6 class="text-text">{{ attachment.fileName }}</h6>
+                          <p class="text-secondary text-sm">{{ attachment.size / 1000 / 1000 | number }} MB</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
         </div>
-      </div>
       } @else {
-      <div class="p-8 grid gap-5 items-center justify-center">
-        <div class="flex items-center justify-center">
-          <div class="w-auto p-5  bg-secondary-subtle text-neutral-300 flex items-center rounded-full  ">
-            <ng-icon class="text-4xl" name="featherFileText" />
+        <div class="p-8 grid gap-5 items-center justify-center">
+          <div class="flex items-center justify-center">
+            <div class="w-auto p-5 bg-secondary-subtle text-neutral-300 flex items-center rounded-full">
+              <ng-icon class="text-4xl" name="featherFileText" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-3 text-center">
+            <h6>No Documents Uploaded</h6>
+            <p class="max-w-sm">Upload your government-issued ID to verify your identity and unlock higher transaction limits.</p>
+          </div>
+          <div class="flex items-center justify-center">
+            <p-button icon="pi pi-plus " label="Get verified now" [loading]="loading()" (onClick)="handleSubmit()" />
           </div>
         </div>
-
-        <div class="grid grid-cols-1 gap-3 text-center">
-          <h6>No Documents Uploaded</h6>
-          <p class="max-w-sm">Upload your government-issued ID to verify your identity and unlock higher transaction
-            limits.</p>
-        </div>
-        <div class="flex items-center justify-center">
-          <p-button icon="pi pi-plus " label="Get verified now" />
-        </div>
-
-      </div>
       }
     </div>
   </div>

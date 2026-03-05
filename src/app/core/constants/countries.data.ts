@@ -1,10 +1,11 @@
-import { Country } from "../models/country.interface";
+import { Country } from '../models/country.interface';
 
-// Helper: convert ISO code to emoji flag
+export function getCoutnryByCode(code: string) {
+  return COUNTRIES.find((x) => x.code == code);
+}
+
 function isoToFlag(iso: string): string {
-  return [...iso.toUpperCase()]
-    .map(c => String.fromCodePoint(0x1f1e6 - 65 + c.charCodeAt(0)))
-    .join('');
+  return [...iso.toUpperCase()].map((c) => String.fromCodePoint(0x1f1e6 - 65 + c.charCodeAt(0))).join('');
 }
 
 export const COUNTRIES: Country[] = [

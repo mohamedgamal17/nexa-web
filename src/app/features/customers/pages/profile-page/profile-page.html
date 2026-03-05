@@ -20,11 +20,12 @@
             <app-profile-address [address]="customer()!.address" [isSubmiting]="isSubmitingAddress()" (submited)="handleAddressSubmit($event)" />
           </div>
           <div>
-            <app-profile-document />
+            <app-profile-document [document]="customer()!.document!" [loading]="isSubmitingKyc()" (submitied)="handleKycSubmited()" />
           </div>
         </div>
       </div>
       <p-toast />
+      <div id="comblycube-container"></div>
     }
   }
 </div>

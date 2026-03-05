@@ -19,6 +19,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastModule } from 'primeng/toast';
 import { CustomerInfo } from '../../interfaces/customer-info.interface';
 import { Address } from '../../interfaces/address.interface';
+import { ComplyCubeService } from '../../../onboarding/services/comply-cube.service';
+import { KycReviewService } from '../../services/kyc-reviews.service';
+import { KycTokenService } from '../../services/kyc-token.service';
+import { catchError, filter, forkJoin, mergeMap, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-profile-page',
@@ -30,8 +34,12 @@ import { Address } from '../../interfaces/address.interface';
 export class ProfilePage implements OnInit {
   private store: Store = inject(Store);
   private customerService = inject(CustomerService);
+  private kycTokenService = inject(KycTokenService);
+  private kycReviewService = inject(KycReviewService);
   private messageService = inject(MessageService);
   private translateSevice = inject(TranslateService);
+  private complyCubeService = inject(ComplyCubeService);
+
   customer = signal<Customer | null>(null);
   isLoading = signal(false);
   apiError = signal<ErrorModel | null>(null);
@@ -41,6 +49,7 @@ export class ProfilePage implements OnInit {
   isSubmitingEmail = signal(false);
   isSubmitingInfo = signal(false);
   isSubmitingAddress = signal(false);
+  isSubmitingKyc = signal(false);
 
   constructor() {}
   ngOnInit(): void {
@@ -145,6 +154,58 @@ export class ProfilePage implements OnInit {
         this.isSubmitingAddress.set(false);
       },
     });
+  }
+  handleKycSubmited() {
+    this.isSubmitingKyc.set(true);
+    this.kycTokenService
+      .createToken()
+      .pipe(
+        mergeMap((value) => this.complyCubeService.mount(value.token, 'comblycube-container')),
+
+        tap((event) => {
+          if (event.type === 'closed') {
+            this.isSubmitingKyc.set(false);
+          }
+
+          if (event.type === 'error') {
+            this.isSubmitingKyc.set(false);
+            console.log(event.error);
+          }
+        }),
+        filter((event) => event.type === 'complete'),
+
+        mergeMap((event) =>
+          forkJoin({
+            event: of(event),
+            customer: this.customerService.updateDocument({
+              kycDocumentId: event.data?.documentId,
+            }),
+          }),
+        ),
+
+        mergeMap(({ event, customer }) => {
+          return forkJoin({
+            customer: of(customer),
+            review: this.kycReviewService.createReview(),
+          });
+        }),
+      )
+      .subscribe({
+        next: ({ customer, review }) => {
+          this.isSubmitingKyc.set(false);
+          this.messageService.add({
+            severity: 'success',
+            summary: this.translateSevice.instant('toast.kycCompleted.summary'),
+            detail: this.translateSevice.instant('toast.kycCompleted.message'),
+          });
+
+          this.store.dispatch(customerActions.updateCustomer({ customer: customer }));
+        },
+        error: (err) => {
+          this.isSubmitingKyc.set(false);
+          this.messageService.add({ severity: 'error', summary: err.title, detail: err.message });
+        },
+      });
   }
 
   extractContact() {
