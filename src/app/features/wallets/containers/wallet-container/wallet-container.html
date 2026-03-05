@@ -1,0 +1,14 @@
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+  @if (hasError()) {
+    <div class="col-span-12">
+      <div class="flex items-center justify-center w-full">
+        <div class="sm:w-[50%] w-full">
+          <app-alert-error [error]="error() ?? undefined" />
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="sm:col-span-4"></div>
+    <app-wallet-card class="sm:col-span-8" [wallet]="activeWallet() ?? undefined" [loading]="isLoading()" />
+  }
+</div>

@@ -1,4 +1,4 @@
-.p-card {
+:host ::ng-deep .p-card {
   background-color: var(--color-primary);
   color: var(--color-primary-foreground);
 }
