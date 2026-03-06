@@ -1,0 +1,114 @@
+<div class="flex justify-center">
+  <p-dialog
+    header="Header"
+    [(visible)]="visible"
+    [modal]="true"
+    [breakpoints]="{ '1199px': '25vw', '575px': '90vw' }"
+    [style]="{ width: '25vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    maskStyleClass="backdrop-blur-xs"
+    [(visible)]="visible"
+    styleClass="!border-0  !rounded-3xl"
+  >
+    <ng-template #headless>
+      <div class="rounded-lg w-full bg-surface overflow-y-auto">
+        <div class="bg-primary text-primary-foreground px-8 py-5">
+          <div class="flex justify-between w-full">
+            <div class="grid grid-cols-1 gap-2">
+              <div class="flex items-center gap-1">
+                <div class="text-4xl">
+                  <ng-icon name="heroCurrencyDollar"></ng-icon>
+                </div>
+                <h4>{{ getModalTitle() }}</h4>
+              </div>
+              <p class="text-primary-elevated text-xs">{{ getModalSubTitle() }}</p>
+            </div>
+            <div class="">
+              <p-button icon="pi pi-times" [disabled]="linking() || submiting()" [rounded]="true" [text]="true" (onClick)="toggleModel()" severity="danger" />
+            </div>
+          </div>
+        </div>
+        <div class="px-8 py-8">
+          @if (loading()) {
+            <div class="grid grid-cols-1 gap-8 w-full">
+              <div class="grid grid-cols-1 gap-5">
+                <div class="grid grid-cols-1 gap-3">
+                  <p-skeleton width="5rem" height=".5rem" />
+                  <div class="w-full">
+                    <app-bank-select-skeleton />
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 gap-3">
+                  <p-skeleton width="5rem" height=".5rem" />
+                  <p-skeleton width="100%" height="3rem" />
+                </div>
+              </div>
+            </div>
+          } @else {
+            @if (banks().length > 0) {
+              <form [formGroup]="bankTansferForm" (submit)="handleSubmit($event)">
+                <div class="grid grid-cols-1 gap-8 w-full">
+                  <div class="grid grid-cols-1 gap-5">
+                    <div class="grid grid-cols-1 gap-1">
+                      <label for="reciverWallet">{{ 'forms.transfer.bank.label' | translate }}</label>
+                      <div class="w-full">
+                        <app-bank-select />
+                        <app-input-error [form]="bankTansferForm" [control]="bankTansferForm.get('bank')!" [fieldKey]="'forms.transfer.bank.label'" />
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-1">
+                      <label for="amount">{{ 'forms.transfer.amount.label' | translate }}</label>
+                      <p-inputgroup>
+                        <p-inputgroup-addon>
+                          <i class="pi pi-shopping-cart"></i>
+                        </p-inputgroup-addon>
+
+                        <p-inputnumber [min]="1" [max]="getMaxAmount()" inputId="amount" mode="currency" currency="USD" locale="en-US" formControlName="amount" />
+                      </p-inputgroup>
+                      <app-input-error [form]="bankTansferForm" [control]="bankTansferForm.get('amount')!" [fieldKey]="'forms.transfer.amount.label'" />
+                      @if (type() == 'withdraw') {
+                        <div class="flex justify-between">
+                          <div class="text-xs text-secondary">
+                            Balance :<span class="ms-1 text-text">{{ activeWallet()?.balance ?? 0 | currency }}</span>
+                          </div>
+
+                          <a (click)="setMaxValue()" class="cursor-pointer text-xs text-primary font-bold hover:underline">Send Max</a>
+                        </div>
+                      }
+                    </div>
+                    <p-button styleClass="!w-full" type="submit" [loading]="submiting()" [label]="getButtonText()" icon="pi pi-arrow-right" iconPos="right" />
+                  </div>
+                </div>
+              </form>
+            } @else {
+              <div class="grid grid-cols-1 gap-5">
+                <div class="flex items-center justify-center">
+                  <div class="h-20 w-20 justify-center flex items-center bg-secondary-subtle text-secondary rounded-full">
+                    <ng-icon class="text-5xl" name="heroBuildingLibrary" />
+                  </div>
+                </div>
+                <div class="grid grid-cols gap-1">
+                  <h5 class="text-center">No Bank Account Linked</h5>
+                  <p class="text-center text-secondary max-w-md">You need to link a source bank account to deposit funds instantly into your NovaWallet.</p>
+                </div>
+                <div class="bg-primary-subtle text-primary p-4 rounded-2xl text-sm">
+                  <div class="flex gap-3">
+                    <div>
+                      <ng-icon class="text-xl" name="heroExclamationCircle" />
+                    </div>
+                    <p>NovaWallet uses secure 3rd party provider (stripe) to protect your financial data during linking.</p>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 gap-3">
+                  <p-button styleClass="w-full block" icon="pi pi-plus" label="Link Bank Account" (onClick)="handleLinkBankAccount()" [loading]="linking()" />
+                  <p-button [disabled]="linking()" styleClass="w-full block" severity="secondary" label="Maybe Latter" (onClick)="toggleModel()" />
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>
