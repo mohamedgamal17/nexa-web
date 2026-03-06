@@ -1,0 +1,52 @@
+@if (selectedWallet()) {
+  <div class="p-5 text-text w-full bg-primary-subtle rounded-3xl border-1 border-primary-elevated">
+    <div class="flex justify-between">
+      <div class="flex items-center gap-5">
+        <div class="p-3 rounded-lg flex items-center text-lg bg-primary text-primary-foreground shadow">
+          <ng-icon name="heroUser" />
+        </div>
+        <div class="flex flex-col justify-between">
+          <h6>{{ selectedWallet()!.customer!.info.firstName + ' ' + selectedWallet()!.customer!.info.lastName + 111 }}</h6>
+          <p class="text-secondary text-sm">{{ selectedWallet()!.number | walletNumber }}</p>
+        </div>
+      </div>
+      <div>
+        <p-button icon="pi pi-times" [variant]="'text'" severity="secondary" (onClick)="removeSelectedWallet()" />
+      </div>
+    </div>
+  </div>
+} @else {
+  <p-input-group>
+    <p-inputgroup-addon>
+      <i class="pi pi-search"></i>
+    </p-inputgroup-addon>
+    <p-auto-complete (onSelect)="setSelectedWallet($event)" [suggestions]="wallets()" (completeMethod)="search($event)" [fluid]="true" optionLabel="number" [invalid]="getValidStatus()">
+      <ng-template let-wallet #item>
+        <div class="p-3 text-text w-full">
+          <div class="flex items-center gap-5">
+            <div class="p-2 rounded-lg flex items-center text-lg bg-primary text-primary-foreground">
+              <ng-icon name="heroUser" />
+            </div>
+            <div class="flex flex-col justify-between text-sm">
+              <p>{{ wallet.customer.info.firstName + ' ' + wallet.customer.info.lastName }}</p>
+              <p class="text-secondary">{{ wallet.number | walletNumber }}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template let-wallet #selected>
+        <div class="p-3 text-text w-full bg-primary-subtle">
+          <div class="flex items-center gap-5">
+            <div class="p-2 rounded-lg flex items-center text-lg bg-primary text-primary-foreground">
+              <ng-icon name="heroUser" />
+            </div>
+            <div class="flex flex-col justify-between text-sm">
+              <p>{{ wallet.customer.info.firstName + ' ' + wallet.customer.info.lastName + 111 }}</p>
+              <p class="text-secondary">{{ wallet.number | walletNumber }}</p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-auto-complete>
+  </p-input-group>
+}
