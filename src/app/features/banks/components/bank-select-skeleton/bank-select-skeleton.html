@@ -1,0 +1,17 @@
+@if (dummy.length > 0) {
+  <div class="grid grid-cols-1 gap-3">
+    @for (bank of dummy; track $index) {
+      <div class="p-3 text-sm rounded-2xl transition-all cursor-pointer border border-secondary-muted">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center gap-5">
+            <p-skeleton size="3rem"></p-skeleton>
+            <div class="grid grid-cols-1 gap-1">
+              <p-skeleton width="5rem" height=".8rem" />
+              <p-skeleton width="3rem" height=".5rem" />
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}
