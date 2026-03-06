@@ -80,6 +80,10 @@
       }
     },
     "transfer": {
+      "bank": {
+        "label": "Bank",
+        "placeholder": "Select your bank account"
+      },
       "fromWallet": {
         "label": "From wallet",
         "placeholder": "select your current wallet"
