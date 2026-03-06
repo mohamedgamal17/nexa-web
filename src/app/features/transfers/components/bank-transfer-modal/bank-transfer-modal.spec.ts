@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BankWithdrawlModal } from './bank-transfer-modal';
+import { BankTransferModal } from './bank-transfer-modal';
 
 describe('BankWithdrawlModal', () => {
-  let component: BankWithdrawlModal;
-  let fixture: ComponentFixture<BankWithdrawlModal>;
+  let component: BankTransferModal;
+  let fixture: ComponentFixture<BankTransferModal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BankWithdrawlModal],
+      imports: [BankTransferModal],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BankWithdrawlModal);
+    fixture = TestBed.createComponent(BankTransferModal);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
