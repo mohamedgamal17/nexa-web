@@ -12,5 +12,10 @@
       <app-wallet-list [loading]="isLoading()" [wallets]="wallets()" [activeWallet]="activeWallet() ?? undefined" />
     </div>
     <app-wallet-card class="sm:col-span-9" [wallet]="activeWallet() ?? undefined" [loading]="isLoading()" />
+    <app-transfer-modal></app-transfer-modal>
   }
+
+  <div class="sm:col-span-12">
+    <app-transfer-modal [wallets]="searchWallets()" (walletSearch)="searchWalletByNumber($event)" />
+  </div>
 </div>

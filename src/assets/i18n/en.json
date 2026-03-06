@@ -79,6 +79,20 @@
         }
       }
     },
+    "transfer": {
+      "fromWallet": {
+        "label": "From wallet",
+        "placeholder": "select your current wallet"
+      },
+      "receiverWallet": {
+        "label": "Reciver wallet",
+        "placeholder": "Select reciver wallet"
+      },
+      "amount": {
+        "label": "Amount",
+        "placeholder": "Enter money amount"
+      }
+    },
     "onboarding": {
       "email": {
         "label": "Email",
