@@ -1,0 +1,18 @@
+export const ERROR_MAP: Record<string, string> = {
+  required: 'errors.validation.required',
+  email: 'errors.validation.email',
+  minlength: 'errors.validation.minLength',
+  maxlength: 'errors.validation.maxLength',
+  max: 'errors.validation.max',
+  min: 'errors.validation.min',
+  phoneRequired: 'errors.validation.phoneRequired',
+  phoneMinLength: 'errors.validation.phoneMinLength',
+  phoneMaxLength: 'errors.validation.phoneMaxLength',
+  phoneInvalid: 'errors.validation.phoneInvalid',
+  invalideEnum: 'errors.validation.invalideEnum',
+  invalidAge: 'errors.validation.invalidAge',
+  minAge: 'errors.validation.minAge',
+  invalidCityName: 'errors.validation.invalidCityName',
+  invalidPostalCode: 'errors.validation.invalidPostalCode',
+  invalidZipCode: 'errors.validation.invalidZipCode',
+};
