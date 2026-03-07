@@ -35,11 +35,13 @@ export const walletReducer = createReducer(
 
   on(walletActions.setActiveWallet, (state, { wallet }) => ({
     ...state,
-    activeWallet: state.activeWallet?.id != wallet.id ? wallet : state.activeWallet,
+    activeWallet:
+      state.activeWallet?.id != wallet.id ? wallet : state.activeWallet,
   })),
 
   on(walletActions.loadWallets, (state, { paging }) => ({
-    ...state,
+    ...initialState,
+    loaded: true,
     isLoading: paging.skip === 0 ? true : state.isLoading,
     paging: {
       ...state.paging,
