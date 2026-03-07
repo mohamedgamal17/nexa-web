@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, model, OnInit, output } from '@angular/core';
+import { Component, effect, inject, input, model, OnInit, output, signal } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Wallet as WalletIcon } from 'lucide-angular';
@@ -50,20 +50,47 @@ export class TransferModal implements OnInit {
 
   visible = model(false);
   wallets = input<Wallet[]>([]);
-
+  loading = input(false);
   walletSearch = output<string>();
-
+  submit = output<{ reciverWallet: Wallet; amount: number }>();
+  isSubmbitied = signal(false);
   transferForm: FormGroup;
+
+  constructor() {
+    effect(() => {
+      const visible = this.visible();
+      this.transferForm?.reset();
+    });
+  }
 
   ngOnInit(): void {
     this.transferForm = this.fb.group({
-      reciverWallet: [, [Validators.required, Validators.maxLength(250)]],
+      reciverWallet: [null, [Validators.required, Validators.maxLength(250)]],
       amount: [0, [Validators.required, Validators.min(1), Validators.max(1000000)]],
     });
   }
 
   toggleDialog() {
     this.visible.set(!this.visible());
+  }
+
+  handleFormSubmit($event: SubmitEvent) {
+    $event.preventDefault();
+    this.isSubmbitied.set(true);
+    console.log(this.transferForm.value);
+    if (this.transferForm.valid) {
+      console.log('VAlid');
+      var obj = {
+        reciverWallet: this.transferForm.value.reciverWallet,
+        amount: this.transferForm.value.amount,
+      };
+
+      this.submit.emit(obj);
+    }
+  }
+
+  log() {
+    console.log('touched');
   }
 
   search($event: string) {
@@ -79,5 +106,9 @@ export class TransferModal implements OnInit {
     this.transferForm.patchValue({
       amount: this.activeWallet()?.balance ?? 0,
     });
+  }
+
+  isAmountInvalid() {
+    return this.transferForm.get('amount') && this.isSubmbitied();
   }
 }

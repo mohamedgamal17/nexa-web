@@ -8,9 +8,9 @@
       <div class="flex flex-col gap-2">
         <label for="email">Email</label>
         <input class="block" pInputText id="email" aria-describedby="email-help" [placeholder]="'forms.onboarding.email.placeholder' | translate" formControlName="email" />
-        <app-input-error [control]="emailForm.get('email')" [fieldKey]="'forms.onboarding.email.label'" />
+        <app-input-error [control]="emailForm.get('email')" [field]="'forms.onboarding.email.label' | translate" />
       </div>
-      <p-button label="Continue" size="large" styleClass="w-full" icon="pi pi-angle-right" iconPos="right" [loading]="loading()" (onClick)="handleSubmit($event)" />
+      <p-button label="Continue" type="submit" size="large" styleClass="w-full" icon="pi pi-angle-right" iconPos="right" [loading]="loading()" />
     </div>
   </form>
 </div>

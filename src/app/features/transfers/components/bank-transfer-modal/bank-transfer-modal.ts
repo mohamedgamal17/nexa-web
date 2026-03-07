@@ -30,13 +30,13 @@ export class BankTransferModal implements OnInit {
 
   bankTansferForm: FormGroup;
 
-  type = signal<'withdraw' | 'deposit'>('deposit');
+  type = model<'withdraw' | 'deposit'>('deposit');
 
   loading = input(false);
 
   submiting = input(false);
 
-  linking = input(true);
+  linking = input(false);
 
   banks = input<Bank[]>([]);
 

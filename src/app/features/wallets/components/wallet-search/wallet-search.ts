@@ -46,8 +46,6 @@ export class WalletSearch implements OnInit, ControlValueAccessor {
   }
   ngOnInit(): void {
     this.control = this.injector.get(NgControl);
-
-    console.log(this.control);
   }
   writeValue(obj: any): void {
     this.selectedWallet.set(obj);
@@ -64,7 +62,6 @@ export class WalletSearch implements OnInit, ControlValueAccessor {
 
   search($event: AutoCompleteCompleteEvent) {
     this.walletNumberChange.emit($event.query);
-    console.log('re');
     this.onTouched();
   }
 
@@ -79,6 +76,7 @@ export class WalletSearch implements OnInit, ControlValueAccessor {
   }
 
   getValidStatus() {
-    return this.form.submitted && !this.control!.valid;
+    console.log(this.form && this.control && !this.control.valid && (this.form.submitted || this.control!.touched));
+    return this.form && this.control && !this.control.valid && (this.form.submitted || this.control!.touched);
   }
 }

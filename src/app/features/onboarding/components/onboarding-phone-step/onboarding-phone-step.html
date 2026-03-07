@@ -6,15 +6,8 @@
   <form (submit)="handleSubmit($event)" [formGroup]="phoneForm">
     <div class="space-y-5">
       <div class="flex flex-col gap-2">
-        <app-phone-input
-          [label]="'forms.onboarding.phone.label' | translate"
-          [countries]="filterdCountries"
-          [placeholder]="'forms.onboarding.phone.placeholder' | translate"
-          formControlName="phone"
-          defaultCountry="US"
-          [invalid]="!phoneForm.get('phone')!.valid && phoneForm.dirty"
-        ></app-phone-input>
-        <app-input-error [form]="phoneForm" [control]="phoneForm.get('phone')" [fieldKey]="'forms.onboarding.phone.label'" />
+        <app-phone-input [label]="'forms.onboarding.phone.label' | translate" [countries]="filterdCountries" [placeholder]="'forms.onboarding.phone.placeholder' | translate" formControlName="phone" defaultCountry="US"></app-phone-input>
+        <app-input-error [form]="phoneForm" [control]="phoneForm.get('phone')" [field]="'forms.onboarding.phone.label' | translate" />
       </div>
 
       <div class="flex gap-2">

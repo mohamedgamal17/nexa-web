@@ -10,24 +10,24 @@
           <div class="flex-1 flex flex-col gap-2">
             <label for="firstName">{{ 'forms.onboarding.profile.firstName.label' | translate }}</label>
             <input id="firstName" [placeholder]="'forms.onboarding.profile.firstName.placeholder' | translate" formControlName="firstName" pInputText />
-            <app-input-error [form]="profileFormGroup" [control]="profileFormGroup.get('firstName')" fieldKey="forms.onboarding.profile.firstName.label" />
+            <app-input-error [form]="profileFormGroup" [control]="profileFormGroup.get('firstName')" [field]="'forms.onboarding.profile.firstName.label' | translate" />
           </div>
           <div class="flex-1 flex flex-col gap-2">
             <label for="lastName">{{ 'forms.onboarding.profile.lastName.label' | translate }}</label>
             <input pInputText class="w-full" id="lastName" [placeholder]="'forms.onboarding.profile.lastName.placeholder' | translate" formControlName="lastName" />
-            <app-input-error [form]="profileFormGroup" [control]="profileFormGroup.get('lastName')" fieldKey="forms.onboarding.profile.lastName.label" />
+            <app-input-error [form]="profileFormGroup" [control]="profileFormGroup.get('lastName')" [field]="'forms.onboarding.profile.lastName.label' | translate" />
           </div>
         </div>
         <div class="flex flex-col sm:flex-row gap-3">
           <div class="flex flex-1 flex-col gap-2">
             <label for="gender">{{ 'forms.onboarding.profile.gender.label' | translate }}</label>
             <p-select [options]="genderSelect" optionLabel="label" optionValue="value" class="w-full" formControlName="gender" />
-            <app-input-error [form]="profileFormGroup" [control]="profileFormGroup.get('gender')" fieldKey="forms.onboarding.profile.gender.label" />
+            <app-input-error [form]="profileFormGroup" [control]="profileFormGroup.get('gender')" [field]="'forms.onboarding.profile.gender.label' | translate" />
           </div>
           <div class="flex-1 flex flex-col gap-2">
             <label for="birthDate">{{ 'forms.onboarding.profile.birthDate.label' | translate }}</label>
             <p-datepicker id="birthDate" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" pInputMask="99/99/9999" formControlName="birthDate" />
-            <app-input-error [form]="profileFormGroup" [control]="profileFormGroup.get('birthDate')" fieldKey="forms.onboarding.profile.birthDate.label" />
+            <app-input-error [form]="profileFormGroup" [control]="profileFormGroup.get('birthDate')" [field]="'forms.onboarding.profile.birthDate.label' | translate" />
           </div>
         </div>
       </div>

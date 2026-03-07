@@ -1,5 +1,4 @@
 <div class="flex justify-center">
-  <p-button (click)="toggleDialog()" label="Show" />
   <p-dialog
     header="Header"
     [(visible)]="visible"
@@ -10,8 +9,7 @@
     [resizable]="false"
     maskStyleClass="backdrop-blur-xs"
     [(visible)]="visible"
-    styleClass="!border-0  !rounded-3xl"
-  >
+    styleClass="!border-0  !rounded-3xl">
     <ng-template #headless>
       <div class="rounded-lg w-full bg-surface overflow-hidden">
         <div class="bg-primary text-primary-foreground px-8 py-5">
@@ -26,39 +24,81 @@
               <p class="text-primary-elevated text-xs">Send money instantly using the recipient's wallet number.</p>
             </div>
             <div class="">
-              <p-button icon="pi pi-times" [rounded]="true" [text]="true" (onClick)="toggleDialog()" severity="danger" />
+              <p-button
+                icon="pi pi-times"
+                [rounded]="true"
+                [text]="true"
+                (onClick)="toggleDialog()"
+                severity="danger" />
             </div>
           </div>
         </div>
         <div class="px-8 py-8">
-          <form [formGroup]="transferForm">
+          <form
+            [formGroup]="transferForm"
+            (submit)="handleFormSubmit($event)">
             <div class="grid grid-cols-1 gap-8 w-full">
               <div class="grid grid-cols-1 gap-5">
                 <div class="grid grid-cols-1 gap-1">
-                  <label for="reciverWallet">{{ 'forms.transfer.receiverWallet.label' | translate }}</label>
+                  <label for="reciverWallet">
+                    {{ 'forms.transfer.receiverWallet.label' | translate }}
+                  </label>
                   <div class="w-full">
-                    <app-wallet-search class="w-full" [wallets]="wallets()" (walletNumberChange)="search($event)" formControlName="reciverWallet" />
-                    <app-input-error [form]="transferForm" [control]="transferForm.get('reciverWallet')!" [fieldKey]="'forms.transfer.receiverWallet.label'" />
+                    <app-wallet-search
+                      class="w-full"
+                      [wallets]="wallets()"
+                      (walletNumberChange)="search($event)"
+                      formControlName="reciverWallet"
+                      (onTouch)="log()" />
+                    <app-input-error
+                      [form]="transferForm"
+                      [control]="transferForm.get('reciverWallet')!"
+                      [field]="'forms.transfer.receiverWallet.label' | translate" />
                   </div>
                 </div>
                 <div class="grid grid-cols-1 gap-1">
-                  <label for="amount">{{ 'forms.transfer.amount.label' | translate }}</label>
+                  <label for="amount">
+                    {{ 'forms.transfer.amount.label' | translate }}
+                  </label>
                   <p-inputgroup>
                     <p-inputgroup-addon>
                       <i class="pi pi-shopping-cart"></i>
                     </p-inputgroup-addon>
 
-                    <p-inputnumber [min]="1" [max]="getMaxAmount()" inputId="amount" mode="currency" currency="USD" locale="en-US" formControlName="amount" />
+                    <p-inputnumber
+                      inputId="amount"
+                      mode="currency"
+                      currency="USD"
+                      locale="en-US"
+                      required="true"
+                      [showButtons]="true"
+                      formControlName="amount" />
                   </p-inputgroup>
-                  <app-input-error [form]="transferForm" [control]="transferForm.get('amount')!" [fieldKey]="'forms.transfer.amount.label'" />
+                  <app-input-error
+                    [form]="transferForm"
+                    [control]="transferForm.get('amount')!"
+                    [field]="'forms.transfer.amount.label' | translate" />
                   <div class="flex justify-between">
                     <div class="text-xs text-secondary">
-                      Balance :<span class="ms-1 text-text">{{ activeWallet()?.balance ?? 0 | currency }}</span>
+                      Balance :
+                      <span class="ms-1 text-text">
+                        {{ activeWallet()?.balance ?? 0 | currency }}
+                      </span>
                     </div>
-                    <a (click)="setMaxValue()" class="cursor-pointer text-xs text-primary font-bold hover:underline">Send Max</a>
+                    <a
+                      (click)="setMaxValue()"
+                      class="cursor-pointer text-xs text-primary font-bold hover:underline">
+                      Send Max
+                    </a>
                   </div>
                 </div>
-                <p-button styleClass="!w-full" type="submit" label="Confirm transfer" icon="pi pi-arrow-right" iconPos="right" />
+                <p-button
+                  styleClass="!w-full"
+                  type="submit"
+                  label="Confirm transfer"
+                  icon="pi pi-arrow-right"
+                  iconPos="right"
+                  [loading]="loading()" />
               </div>
             </div>
           </form>

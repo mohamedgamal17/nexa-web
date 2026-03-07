@@ -18,7 +18,7 @@
               formControlName="country"
               (onChange)="handleCountryChange($event.value)"
             />
-            <app-input-error [form]="addressForm" [control]="addressForm.get('country')" fieldKey="forms.onboarding.address.country.label"></app-input-error>
+            <app-input-error [form]="addressForm" [control]="addressForm.get('country')" [field]="'forms.onboarding.address.country.label' | translate"></app-input-error>
           </div>
           <div class="flex-1 flex flex-col gap-2">
             <label for="state">{{ 'forms.onboarding.address.state.label' | translate }}</label>
@@ -32,29 +32,29 @@
               [placeholder]="'forms.onboarding.address.state.placeholder' | translate"
               formControlName="state"
             />
-            <app-input-error [form]="addressForm" [control]="addressForm.get('state')" fieldKey="forms.onboarding.address.state.label"></app-input-error>
+            <app-input-error [form]="addressForm" [control]="addressForm.get('state')" [field]="'forms.onboarding.address.state.label' | translate"></app-input-error>
           </div>
         </div>
         <div class="flex flex-col gap-2">
           <label for="city">{{ 'forms.onboarding.address.city.label' | translate }}</label>
           <input pInputText formControlName="city" [placeholder]="'forms.onboarding.address.city.placeholder' | translate" />
-          <app-input-error [form]="addressForm" [control]="addressForm.get('city')" fieldKey="forms.onboarding.address.city.label"></app-input-error>
+          <app-input-error [form]="addressForm" [control]="addressForm.get('city')" [field]="'forms.onboarding.address.city.label' | translate"></app-input-error>
         </div>
         <div class="flex flex-col gap-2">
           <label for="streetLine">{{ 'forms.onboarding.address.streetLine.label' | translate }}</label>
           <input pInputText formControlName="streetLine" [placeholder]="'forms.onboarding.address.streetLine.placeholder' | translate" />
-          <app-input-error [form]="addressForm" [control]="addressForm.get('streetLine')" fieldKey="forms.onboarding.address.streetLine.label"></app-input-error>
+          <app-input-error [form]="addressForm" [control]="addressForm.get('streetLine')" [field]="'forms.onboarding.address.streetLine.label' | translate"></app-input-error>
         </div>
         <div class="flex flex-col sm:flex-row gap-3">
           <div class="flex flex-1 flex-col gap-2">
             <label for="postalCode">{{ 'forms.onboarding.address.postalCode.label' | translate }}</label>
             <input id="postalCode" pInputText class="w-full" [placeholder]="'forms.onboarding.address.postalCode.placeholder' | translate" formControlName="postalCode" />
-            <app-input-error [form]="addressForm" [control]="addressForm.get('postalCode')" fieldKey="forms.onboarding.address.postalCode.label" />
+            <app-input-error [form]="addressForm" [control]="addressForm.get('postalCode')" [field]="'forms.onboarding.address.postalCode.label' | translate" />
           </div>
           <div class="flex flex-1 flex-col gap-2">
             <label for="zipCode">{{ 'forms.onboarding.address.zipCode.label' | translate }}</label>
             <input id="zipCode" pInputText class="w-full" [placeholder]="'forms.onboarding.address.zipCode.placeholder' | translate" formControlName="zipCode" />
-            <app-input-error [form]="addressForm" [control]="addressForm.get('zipCode')" fieldKey="forms.onboarding.address.zipCode.label" />
+            <app-input-error [form]="addressForm" [control]="addressForm.get('zipCode')" [field]="'forms.onboarding.address.zipCode.label' | translate" />
           </div>
         </div>
       </div>
