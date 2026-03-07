@@ -21,6 +21,30 @@
     "kycCompleted": {
       "summary": "Kyc completed.",
       "message": "Your have submited your kyc verification info the verification process in progress."
+    },
+
+    "transfer": {
+      "netowork": {
+        "completed": {
+          "summary": "P2P transfer completed",
+          "message": "Your p2p transfer to {wallet} completed successfully"
+        }
+      },
+      "bank": {
+        "deposit": {
+          "completed": {
+            "summary": "Deposit completed",
+            "message": "Your deposit with {bankAccount} completed successfully"
+          }
+        },
+
+        "withdraw": {
+          "completed": {
+            "summary": "Withdraw completed",
+            "message": "Your withdraw to {bankAccount} completed successfully"
+          }
+        }
+      }
     }
   },
   "forms": {
