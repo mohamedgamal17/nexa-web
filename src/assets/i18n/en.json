@@ -34,14 +34,21 @@
         "deposit": {
           "completed": {
             "summary": "Deposit completed",
-            "message": "Your deposit with {bankAccount} completed successfully"
+            "message": "Your deposit with bank account : **** {{bankAccount}} . Completed successfully"
           }
         },
 
         "withdraw": {
           "completed": {
             "summary": "Withdraw completed",
-            "message": "Your withdraw to {bankAccount} completed successfully"
+            "message": "Your withdraw to bank account : **** {{bankAccount}} . completed successfully"
+          }
+        },
+
+        "linking": {
+          "completed": {
+            "summary": "Linking bank account success",
+            "message": "Your bank account has been linked to your account successfully."
           }
         }
       }
