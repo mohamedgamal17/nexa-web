@@ -11,11 +11,8 @@
     <div class="sm:col-span-3">
       <app-wallet-list [loading]="isLoading()" [wallets]="wallets()" [activeWallet]="activeWallet() ?? undefined" />
     </div>
-    <app-wallet-card class="sm:col-span-9" [wallet]="activeWallet() ?? undefined" [loading]="isLoading()" />
-    <app-transfer-modal></app-transfer-modal>
+    <app-wallet-card class="sm:col-span-9" [(transferBankType)]="transferBankType" [(transferBankView)]="transferBankView" [(transferModelView)]="transferModelView" [wallet]="activeWallet() ?? undefined" [loading]="isLoading()" />
+    <app-transfer-modal [] [wallets]="searchWallets()" [(visible)]="transferModelView" (walletSearch)="searchWalletByNumber($event)" (submit)="createNetworkTransfer($event)"></app-transfer-modal>
+    <app-bank-transfer-modal [submiting]="submitingBankTransfer()" [(type)]="transferBankType" [(visible)]="transferBankView" (submit)="createBankTransfer($event)" />
   }
-
-  <div class="sm:col-span-12">
-    <app-transfer-modal [wallets]="searchWallets()" (walletSearch)="searchWalletByNumber($event)" />
-  </div>
 </div>

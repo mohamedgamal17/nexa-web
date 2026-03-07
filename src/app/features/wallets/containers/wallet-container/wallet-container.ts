@@ -1,6 +1,6 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, model, OnInit, signal } from '@angular/core';
 import { Wallet } from '../../interfaces/wallet.interface';
-import { single, Subscription, tap } from 'rxjs';
+import { mergeMap, of, single, Subscription, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectIsWalletStateLoaded, selectWalletPaging, walletState } from '../../state/wallet.selectors';
 import { walletActions } from '../../state/wallet.actions';
@@ -16,10 +16,15 @@ import { TransferModal } from '../../../transfers/components/transfer-modal/tran
 import { WalletSearch } from '../../components/wallet-search/wallet-search';
 import { WalletService } from '../../services/wallet.service';
 import { MessageService } from 'primeng/api';
+import { TransferServiceService as TransferService } from '../../../transfers/services/transfer-service.service';
+import { BankTransferModal } from '../../../transfers/components/bank-transfer-modal/bank-transfer-modal';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Bank } from '../../../banks/interfaces/bank.interface';
+import { TransferDirection } from '../../../transfers/enums/transfer-direction.enum';
 
 @Component({
   selector: 'app-wallet-container',
-  imports: [WalletCard, AlertError, WalletList, TransferModal],
+  imports: [WalletCard, AlertError, WalletList, TransferModal, BankTransferModal, TranslateModule],
   templateUrl: './wallet-container.html',
   styleUrl: './wallet-container.scss',
   viewProviders: [provideIcons({ heroExclamationCircle })],
@@ -28,7 +33,9 @@ import { MessageService } from 'primeng/api';
 export class WalletContainer implements OnInit {
   private store = inject(Store);
   private walletService = inject(WalletService);
+  private transferService = inject(TransferService);
   private messageService = inject(MessageService);
+  private translateService = inject(TranslateService);
 
   isLoaded = signal(false);
   isLoading = signal(false);
@@ -38,8 +45,14 @@ export class WalletContainer implements OnInit {
   activeWallet = signal<Wallet | null>(null);
   paging = signal<PagingState | null>(null);
   searchWallets = signal<Wallet[] | []>([]);
+  submitingNetworkTransfer = signal(false);
+  submitingBankTransfer = signal(false);
+
   subscriptions: Subscription[] = [];
 
+  transferModelView = model(false);
+  transferBankView = model(false);
+  transferBankType = model<'withdraw' | 'deposit'>('withdraw');
   pagingLength = 10;
 
   constructor() {
@@ -60,6 +73,85 @@ export class WalletContainer implements OnInit {
           severity: 'error',
         }),
     });
+  }
+
+  createNetworkTransfer($event: { reciverWallet: Wallet; amount: number }) {
+    var activeWallet = this.activeWallet();
+
+    if (activeWallet) {
+      var req = {
+        senderId: this.activeWallet()!.id,
+        reciverId: $event.reciverWallet.id,
+        amount: $event.amount,
+      };
+
+      this.submitingNetworkTransfer.set(true);
+
+      const sub = this.transferService.createNetworkTransfer(req).subscribe({
+        next: (v) => {
+          this.messageService.add({
+            summary: this.translateService.instant('toast.transfer.network.completed.summary'),
+            detail: this.translateService.instant('toast.transfer.network.completed.message', { wallet: $event.reciverWallet.number }),
+            severity: 'success',
+          });
+          this.submitingNetworkTransfer.set(false);
+        },
+
+        error: (err: ErrorModel) => {
+          this.messageService.add({
+            summary: err.title,
+            detail: err.message,
+            severity: 'error',
+          });
+          this.submitingNetworkTransfer.set(false);
+        },
+      });
+
+      this.subscriptions.push(sub);
+    }
+  }
+
+  createBankTransfer($event: { bank: Bank; amount: number; type: 'withdraw' | 'deposit' }) {
+    var activeWallet = this.activeWallet();
+
+    if (activeWallet) {
+      this.submitingBankTransfer.set(true);
+      var req = {
+        walletId: activeWallet.id,
+        fundingResourceId: $event.bank.id,
+        amount: $event.amount,
+        direction: $event.type == 'deposit' ? TransferDirection.depit : TransferDirection.credit,
+      };
+
+      const sub = this.transferService.createBankTransfer(req).subscribe({
+        next: (val) => {
+          if (val.direction == TransferDirection.depit) {
+            this.messageService.add({
+              summary: this.translateService.instant('toast.transfer.bank.withdraw.completed.summary'),
+              detail: this.translateService.instant('toast.transfer.bank.withdraw.completed.message', { bankAccount: $event.bank.accountNumberLast4 }),
+              severity: 'success',
+            });
+          } else {
+            this.messageService.add({
+              summary: this.translateService.instant('toast.transfer.bank.deposit.completed.summary'),
+              detail: this.translateService.instant('toast.transfer.bank.deposit.completed.message', { bankAccount: $event.bank.accountNumberLast4 }),
+              severity: 'success',
+            });
+          }
+
+          this.submitingBankTransfer.set(false);
+        },
+
+        error: (err) => {
+          this.messageService.add({
+            summary: err.title,
+            detail: err.message,
+            severity: 'error',
+          });
+          this.submitingNetworkTransfer.set(false);
+        },
+      });
+    }
   }
 
   private loadWalletsIfNotLoaded() {
