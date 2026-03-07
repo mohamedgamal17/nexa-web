@@ -2,10 +2,14 @@
   "tabWidth": 2,
   "trailingComma": "all",
   "singleQuote": true,
-  "printWidth": 250,
+  "printWidth": 80,
+  "semi": true,
+  "arrowParens": "avoid",
   "singleAttributePerLine": true,
   "htmlWhitespaceSensitivity": "ignore",
   "bracketSameLine": true,
+  "proseWrap": "always",
+  "bracketSpacing": true,
 
   "overrides": [
     {
