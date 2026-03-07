@@ -1,38 +1,36 @@
-import { Component, computed, effect, forwardRef, input, OnInit, output, signal, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, computed, effect, forwardRef, Host, inject, Injector, input, OnInit, Optional, output, Self, signal, SkipSelf, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { SelectModule } from 'primeng/select';
 import { InputMask, InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { Country } from '../../../core/models/country.interface';
 import { COUNTRIES } from '../../../core/constants/countries.data';
-import { ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validator } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgControl, NgForm, ReactiveFormsModule, ValidationErrors, Validator } from '@angular/forms';
 import { PhoneValueModel } from './models/phone-value-model.interface';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SkeletonModule } from 'primeng/skeleton';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-phone-input',
-  imports: [SelectModule,
-    InputMaskModule,
-    InputTextModule,
-    FormsModule,
-    ProgressSpinnerModule,
-    SkeletonModule,
-    ReactiveFormsModule],
+  imports: [SelectModule, InputMaskModule, InputTextModule, FormsModule, ProgressSpinnerModule, SkeletonModule, ReactiveFormsModule],
 
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => PhoneInput),
       multi: true,
-    }
+    },
   ],
   templateUrl: './phone-input.html',
   styleUrl: './phone-input.scss',
 })
-export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
-
+export class PhoneInput implements OnInit, ControlValueAccessor {
   @ViewChild(InputMask) inputMaskRef!: InputMask;
+  private injector = inject(Injector);
+
+  ngControl: NgControl | null = null;
+  form: FormGroupDirective | null = this.injector.get(FormGroupDirective, null, { host: true });
 
   defaultCountry = input<string>('US');
   placeholder = input<string>('Enter phone number');
@@ -56,7 +54,7 @@ export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
   });
 
   currentMask = computed(() => {
-    console.log(this.selectedCountry())
+    console.log(this.selectedCountry());
     return this.selectedCountry()?.mask ?? '999 999 999 9999';
   });
 
@@ -66,7 +64,7 @@ export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
       return country.mask.replace(/9/g, '_');
     }
 
-    console.log(this.selectedCountry())
+    console.log(this.selectedCountry());
     return this.placeholder();
   });
 
@@ -88,10 +86,9 @@ export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
     };
   });
 
-
-  private onChange: (value: PhoneValueModel | null) => void = () => { };
-  private onTouched: () => void = () => { };
-  private onValidatorChange: () => void = () => { };
+  private onChange: (value: PhoneValueModel | null) => void = () => {};
+  private onTouched: () => void = () => {};
+  private onValidatorChange: () => void = () => {};
 
   constructor() {
     effect(() => {
@@ -102,29 +99,29 @@ export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
       var value = this.defaultCountry();
 
       if (value) {
-        const defaultC = this.countries().find(c => c.code == this.defaultCountry());
+        const defaultC = this.countries().find((c) => c.code == this.defaultCountry());
         if (defaultC) this.selectedCountry.set(defaultC);
       }
-    })
+    });
   }
 
   ngOnInit(): void {
-
+    this.ngControl = this.injector.get(NgControl, null);
+    //  this.ngForm = this.injector.get(NgForm, null, { skipSelf  : true });
+    console.log(this.form);
   }
 
-
   writeValue(value: PhoneValueModel | null): void {
-    console.log(value)
+    console.log(value);
     if (value) {
-      console.log(value)
-      const country = this.countries().find(c => c.code === value.countryCode);
-      console.log(country)
+      console.log(value);
+      const country = this.countries().find((c) => c.code === value.countryCode);
+      console.log(country);
       this.selectedCountry.set(country ?? null);
       this.phoneNumber.set(value.number ?? '');
     } else {
-      const defaultC = this.countries().find(c => c.code === this.defaultCountry());
+      const defaultC = this.countries().find((c) => c.code === this.defaultCountry());
       this.selectedCountry.set(defaultC ?? null);
-
     }
   }
 
@@ -139,7 +136,6 @@ export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled.set(isDisabled);
   }
-
 
   validate(): ValidationErrors | null {
     const value = this.formattedValue();
@@ -158,31 +154,24 @@ export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
     this.onValidatorChange = fn;
   }
 
-
-
   onCountryChange(country: Country): void {
-
-
     if (country) {
       this.selectedCountry.set(country);
       if (this.isTouched()) {
         this.emitValue();
-        this.onValidatorChange();
+        //this.onValidatorChange();
       }
-
     }
-
   }
 
   onPhoneInput(value: string): void {
     this.phoneNumber.set(value ?? '');
     this.emitValue();
-    this.onValidatorChange();
+    //this.onValidatorChange();
   }
 
   onCountrySelectBlur() {
     if (!this.isTouched()) {
-
       this.isTouched.set(true);
       this.onTouched();
     }
@@ -195,9 +184,11 @@ export class PhoneInput implements OnInit, ControlValueAccessor, Validator {
     }
   }
 
+  isInvalid() {
+    return this.form && this.ngControl && !this.ngControl.valid && (this.ngControl.touched || this.form.submitted);
+  }
 
   private emitValue(): void {
     this.onChange(this.formattedValue());
   }
-
 }
