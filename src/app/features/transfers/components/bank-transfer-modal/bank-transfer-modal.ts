@@ -1,5 +1,19 @@
-import { Component, inject, input, model, OnInit, output, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  model,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -14,14 +28,39 @@ import { CommonModule } from '@angular/common';
 import { BankSelect } from '../../../banks/components/bank-select/bank-select';
 import { BankSelectSkeleton } from '../../../banks/components/bank-select-skeleton/bank-select-skeleton';
 import { SkeletonModule } from 'primeng/skeleton';
-import { heroBuildingLibrary, heroBuildingOffice, heroCurrencyDollar, heroExclamationCircle } from '@ng-icons/heroicons/outline';
+import {
+  heroBuildingLibrary,
+  heroBuildingOffice,
+  heroCurrencyDollar,
+  heroExclamationCircle,
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-bank-transfer-modal',
-  imports: [DialogModule, NgIcon, ButtonModule, ReactiveFormsModule, CommonModule, TranslateModule, InputError, InputGroupAddonModule, InputGroupModule, InputNumberModule, BankSelect, BankSelectSkeleton, SkeletonModule],
+  imports: [
+    DialogModule,
+    NgIcon,
+    ButtonModule,
+    ReactiveFormsModule,
+    CommonModule,
+    TranslateModule,
+    InputError,
+    InputGroupAddonModule,
+    InputGroupModule,
+    InputNumberModule,
+    BankSelect,
+    BankSelectSkeleton,
+    SkeletonModule,
+  ],
   templateUrl: './bank-transfer-modal.html',
   styleUrl: './bank-transfer-modal.scss',
-  viewProviders: [provideIcons({ heroCurrencyDollar, heroBuildingLibrary, heroExclamationCircle })],
+  viewProviders: [
+    provideIcons({
+      heroCurrencyDollar,
+      heroBuildingLibrary,
+      heroExclamationCircle,
+    }),
+  ],
 })
 export class BankTransferModal implements OnInit {
   private fb = inject(FormBuilder);
@@ -42,14 +81,29 @@ export class BankTransferModal implements OnInit {
 
   activeWallet = input<Wallet>();
 
-  submit = output<{ bank: Bank; amount: number; type: 'withdraw' | 'deposit' }>();
+  submitied = output<{
+    bank: Bank;
+    amount: number;
+    type: 'withdraw' | 'deposit';
+  }>();
 
   linkBankAccount = output<void>();
+
+  constructor() {
+    effect(() => {
+      if (!this.visible()) {
+        this.bankTansferForm?.reset();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.bankTansferForm = this.fb.group({
       bank: [, [Validators.required]],
-      amount: [0, [Validators.required, Validators.max(1000000), Validators.min(1)]],
+      amount: [
+        0,
+        [Validators.required, Validators.max(1000000), Validators.min(1)],
+      ],
     });
   }
 
@@ -81,9 +135,18 @@ export class BankTransferModal implements OnInit {
 
   handleSubmit($event: SubmitEvent) {
     $event.preventDefault();
+    console.log('valid');
 
     if (this.bankTansferForm.valid) {
-      this.submit.emit({
+      console.log('valid');
+      console.log(this.bankTansferForm.value);
+      var ob = {
+        ...this.bankTansferForm.value,
+        type: this.type(),
+      };
+
+      console.log(ob);
+      this.submitied.emit({
         ...this.bankTansferForm.value,
         type: this.type(),
       });
@@ -95,7 +158,9 @@ export class BankTransferModal implements OnInit {
   }
 
   getMaxAmount() {
-    return (this.activeWallet()?.balance ?? 0 > 0) ? this.activeWallet()?.balance : 1000;
+    return (this.activeWallet()?.balance ?? 0 > 0)
+      ? this.activeWallet()?.balance
+      : 1000;
   }
 
   setMaxValue() {

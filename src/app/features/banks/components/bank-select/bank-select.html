@@ -3,21 +3,28 @@
     @for (bank of banks(); track $index) {
       <div
         class="p-3 text-sm rounded-2xl transition-all cursor-pointer border"
-        [ngClass]="bank.id === selectedBank()!.id ? 'bg-primary-subtle border-primary' : ' border-secondary-muted  hover:border-secondary-border'"
-        (click)="updateSelectedBank(bank)"
-      >
+        [ngClass]="
+          bank.id === selectedBank()?.id
+            ? 'bg-primary-subtle border-primary'
+            : ' border-secondary-muted  hover:border-secondary-border'
+        "
+        (click)="updateSelectedBank(bank)">
         <div class="flex justify-between items-center">
           <div class="flex items-center gap-5">
-            <div class="p-3 flex items-center bg-secondary-muted text-secondary">
+            <div
+              class="p-3 flex items-center bg-secondary-muted text-secondary">
               <ng-icon name="heroBuildingLibrary" />
             </div>
             <div class="grid grid-cols-1">
               <h6 class="font-bold text-md">{{ bank.bankName }}</h6>
-              <p class="text-secondary text-md">**** {{ bank.accountNumberLast4 }}</p>
+              <p class="text-secondary text-md">
+                **** {{ bank.accountNumberLast4 }}
+              </p>
             </div>
           </div>
           @if (bank.id === selectedBank()?.id) {
-            <div class="p-1 flex items-center bg-primary rounded-full text-primary-foreground">
+            <div
+              class="p-1 flex items-center bg-primary rounded-full text-primary-foreground">
               <ng-icon name="heroCheck" />
             </div>
           }

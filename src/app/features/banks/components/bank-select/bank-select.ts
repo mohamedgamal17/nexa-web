@@ -1,4 +1,12 @@
-import { Component, effect, forwardRef, input, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  forwardRef,
+  input,
+  linkedSignal,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Bank } from '../../interfaces/bank.interface';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -30,20 +38,8 @@ export class BankSelect implements OnInit, ControlValueAccessor {
 
   private onTouch = () => {};
 
-  constructor() {
-    effect(() => {
-      const bank = this.selectedBank();
-      this.onChange(bank);
-      this.onTouch();
-    });
-  }
-  ngOnInit(): void {
-    const banks = this.banks();
-
-    if (banks.length > 0) {
-      this.selectedBank.set(banks[0]);
-    }
-  }
+  constructor() {}
+  ngOnInit(): void {}
 
   writeValue(obj: Bank | null): void {
     this.selectedBank.set(obj);
@@ -59,8 +55,8 @@ export class BankSelect implements OnInit, ControlValueAccessor {
   }
 
   updateSelectedBank(bank: Bank) {
-    console.log(bank);
     this.selectedBank.set(bank);
-    console.log(this.selectedBank());
+    this.onChange(bank);
+    this.onTouch();
   }
 }

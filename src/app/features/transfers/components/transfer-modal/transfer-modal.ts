@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, input, model, OnInit, output, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  model,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Wallet as WalletIcon } from 'lucide-angular';
@@ -7,8 +16,16 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { Wallet } from '../../../wallets/interfaces/wallet.interface';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  AutoCompleteCompleteEvent,
+  AutoCompleteModule,
+} from 'primeng/autocomplete';
 import { heroCurrencyDollar, heroUser } from '@ng-icons/heroicons/outline';
 import { WalletNumberPipe } from '../../../wallets/pipes/wallet-number-pipe';
 import { Gender } from '../../../customers/enums/gender.enum';
@@ -52,21 +69,26 @@ export class TransferModal implements OnInit {
   wallets = input<Wallet[]>([]);
   loading = input(false);
   walletSearch = output<string>();
-  submit = output<{ reciverWallet: Wallet; amount: number }>();
+  submitied = output<{ reciverWallet: Wallet; amount: number }>();
   isSubmbitied = signal(false);
   transferForm: FormGroup;
 
   constructor() {
     effect(() => {
       const visible = this.visible();
-      this.transferForm?.reset();
+      if (!visible) {
+        this.transferForm?.reset();
+      }
     });
   }
 
   ngOnInit(): void {
     this.transferForm = this.fb.group({
       reciverWallet: [null, [Validators.required, Validators.maxLength(250)]],
-      amount: [0, [Validators.required, Validators.min(1), Validators.max(1000000)]],
+      amount: [
+        0,
+        [Validators.required, Validators.min(1), Validators.max(1000000)],
+      ],
     });
   }
 
@@ -85,7 +107,7 @@ export class TransferModal implements OnInit {
         amount: this.transferForm.value.amount,
       };
 
-      this.submit.emit(obj);
+      this.submitied.emit(obj);
     }
   }
 
@@ -99,7 +121,9 @@ export class TransferModal implements OnInit {
   }
 
   getMaxAmount() {
-    return (this.activeWallet()?.balance ?? 0 > 0) ? this.activeWallet()?.balance : 1000;
+    return (this.activeWallet()?.balance ?? 0 > 0)
+      ? this.activeWallet()?.balance
+      : 1000;
   }
 
   setMaxValue() {
