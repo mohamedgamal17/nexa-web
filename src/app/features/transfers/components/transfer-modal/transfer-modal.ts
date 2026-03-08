@@ -35,6 +35,13 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputError } from '../../../../shared/components/input-error/Input-error';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Store } from '@ngrx/store';
+import { selectShowP2PModal } from '../../../wallets/state/wallet.selectors';
+import {
+  walletActions,
+  walletCardActions,
+} from '../../../wallets/state/wallet.actions';
 @Component({
   selector: 'app-transfer-modal',
   imports: [
@@ -60,12 +67,14 @@ import { InputError } from '../../../../shared/components/input-error/Input-erro
 })
 export class TransferModal implements OnInit {
   private translateService = inject(TranslateService);
-
   private fb = inject(FormBuilder);
+  private store = inject(Store);
 
   activeWallet = input<Wallet>();
 
-  visible = model(false);
+  visible = toSignal(this.store.select(selectShowP2PModal), {
+    initialValue: false,
+  });
   wallets = input<Wallet[]>([]);
   loading = input(false);
   walletSearch = output<string>();
@@ -93,7 +102,7 @@ export class TransferModal implements OnInit {
   }
 
   toggleDialog() {
-    this.visible.set(!this.visible());
+    this.store.dispatch(walletCardActions.toggleP2PTransferModal());
   }
 
   handleFormSubmit($event: SubmitEvent) {

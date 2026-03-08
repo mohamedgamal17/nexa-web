@@ -19,23 +19,17 @@
     </div>
     <app-wallet-card
       class="sm:col-span-9"
-      [(transferBankType)]="transferBankType"
-      [(transferBankView)]="transferBankView"
-      [(transferModelView)]="transferModelView"
       [wallet]="activeWallet() ?? undefined"
       [loading]="isLoading()" />
     <app-transfer-modal
       []
       [wallets]="searchWallets()"
-      [(visible)]="transferModelView"
       (walletSearch)="searchWalletByNumber($event)"
       (submitied)="createNetworkTransfer($event)"></app-transfer-modal>
     <app-bank-transfer-modal
       [submiting]="submitingBankTransfer()"
       [banks]="banks()"
       [linking]="linkingBank()"
-      [(type)]="transferBankType"
-      [(visible)]="transferBankView"
       (submitied)="createBankTransfer($event)"
       (linkBankAccount)="linkBankAccount()" />
 

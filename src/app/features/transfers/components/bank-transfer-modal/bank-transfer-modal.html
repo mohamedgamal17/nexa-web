@@ -1,14 +1,13 @@
 <div class="flex justify-center">
   <p-dialog
     header="Header"
-    [(visible)]="visible"
+    [visible]="visible()"
     [modal]="true"
     [breakpoints]="{ '1199px': '25vw', '575px': '90vw' }"
     [style]="{ width: '25vw' }"
     [draggable]="false"
     [resizable]="false"
     maskStyleClass="backdrop-blur-xs"
-    [(visible)]="visible"
     styleClass="!border-0  !rounded-3xl">
     <ng-template #headless>
       <div class="rounded-lg w-full bg-surface overflow-y-auto">

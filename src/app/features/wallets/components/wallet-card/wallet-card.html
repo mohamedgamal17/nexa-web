@@ -3,10 +3,16 @@
     <div class="p-3">
       <div class="grid grid-cols-1 gap-8">
         <p-skeleton width="10rem" />
-        <p-skeleton width="20rem" height="5rem" />
+        <p-skeleton
+          width="20rem"
+          height="5rem" />
         <div class="flex gap-3">
-          <p-skeleton width="10rem" height="3rem" />
-          <p-skeleton width="10rem" height="3rem" />
+          <p-skeleton
+            width="10rem"
+            height="3rem" />
+          <p-skeleton
+            width="10rem"
+            height="3rem" />
         </div>
       </div>
     </div>
@@ -20,28 +26,38 @@
           <h1 class="text-6xl mb-5">{{ wallet()?.balance | currency }}</h1>
           <div class="flex flex-col lg:flex-row gap-3">
             <div class="grid grid-cols-2 gap-3">
-              <button class="px-8 py-4 flex items-center font-bold text-lg gap-3 bg-white/20 hover:bg-white/30 rounded-3xl border-none cursor-pointer" (click)="transferModelView.set(true)">
+              <button
+                class="px-8 py-4 flex items-center font-bold text-lg gap-3 bg-white/20 hover:bg-white/30 rounded-3xl border-none cursor-pointer"
+                (click)="showP2PModal()">
                 <ng-icon name="heroArrowUpRight" />
                 Send
               </button>
-              <button class="px-8 py-4 flex items-center font-bold text-lg gap-3 bg-white/20 hover:bg-white/30 rounded-3xl border-none cursor-pointer">
+              <button
+                class="px-8 py-4 flex items-center font-bold text-lg gap-3 bg-white/20 hover:bg-white/30 rounded-3xl border-none cursor-pointer">
                 <ng-icon name="heroArrowDownLeft" />
                 Recive
               </button>
             </div>
             <div class="grid grid-cols-2 gap-3">
-              <button class="px-8 py-4 flex items-center font-bold text-lg gap-3 bg-white/20 hover:bg-white/30 rounded-3xl border-none cursor-pointer" (click)="showDepositModal()">
+              <button
+                class="px-8 py-4 flex items-center font-bold text-lg gap-3 bg-white/20 hover:bg-white/30 rounded-3xl border-none cursor-pointer"
+                (click)="showDepositModal()">
                 <ng-icon name="heroPlus" />
                 Deposit
               </button>
-              <button class="px-8 py-4 flex items-center font-bold text-lg gap-3 bg-white/20 hover:bg-white/30 rounded-3xl border-none cursor-pointer" (click)="showWithdrawModal()">
+              <button
+                class="px-8 py-4 flex items-center font-bold text-lg gap-3 bg-white/20 hover:bg-white/30 rounded-3xl border-none cursor-pointer"
+                (click)="showWithdrawModal()">
                 <ng-icon name="heroMinus" />
                 Withdraw
               </button>
             </div>
           </div>
           <div class="absolute right-0 translate-y-10 text-white opacity-10">
-            <lucide-icon [img]="WalletIcon" [size]="100" [strokeWidth]="2"></lucide-icon>
+            <lucide-icon
+              [img]="WalletIcon"
+              [size]="100"
+              [strokeWidth]="2"></lucide-icon>
           </div>
         </div>
       </div>

@@ -1,14 +1,13 @@
 <div class="flex justify-center">
   <p-dialog
     header="Header"
-    [(visible)]="visible"
     [modal]="true"
     [breakpoints]="{ '1199px': '25vw', '575px': '90vw' }"
     [style]="{ width: '25vw' }"
     [draggable]="false"
     [resizable]="false"
     maskStyleClass="backdrop-blur-xs"
-    [(visible)]="visible"
+    [visible]="visible()"
     styleClass="!border-0  !rounded-3xl">
     <ng-template #headless>
       <div class="rounded-lg w-full bg-surface overflow-hidden">
@@ -21,7 +20,9 @@
                 </div>
                 <h4>Transfer Funds</h4>
               </div>
-              <p class="text-primary-elevated text-xs">Send money instantly using the recipient's wallet number.</p>
+              <p class="text-primary-elevated text-xs">
+                Send money instantly using the recipient's wallet number.
+              </p>
             </div>
             <div class="">
               <p-button
@@ -53,7 +54,9 @@
                     <app-input-error
                       [form]="transferForm"
                       [control]="transferForm.get('reciverWallet')!"
-                      [field]="'forms.transfer.receiverWallet.label' | translate" />
+                      [field]="
+                        'forms.transfer.receiverWallet.label' | translate
+                      " />
                   </div>
                 </div>
                 <div class="grid grid-cols-1 gap-1">

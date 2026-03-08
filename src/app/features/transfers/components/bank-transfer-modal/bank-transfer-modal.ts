@@ -34,6 +34,14 @@ import {
   heroCurrencyDollar,
   heroExclamationCircle,
 } from '@ng-icons/heroicons/outline';
+import { Store } from '@ngrx/store';
+import {
+  selectBankModalType,
+  selectShowBankModal,
+  selectShowP2PModal,
+} from '../../../wallets/state/wallet.selectors';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { walletCardActions } from '../../../wallets/state/wallet.actions';
 
 @Component({
   selector: 'app-bank-transfer-modal',
@@ -64,12 +72,17 @@ import {
 })
 export class BankTransferModal implements OnInit {
   private fb = inject(FormBuilder);
+  private store = inject(Store);
 
-  visible = model(true);
+  visible = toSignal(this.store.select(selectShowBankModal), {
+    initialValue: false,
+  });
+
+  type = toSignal(this.store.select(selectBankModalType), {
+    initialValue: 'deposit',
+  });
 
   bankTansferForm: FormGroup;
-
-  type = model<'withdraw' | 'deposit'>('deposit');
 
   loading = input(false);
 
@@ -130,7 +143,7 @@ export class BankTransferModal implements OnInit {
   }
 
   toggleModel() {
-    this.visible.set(!this.visible());
+    this.store.dispatch(walletCardActions.toggleBankTransferModal({}));
   }
 
   handleSubmit($event: SubmitEvent) {

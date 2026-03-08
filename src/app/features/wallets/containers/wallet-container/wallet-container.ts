@@ -15,12 +15,13 @@ import {
   selectActiveWallet,
   selectIsWalletsLoading,
   selectIsWalletStateLoaded,
+  selectShowBankModal,
   selectWalletError,
   selectWalletList,
   selectWalletPaging,
   walletState,
 } from '../../state/wallet.selectors';
-import { walletActions } from '../../state/wallet.actions';
+import { walletActions, walletCardActions } from '../../state/wallet.actions';
 import { ErrorModel } from '../../../../core/models/error-model.interface';
 import { PagingState } from '../../../../core/models/paging-state.interface';
 import { WalletCard } from '../../components/wallet-card/wallet-card';
@@ -82,6 +83,9 @@ export class WalletContainer implements OnInit {
   wallets = toSignal(this.store.select(selectWalletList), { initialValue: [] });
   paging = toSignal(this.store.select(selectWalletPaging));
   hasError = computed(() => this.error() != null);
+  transferBankView = toSignal(this.store.select(selectShowBankModal), {
+    initialValue: false,
+  });
 
   searchWallets = signal<Wallet[] | []>([]);
   bankLoading = signal(false);
@@ -94,9 +98,6 @@ export class WalletContainer implements OnInit {
 
   subscriptions: Subscription[] = [];
 
-  transferModelView = model(false);
-  transferBankView = model(false);
-  transferBankType = model<'withdraw' | 'deposit'>('withdraw');
   pagingLength = 10;
 
   constructor() {
@@ -235,7 +236,7 @@ export class WalletContainer implements OnInit {
               paging: { length: this.pagingLength, skip: 0 },
             }),
           );
-          this.transferBankView.set(false);
+          this.store.dispatch(walletCardActions.toggleP2PTransferModal());
           this.submitingBankTransfer.set(false);
         },
 
