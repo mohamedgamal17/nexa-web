@@ -1,5 +1,8 @@
 {
   "toast": {
+    "transferCopied": {
+      "message": "Transaction number copied!"
+    },
     "addressSaved": {
       "summary": "Address saved.",
       "message": "Your address has been saved successfully."
