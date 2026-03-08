@@ -1,8 +1,17 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { WALLET_FEATURE_KEY, WalletState } from './wallet.reducer';
+import {
+  WALLET_CARD_FEATURE_KEY,
+  WALLET_FEATURE_KEY,
+  WalletCardState,
+  WalletState,
+} from './wallet.reducer';
 
 export const walletState =
   createFeatureSelector<WalletState>(WALLET_FEATURE_KEY);
+
+export const walletCardState = createFeatureSelector<WalletCardState>(
+  WALLET_CARD_FEATURE_KEY,
+);
 
 export const selectIsWalletStateLoaded = createSelector(
   walletState,
@@ -32,4 +41,19 @@ export const selectWalletPaging = createSelector(
 export const selectWalletError = createSelector(
   walletState,
   state => state.error,
+);
+
+export const selectShowP2PModal = createSelector(
+  walletCardState,
+  state => state.showP2PModal,
+);
+
+export const selectShowBankModal = createSelector(
+  walletCardState,
+  state => state.showBankModal,
+);
+
+export const selectBankModalType = createSelector(
+  walletCardState,
+  state => state.bankModalType,
 );
