@@ -22,7 +22,7 @@ export const walletCardActions = createActionGroup({
   events: {
     'Toggle P2P Transfer Modal': emptyProps(),
     'Toggle Bank Transfer Modal': props<{
-      modalType: 'deposit' | 'withdraw';
+      modalType?: 'deposit' | 'withdraw';
     }>(),
   },
 });

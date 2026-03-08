@@ -100,6 +100,6 @@ export const walletCardReducer = createReducer(
   on(walletCardActions.toggleBankTransferModal, (state, { modalType }) => ({
     ...state,
     showBankModal: !state.showBankModal,
-    bankModalType: modalType,
+    bankModalType: modalType != null ? modalType : state.bankModalType,
   })),
 );
