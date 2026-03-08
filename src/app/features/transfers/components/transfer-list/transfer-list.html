@@ -7,8 +7,19 @@
   } @else {
     @if (transfers().length > 0) {
       @for (transfer of transfers(); track $index) {
-        <app-transfer-list-item [transfer]="transfer" />
+        <app-transfer-list-item
+          (clicked)="showTransferDetails(transfer)"
+          [transfer]="transfer" />
       }
+
+      <app-transfer-details
+        (textCopied)="copyTransferNumber($event)"
+        [transfer]="transferModalData()"
+        [(visible)]="transfeDetailsVisible" />
+
+      <p-toast
+        position="bottom-right"
+        key="br" />
     } @else {
       <div class="p-12 flex flex-col items-center justify-center gap-5">
         <div

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   heroArrowDownLeft,
@@ -26,6 +26,8 @@ import { CommonModule } from '@angular/common';
 export class TransferListItem {
   transfer = input<Transfer>();
   TransferType = TransferType;
+  clicked = output<void>();
+
   getIcon(transfer: Transfer) {
     if (transfer.type == TransferType.bank) {
       return 'heroBuildingLibrary';

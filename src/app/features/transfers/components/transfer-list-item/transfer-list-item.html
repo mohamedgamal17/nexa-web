@@ -1,6 +1,7 @@
 @if (transfer()) {
   <div
-    class="px-3 py-5 border-b border-secondary-subtle hover:bg-secondary-subtle cursor-pointer group transition-all">
+    class="px-3 py-5 border-b border-secondary-subtle hover:bg-secondary-subtle cursor-pointer group transition-all"
+    (click)="clicked.emit()">
     <div class="flex justify-between">
       <div class="flex items-center gap-3">
         <div

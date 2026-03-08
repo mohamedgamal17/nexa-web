@@ -1,0 +1,133 @@
+@if (transfer()) {
+  <p-dialog
+    [modal]="true"
+    [breakpoints]="{ '1199px': '25vw', '575px': '90vw' }"
+    [style]="{ width: '26vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    [(visible)]="visible"
+    maskStyleClass="backdrop-blur-xs"
+    styleClass="!border-0 border-none  !rounded-3xl">
+    <ng-template #headless>
+      <div class="w-full overflow-y-auto bg-surface rounded rounded-3xl">
+        <div class="p-12 relative bg-secondary-subtle">
+          <div class="absolute top-1 right-1 translate-y-2 w-auto">
+            <p-button
+              icon="pi pi-times"
+              [rounded]="true"
+              [text]="true"
+              size="small"
+              severity="contrast"
+              (onClick)="visible.set(false)" />
+          </div>
+
+          <div class="flex flex-col items-center justify-center gap-8 z-10">
+            <div
+              class="p-6 flex items-center bg-surface rounded-3xl !text-secondary shadow shadow-sm text-3xl font-bold">
+              <ng-icon
+                class="!text-secondary"
+                [name]="getTransferIcon()" />
+            </div>
+
+            <div class="grid grid-cols-1 gap-2">
+              <p class="text-secondary text-center uppercase font-bold text-sm">
+                {{ getTransferTitle() }}
+              </p>
+              <h4
+                class="text-center"
+                [ngClass]="getAmountColor()">
+                {{ getAmountSign() }}{{ transfer()?.amount | currency }}
+              </h4>
+              <div class="flex items-center justify-center">
+                <div
+                  class="!text-sm px-4 py-1.5 flex items-center rounded-full gap-1"
+                  [ngClass]="getBadgeColor()">
+                  <ng-icon name="heroClock" />
+                  <p>{{ getBadgeText() }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-8">
+          <div class="grid grid-cols-1 gap-8">
+            <div class="p-4 bg-secondary-subtle rounded rounded-;g">
+              <div class="flex items-center justify-between !text-xs">
+                <div class="flex flex-col gap-1 !text-xs">
+                  <div class="flex items-center gap-1">
+                    <p class="text-secondary uppercase !text-xs">Source</p>
+                    <i
+                      class="pi !text-sm"
+                      [ngClass]="getSourceIcon()"></i>
+                  </div>
+                  <p class="text-base font-bold text-sm">
+                    {{ getSourceName() }}
+                  </p>
+                  <div class="px-1.5 py-0.5 bg-surface text-secondary !text-xs">
+                    {{
+                      transfer()?.type === TransferType.network ||
+                      transfer()?.direction === TransferDirection.depit
+                        ? (transfer()!.wallet!.number | walletNumber)
+                        : (transfer()!.fundingResource!.accountNumberLast4
+                          | bankAccountNumber)
+                    }}
+                  </div>
+                </div>
+                <div
+                  class="p-3 bg-surface shadow shadow-sm rounded-full text-center flex justify-center items-center !text-lg !text-secondary">
+                  <i class="pi pi-arrow-right"></i>
+                </div>
+                <div class="flex flex-col gap-1 !text-xs items-end">
+                  <div class="flex items-center gap-1">
+                    <i
+                      class="pi !text-sm"
+                      [ngClass]="getDestenationIcon()"></i>
+                    <p class="text-secondary uppercase !text-xs">Destination</p>
+                  </div>
+                  <p class="text-base font-bold text-sm">
+                    {{ getDestenationName() }}
+                  </p>
+                  <div class="px-1.5 py-0.5 bg-surface text-secondary">
+                    {{
+                      transfer()?.type === TransferType.network
+                        ? (transfer()!.reciver!.number | walletNumber)
+                        : transfer()?.direction === TransferDirection.credit
+                          ? (transfer()!.wallet!.number | walletNumber)
+                          : (transfer()!.fundingResource!.accountNumberLast4
+                            | bankAccountNumber)
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 bg-secondary-subtle rounded-lg">
+              <div class="flex justify-between items-center">
+                <div class="flex flex-col gap-2 text-sm">
+                  <p class="text-secondary">Reference ID</p>
+                  <div class="px-1.5 py-0.5 bg-surface text-secondary">
+                    <p>{{ transfer()?.number }}</p>
+                  </div>
+                </div>
+                <p-button
+                  variant="text"
+                  severity="success"
+                  icon="pi pi-clone"
+                  (onClick)="
+                    textCopied.emit({ text: transfer()!.number })
+                  "></p-button>
+              </div>
+            </div>
+            <p-button
+              fluid="true"
+              variant="text"
+              severity="secondary"
+              label="close"
+              (onClick)="visible.set(false)" />
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #content></ng-template>
+  </p-dialog>
+}
