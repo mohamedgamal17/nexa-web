@@ -1,0 +1,44 @@
+@if (transfer()) {
+  <div
+    class="px-3 py-5 border-b border-secondary-subtle hover group transition-all">
+    <div class="flex justify-between">
+      <div class="flex items-center gap-3">
+        <div
+          class="bg-surface rounded-2xl p-3 flex items-center shadow shadow-sm border border-secondary-muted group-hover:scale-110 transition-transform"
+          [ngClass]="getIconColor(transfer()!)">
+          <ng-icon
+            class="text-2xl"
+            [name]="getIcon(transfer()!)"
+            name="heroBuildingLibrary" />
+        </div>
+
+        @if (transfer()!.type === TransferType.bank) {
+          <div class="flex flex-col">
+            <p class="font-bold">{{ transfer()!.fundingResource?.bankName }}</p>
+            <div class="flex items-center gap-1 text-secondary text-sm">
+              <p>
+                {{
+                  transfer()!.fundingResource?.accountNumberLast4
+                    | bankAccountNumber
+                }}
+              </p>
+              <div class="w-1 h-1 rounded-full bg-secondary"></div>
+              <p>{{ transfer()?.completedAt | date }}</p>
+            </div>
+          </div>
+        } @else {}
+      </div>
+      <div
+        class="flex flex-col gap-1 justify-center content-end items-end !text-right">
+        <p class="text-success font-bold">
+          {{ getAmountSign(transfer()!) }} {{ transfer()!.amount | currency }}
+        </p>
+        <div
+          class="py-0.5 px-3 text-xs rounded-2xl uppercase font-bold"
+          [ngClass]="getTagColor(transfer()!)">
+          {{ getTagText(transfer()!) }}
+        </div>
+      </div>
+    </div>
+  </div>
+}

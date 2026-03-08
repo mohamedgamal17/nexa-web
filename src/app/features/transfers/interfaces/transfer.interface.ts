@@ -1,4 +1,5 @@
 import { Entity } from '../../../core/models/entity.interface';
+import { Bank } from '../../banks/interfaces/bank.interface';
 import { Wallet } from '../../wallets/interfaces/wallet.interface';
 import { TransferDirection } from '../enums/transfer-direction.enum';
 import { TransferStatus } from '../enums/transfer-status.enum';
@@ -14,6 +15,7 @@ export interface Transfer extends Entity {
   reciverId?: string;
   reciver?: Wallet;
   fundingResourceId?: string;
+  fundingResource?: Bank;
   direction: TransferDirection;
   bankTransferType?: BankTransfer;
   status: TransferStatus;

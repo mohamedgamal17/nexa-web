@@ -1,0 +1,27 @@
+<div
+  class="grid grid-cols-1 bg-surface shadow-sm boarder boarder-secondary-muted rounded rounded-3xl">
+  @if (loading()) {
+    @for (dummy of skeletonArray; track $index) {
+      <app-transfer-list-item-skeleton />
+    }
+  } @else {
+    @if (transfers().length > 0) {
+      @for (transfer of transfers(); track $index) {
+        <app-transfer-list-item [transfer]="transfer" />
+      }
+    } @else {
+      <div class="p-12 flex flex-col items-center justify-center gap-5">
+        <div
+          class="p-3 rounded-full flex items-center bg-secondary-subtle text-secondary-border text-center">
+          <i class="!text-3xl pi pi-history"></i>
+        </div>
+        <div class="text-center">
+          <h6>No transactions found for Main Wallet.</h6>
+          <p class="text-secondary text-sm">
+            Start by sending or receiving funds.
+          </p>
+        </div>
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,33 @@
+<div class="grid-cols-1 gap-8">
+  @if (error()) {
+    <div class="flex items-center justify-center w-full">
+      <div class="sm:w-[50%] w-full">
+        <app-alert-error [error]="error() ?? undefined" />
+      </div>
+    </div>
+  } @else {
+    @if (loading()) {
+      <div class="flex justify-between items-center mb-5">
+        <p-skeleton
+          width="5rem"
+          height="1.2rem" />
+        <p-skeleton
+          width="3rem"
+          height="1rem" />
+      </div>
+    } @else {
+      <div class="flex justify-between items-center w-full mb-5">
+        <h6>Recent Transactions</h6>
+        <a
+          href="#"
+          class="text-primary underline hover:text-primary-hover">
+          View all
+        </a>
+      </div>
+    }
+
+    <app-transfer-list
+      [transfers]="transfers()"
+      [loading]="loading()" />
+  }
+</div>

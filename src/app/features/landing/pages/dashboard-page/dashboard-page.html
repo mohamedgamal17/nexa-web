@@ -1,5 +1,12 @@
-<div class="max-w-7xl mx-auto px-4 mt-8 lg:px-8 mb-8 min-h-screen flex flex-col">
+<div
+  class="max-w-7xl mx-auto px-4 mt-8 lg:px-8 mb-8 min-h-screen flex flex-col">
   <div class="grid grid-cols-1 gap-5">
     <app-wallet-container />
+    <div class="grid sm:grid-cols-12 grid-cols-1 gap-5">
+      <div class="sm:col-span-3"></div>
+      <div class="sm:col-span-9">
+        <app-recent-transfer-container />
+      </div>
+    </div>
   </div>
 </div>
