@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Wallet } from '../interfaces/wallet.interface';
-import { walletActions } from './wallet.actions';
+import { walletActions, walletCardActions } from './wallet.actions';
 import { PagingState } from '../../../core/models/paging-state.interface';
 import { ErrorModel } from '../../../core/models/error-model.interface';
 
@@ -13,7 +13,14 @@ export interface WalletState {
   error: ErrorModel | null;
 }
 
+export interface WalletCardState {
+  showP2PModal: boolean;
+  showBankModal: boolean;
+}
+
 export const WALLET_FEATURE_KEY = 'wallets';
+
+export const WALLET_CARD_FEATURE_KEY = 'wallet-card';
 
 const initialState: WalletState = {
   loaded: false,
@@ -28,6 +35,11 @@ const initialState: WalletState = {
     isLoading: false,
     error: null,
   },
+};
+
+const walletCardInitialState: WalletCardState = {
+  showBankModal: false,
+  showP2PModal: false,
 };
 
 export const walletReducer = createReducer(
@@ -74,5 +86,17 @@ export const walletReducer = createReducer(
       isLoading: state.paging.skip > 0 ? false : state.paging.isLoading,
       error: state.paging.skip > 0 ? error : null,
     },
+  })),
+);
+
+export const walletCardReducer = createReducer(
+  walletCardInitialState,
+  on(walletCardActions.toggleP2PTransferModal, state => ({
+    ...state,
+    showP2PModal: !state.showP2PModal,
+  })),
+  on(walletCardActions.toggleBankTransferModal, state => ({
+    ...state,
+    showBankModal: !state.showBankModal,
   })),
 );
