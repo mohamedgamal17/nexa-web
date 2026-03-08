@@ -63,6 +63,12 @@ export class TransferListItem {
     }
     return 'faild';
   }
+  getAmountColor() {
+    return this.transfer()?.type === TransferType.network ||
+      this.transfer()?.direction === TransferDirection.depit
+      ? 'text-danger'
+      : 'text-success';
+  }
 
   getAmountSign(transfer: Transfer) {
     if (transfer.direction === TransferDirection.depit) {

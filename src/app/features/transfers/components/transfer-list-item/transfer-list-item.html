@@ -31,7 +31,9 @@
       </div>
       <div
         class="flex flex-col gap-1 justify-center content-end items-end !text-right">
-        <p class="text-success font-bold">
+        <p
+          class="font-bold"
+          [ngClass]="getAmountColor()">
           {{ getAmountSign(transfer()!) }} {{ transfer()!.amount | currency }}
         </p>
         <div
