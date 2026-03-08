@@ -9,10 +9,13 @@
     </div>
   } @else {
     <div class="sm:col-span-3">
-      <app-wallet-list
-        [loading]="isLoading()"
-        [wallets]="wallets()"
-        [activeWallet]="activeWallet() ?? undefined" />
+      <div class="grid grid-cols-1 gap-5">
+        <h6>My Wallets</h6>
+        <app-wallet-list
+          [loading]="isLoading()"
+          [wallets]="wallets()"
+          [activeWallet]="activeWallet() ?? undefined" />
+      </div>
     </div>
     <app-wallet-card
       class="sm:col-span-9"
