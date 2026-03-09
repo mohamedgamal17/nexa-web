@@ -1,0 +1,124 @@
+<div class="sticky z-50 w-full bg-surface border-b border-secondary-muted">
+  <div class="px-4 h-20 max-w-7xl mx-auto flex items-center justify-between">
+    @if (showLogo()) {
+      <div class="flex items-center gap-3 cursor-pointer group">
+        <div
+          class="p-2.5 flex items-center rounded rounded-xl bg-primary text-primary-foreground shadow shadow-sm group-hover:scale-110 transition-transform duration-300">
+          <lucide-icon
+            [name]="WalletIcon"
+            size="20" />
+        </div>
+        <h5 class="whitespace-nowrap">
+          Nexa
+          <span class="text-primary">Wallet</span>
+        </h5>
+      </div>
+    } @else {
+      <p-button
+        variant="text"
+        icon="pi pi-angle-left"
+        label="back"
+        severity="secondary"
+        [routerLink]="['/']"></p-button>
+    }
+
+    <div>
+      @if (customerLoading()) {
+        <div
+          class="p-2 border border-secondary-elevated flex items-center gap-2 group rounded-xl">
+          <p-skeleton
+            width="2.5rem"
+            height="2.5rem" />
+          <div class="flex flex-col gap-2">
+            <p-skeleton
+              width="5rem"
+              height=".5rem" />
+            <p-skeleton
+              width="2.5rem"
+              height=".5rem" />
+          </div>
+        </div>
+      } @else {
+        <div
+          class="p-2 border border-secondary-elevated flex items-center gap-2 group rounded-xl cursor-pointer"
+          (click)="menu.toggle($event)">
+          <div
+            class="h-10 w-10 rounded text-sm rounded-xl bg-primary text-primary-foreground uppercase font-bold text-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            {{
+              currentCustomer()?.info?.firstName?.at(0) +
+                '' +
+                currentCustomer()?.info?.lastName?.at(0)
+            }}
+          </div>
+          <div class="flex flex-col">
+            <p class="text-sm font-bold">
+              {{
+                currentCustomer()?.info?.firstName +
+                  ' ' +
+                  currentCustomer()?.info?.lastName
+              }}
+            </p>
+            <p
+              class="text-secondary text-xs"
+              [ngClass]="getCustomerStatusColor()">
+              {{ getCustomerStatus() }}
+            </p>
+          </div>
+        </div>
+        <p-menu
+          #menu
+          styleClass="p-3 w-50"
+          [popup]="true"
+          [model]="items">
+          <ng-template #start>
+            <div
+              class="flex items-center gap-3 border-b border-secondary-subtle px-0.5 py-2.5">
+              <div
+                class="h-10 w-10 rounded text-sm rounded-xl bg-primary text-primary-foreground uppercase font-bold text-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                {{
+                  currentCustomer()?.info?.firstName?.at(0) +
+                    '' +
+                    currentCustomer()?.info?.lastName?.at(0)
+                }}
+              </div>
+              <div class="flex-col">
+                <p class="text-sm font-bold">
+                  {{
+                    currentCustomer()?.info?.firstName +
+                      ' ' +
+                      currentCustomer()?.info?.lastName
+                  }}
+                </p>
+                <p
+                  class="text-secondary text-xs"
+                  [ngClass]="getCustomerStatusColor()">
+                  {{ getCustomerStatus() }}
+                </p>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template
+            #item
+            let-item>
+            <div
+              class="flex items-center gap-3 p-3 hover:bg-primary-subtle transition-colors duration-100 rounded-lg cursor-pointer"
+              [routerLink]="[item.link]">
+              <i
+                [ngClass]="item.icon"
+                class="text-primary"></i>
+              {{ item.label }}
+            </div>
+          </ng-template>
+          <ng-template #end>
+            <div
+              class="border-t border-secondary-subtle flex items-center gap-3 p-3 hover:bg-primary-subtle rounded rounded-2xl transition-colors duration-100 cursor-pointer"
+              (click)="logout()">
+              <i class="pi pi-sign-out text-danger"></i>
+              Logout
+            </div>
+          </ng-template>
+        </p-menu>
+      }
+    </div>
+  </div>
+</div>
