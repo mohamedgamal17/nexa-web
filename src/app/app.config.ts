@@ -34,6 +34,7 @@ import {
   walletReducer,
 } from './features/wallets/state/wallet.reducer';
 import { WalletEffects } from './features/wallets/state/wallet.effects';
+import { provideTransfers } from './features/transfers/transfer.feature';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -79,6 +80,7 @@ export const appConfig: ApplicationConfig = {
     provideAuthFeature(),
     provideOnboardingFeature(),
     provideCustomersFeature(),
+    provideTransfers(),
     provideLanding(),
     provideStore({
       [CUSTOMER_KEY_FEAUTRE]: customerReducer,

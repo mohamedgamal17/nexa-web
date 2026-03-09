@@ -1,0 +1,52 @@
+<div
+  class="max-w-5xl mx-auto px-4 mt-8 lg:px-8 mb-8 min-h-screen flex flex-col">
+  <div class="grid grid-cols-1 gap-8">
+    @if (error()) {
+      <app-data-loader-error
+        [error]="error()!"
+        (refresh)="refresh()"></app-data-loader-error>
+    } @else {
+      @if (walletLoading()) {
+        <div class="flex items-center gap-3">
+          <p-skeleton
+            width="3rem"
+            height="3rem" />
+          <div class="flex flex-col gap-2">
+            <p-skeleton
+              height="1rem"
+              width="12rem" />
+            <p-skeleton
+              height="1rem"
+              width="6rem" />
+          </div>
+        </div>
+      } @else {
+        <div class="flex items-center gap-3">
+          <div
+            class="p-3 flex items-center bg-primary text-primary-foreground rounded rounded-2xl">
+            <i class="!text-2xl pi pi-wallet"></i>
+          </div>
+          <div class="flex flex-col">
+            <h6>Main Wallet Transfers</h6>
+            <p class="text-secondary">
+              Linked To : {{ activeWallet()?.number | walletNumber }}
+            </p>
+          </div>
+        </div>
+      }
+
+      <app-transfer-list
+        [transfers]="transfers()"
+        [loading]="transferLoading()" />
+
+      @if (!transferLoading()) {
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [rowsPerPageOptions]="[10, 20, 30]"
+          [first]="transferSkip()"
+          [rows]="pagingLength()"
+          [totalRecords]="transferPaging()?.totalCount ?? 0" />
+      }
+    }
+  </div>
+</div>
