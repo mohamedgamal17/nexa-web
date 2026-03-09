@@ -10,6 +10,7 @@ import { CardModule } from 'primeng/card';
 import { QuickActionItem } from '../quick-action-item/quick-action-item';
 import { Store } from '@ngrx/store';
 import { walletCardActions } from '../../../wallets/state/wallet.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quick-actions',
@@ -22,6 +23,7 @@ import { walletCardActions } from '../../../wallets/state/wallet.actions';
 })
 export class QuickActions {
   private store = inject(Store);
+  private router = inject(Router);
 
   toggleP2PTransferModal() {
     this.store.dispatch(walletCardActions.toggleP2PTransferModal());
@@ -31,5 +33,9 @@ export class QuickActions {
     this.store.dispatch(
       walletCardActions.toggleBankTransferModal({ modalType: type }),
     );
+  }
+
+  navigateToUrl(url: string) {
+    this.router.navigateByUrl(url);
   }
 }

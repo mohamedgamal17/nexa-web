@@ -5,9 +5,10 @@ import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ErrorModel } from '../../../../core/models/error-model.interface';
 import { SkeletonModule } from 'primeng/skeleton';
 import { AlertError } from '../../../../shared/components/alert-error/alert-error';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-recent-transfer-container',
-  imports: [TransferList, SkeletonModule, AlertError],
+  imports: [TransferList, SkeletonModule, AlertError, RouterModule],
   templateUrl: './recent-transfer-container.html',
   styleUrl: './recent-transfer-container.scss',
 })
