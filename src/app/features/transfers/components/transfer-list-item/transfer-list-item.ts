@@ -13,10 +13,11 @@ import { TransferDirection } from '../../enums/transfer-direction.enum';
 
 import { BankAccountNumberPipe } from '../../../banks/pips/bank-account-number-pipe';
 import { CommonModule } from '@angular/common';
+import { WalletNumberPipe } from '../../../wallets/pipes/wallet-number-pipe';
 
 @Component({
   selector: 'app-transfer-list-item',
-  imports: [NgIcon, BankAccountNumberPipe, CommonModule],
+  imports: [NgIcon, BankAccountNumberPipe, CommonModule , WalletNumberPipe],
   templateUrl: './transfer-list-item.html',
   styleUrl: './transfer-list-item.scss',
   viewProviders: [
@@ -64,6 +65,10 @@ export class TransferListItem {
     return 'faild';
   }
   getAmountColor() {
+    if(this.transfer()?.status !== TransferStatus.completed){
+      return 'text-secondary'
+    }
+
     return this.transfer()?.type === TransferType.network ||
       this.transfer()?.direction === TransferDirection.depit
       ? 'text-danger'
@@ -71,7 +76,7 @@ export class TransferListItem {
   }
 
   getAmountSign(transfer: Transfer) {
-    if (transfer.direction === TransferDirection.depit) {
+    if (transfer.direction === TransferDirection.depit || transfer.type === TransferType.network) {
       return '-';
     }
     return '+';

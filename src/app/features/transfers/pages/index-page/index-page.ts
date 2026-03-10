@@ -46,7 +46,7 @@ export class IndexPage {
 
   pagingLength = signal(10);
 
-  transferSkip = signal(10);
+  transferSkip = signal(0);
 
   transferResource = rxResource({
     params: () => ({

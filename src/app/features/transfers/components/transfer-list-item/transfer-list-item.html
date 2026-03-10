@@ -27,7 +27,22 @@
               <p>{{ transfer()?.completedAt | date }}</p>
             </div>
           </div>
-        } @else {}
+        } @else {
+
+           <div class="flex flex-col">
+            <p class="font-bold">{{ transfer()!.reciver?.customer?.info?.firstName + ' ' +  transfer()!.reciver?.customer?.info?.lastName  }}</p>
+            <div class="flex items-center gap-1 text-secondary text-sm">
+              <p class="text-secondary">
+                {{
+                  transfer()!.reciver?.number | walletNumber
+                   
+                }}
+              </p>
+              <div class="w-1 h-1 rounded-full bg-secondary"></div>
+              <p>{{ transfer()?.completedAt | date }}</p>
+            </div>
+          </div>
+        }
       </div>
       <div
         class="flex flex-col gap-1 justify-center content-end items-end !text-right">
