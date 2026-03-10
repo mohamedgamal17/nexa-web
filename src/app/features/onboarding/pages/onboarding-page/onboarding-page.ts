@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal, ViewChild, ViewRef } from '@angular/core';
+import { Component, computed, effect, inject, linkedSignal, OnInit, signal, ViewChild, ViewRef } from '@angular/core';
 import { OnboardingWizard } from '../../components/onboarding-wizard/onboarding-wizard';
 import { OnboardCustomerService } from '../../services/onboard-customer.service';
 import { OnboardCustomer } from '../../interfaces/onboard-customer.interface';
@@ -21,6 +21,11 @@ import { ToastModule } from 'primeng/toast';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorModel } from '../../../../core/models/error-model.interface';
 import { DataLoaderError } from '../../../../shared/components/data-loader-error/data-loader-error';
+import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { selectCustomer } from '../../../customers/state/customer.selectors';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { customerActions } from '../../../customers/state/customer.actions';
 
 @Component({
   selector: 'app-onboarding-page',
@@ -30,7 +35,8 @@ import { DataLoaderError } from '../../../../shared/components/data-loader-error
   styleUrl: './onboarding-page.scss',
 })
 export class OnboardingPage implements OnInit {
-  customer = signal<Customer | null>(null);
+  private store =inject(Store)
+  customer = toSignal(this.store.select(selectCustomer),{initialValue : null})
   onboardCustomer = signal<OnboardCustomer | null>(null);
   onboardingLoading = signal(false);
   onboardingError = signal<ErrorModel | null>(null);
@@ -42,6 +48,7 @@ export class OnboardingPage implements OnInit {
   @ViewChild('complyCubeContainer') complyCubeContainer: HTMLElement;
 
   constructor(
+
     private customerService: CustomerService,
     private onboardingCustomerService: OnboardCustomerService,
     private onboardingStepStateService: OnboardingStepStateService,
@@ -50,7 +57,17 @@ export class OnboardingPage implements OnInit {
     private complyCubeService: ComplyCubeService,
     private messageService: MessageService,
     private transalteService: TranslateService,
-  ) {}
+    private router :Router,
+   
+  ) {
+
+    effect(()=> {
+      const customer = this.customer()
+      if(customer && customer.document){
+        this.router.navigateByUrl('/customer')
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.getOnboardCustomer();
@@ -157,7 +174,7 @@ export class OnboardingPage implements OnInit {
       )
       .subscribe({
         next: (value) => {
-          this.customer.set(value);
+          this.store.dispatch(customerActions.loadCustomerSucceeded({customer : value}))
           this.onboardingStepStateService.update(OnboardingStepState.Completed);
           this.messageService.add({
             severity: 'success',
@@ -218,7 +235,9 @@ export class OnboardingPage implements OnInit {
             summary: this.transalteService.instant('toast.kycCompleted.summary'),
             detail: this.transalteService.instant('toast.kycCompleted.message'),
           });
-          this.customer.set(customer);
+
+          this.store.dispatch(customerActions.loadCustomerSucceeded({customer : customer}))
+
         },
         error: (err) => {
           this.submitError.set(err);
@@ -234,7 +253,6 @@ export class OnboardingPage implements OnInit {
   }
 
   private resetState() {
-    this.customer.set(null);
     this.onboardCustomer.set(null);
     this.onboardingLoading.set(false);
     this.onboardingError.set(null);
