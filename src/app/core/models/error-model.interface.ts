@@ -1,6 +1,7 @@
 import { ApiProblemDetails } from './api-problem-details.interface';
 
-export type ErrorType = 'connection' | 'not-found' | 'server' | 'bad-request' | 'forbidden' | 'unauthorized' | 'generic' | 'vendors-ui';
+export type ErrorType = 'connection' | 'not-found' | 'business-logic'
+ | 'server' | 'bad-request' | 'forbidden' | 'unauthorized' | 'generic' | 'vendors-ui';
 
 export interface ErrorModel {
   type: ErrorType;

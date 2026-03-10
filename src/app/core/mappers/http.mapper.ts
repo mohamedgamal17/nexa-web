@@ -35,6 +35,13 @@ export function mapToErrorModel(error: HttpErrorResponse): ErrorModel {
           status: 400,
           validationErrors: problem.errors,
         };
+      } else {
+        return {
+          type: 'business-logic',
+          title: problem.title ?? 'Validation Error',
+          message: problem.detail ?? 'Unexpected error occurred.',
+          status: 400,
+        };
       }
       break;
 
@@ -54,14 +61,15 @@ export function mapToErrorModel(error: HttpErrorResponse): ErrorModel {
         status: 500,
         retryable: true,
       };
-  }
 
-  return {
-    type: 'generic',
-    title: 'Error',
-    message: problem?.detail ?? 'Unexpected error occurred.',
-    status: error.status,
-  };
+    default:
+      return {
+        type: 'generic',
+        title: 'Error',
+        message: problem?.detail ?? 'Unexpected error occurred.',
+        status: error.status,
+      };
+  }
 }
 
 export const isObject = (value: any) => {
