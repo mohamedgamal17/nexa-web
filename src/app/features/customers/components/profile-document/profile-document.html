@@ -41,7 +41,7 @@
           </div>
           <div class="flex flex-col gap-1 flex-1">
             <div class="flex justify-end">
-              <div class="px-3 py-1 rounded-3xl text-xs border-1 flex items-center" [ngClass]="getDocumentStatusClass(document()!.status)">
+              <div class="px-3 py-1 rounded-3xl text-xs border-1 flex items-center font-bold" [ngClass]="getDocumentStatusClass(document()!.status)">
                 <p>{{ getDocumentStatusName(document()!.status) }}</p>
               </div>
             </div>

@@ -55,7 +55,10 @@ export class ProfileDocument {
   }
 
   getDocumentStatusClass(status: DocumentVerificationStatus) {
-    if (status == DocumentVerificationStatus.Pending || DocumentVerificationStatus.Processing) {
+    console.log(status)
+
+    if (status == DocumentVerificationStatus.Pending  ||
+      status == DocumentVerificationStatus.Processing) {
       return 'bg-info-subtle border-info  text-info';
     }
 
