@@ -275,7 +275,29 @@ export class WalletContainer implements OnInit {
           this.linkingBank.set(false);
         },
         error: (err: ErrorModel | StripeError | any) => {
-          console.log(err);
+          const errorModel = err as ErrorModel;
+
+          if (errorModel) {
+            this.messageService.add({
+              summary: errorModel.title,
+              detail  :errorModel.message,
+              severity:'error'
+            });
+
+            console.log(errorModel)
+          }else{
+            const stripeError =  err as StripeError
+
+            stripeError ?
+              this.messageService
+                .add({
+                  summary : stripeError.type,
+                  detail:stripeError.message,
+                   severity:'error'
+                })
+              : console.log(err)
+          }
+
           this.linkingBank.set(false);
         },
       });
