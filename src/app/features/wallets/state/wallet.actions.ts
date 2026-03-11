@@ -24,5 +24,6 @@ export const walletCardActions = createActionGroup({
     'Toggle Bank Transfer Modal': props<{
       modalType?: 'deposit' | 'withdraw';
     }>(),
+    'Toggle Recive Funds Modal' :emptyProps(),
   },
 });

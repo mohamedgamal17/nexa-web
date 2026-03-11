@@ -45,6 +45,7 @@ import { StripeError } from '@stripe/stripe-js';
 import { BankService } from '../../../banks/services/bank.service';
 import { ToastModule } from 'primeng/toast';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
+import { ReciveFundsModal } from '../../components/recive-funds-modal/recive-funds-modal';
 
 @Component({
   selector: 'app-wallet-container',
@@ -56,6 +57,7 @@ import { rxResource, toSignal } from '@angular/core/rxjs-interop';
     BankTransferModal,
     TranslateModule,
     ToastModule,
+    ReciveFundsModal
   ],
   templateUrl: './wallet-container.html',
   styleUrl: './wallet-container.scss',

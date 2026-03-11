@@ -16,6 +16,7 @@ export interface WalletState {
 export interface WalletCardState {
   showP2PModal: boolean;
   showBankModal: boolean;
+  showReciveFundsModal:boolean,
   bankModalType: 'deposit' | 'withdraw';
 }
 
@@ -41,6 +42,7 @@ const initialState: WalletState = {
 const walletCardInitialState: WalletCardState = {
   showBankModal: false,
   showP2PModal: false,
+  showReciveFundsModal :false,
   bankModalType: 'deposit',
 };
 
@@ -97,9 +99,15 @@ export const walletCardReducer = createReducer(
     ...state,
     showP2PModal: !state.showP2PModal,
   })),
+
   on(walletCardActions.toggleBankTransferModal, (state, { modalType }) => ({
     ...state,
     showBankModal: !state.showBankModal,
     bankModalType: modalType != null ? modalType : state.bankModalType,
   })),
+
+  on(walletCardActions.toggleReciveFundsModal, (state)=> ({
+    ...state,
+    showReciveFundsModal :!state.showReciveFundsModal
+  }))
 );

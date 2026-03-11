@@ -57,3 +57,8 @@ export const selectBankModalType = createSelector(
   walletCardState,
   state => state.bankModalType,
 );
+
+export const selectShowReciveFundsModal = createSelector(
+  walletCardState,
+  state => state.showReciveFundsModal
+)
