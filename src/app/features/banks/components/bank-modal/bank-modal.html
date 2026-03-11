@@ -1,0 +1,132 @@
+<p-dialog
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [(visible)]="visible">
+  <ng-template #content>
+    @if (
+      linkedBank().progress === 'Pending' ||
+      linkedBank().progress == 'Processing'
+    ) {
+      <div class="flex flex-col items-center  gap-10">
+        <div
+          class="p-6 bg-primary-subtle text-primary flex items-center rounded-full">
+          <lucide-icon
+            [name]="Building2"
+            size="48" />
+        </div>
+        <div class="grid grid-cols-1 gap-1">
+          <h4 class="text-center">Link your bank</h4>
+          <p class="text-secondary text-center max-w-sm">
+            NexWallet uses bank-grade encryption to securely link your accounts
+            for instant transfers.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 gap-3 w-full">
+          <div
+            class="p-5 rounded rounded-2xl bg-secondary-subtle border border-secondary-muted">
+            <div class="flex items-center gap-3">
+              <div class="bg-surface text-primary p-3 rounded-2xl">
+                <lucide-icon [name]="ShieldCheck" />
+              </div>
+              <div class="space-y-1 text-sm">
+                <h6>Secure Connection</h6>
+                <p class="text-secondary">
+                  Your login credentials are never stored on our servers.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="p-5 rounded rounded-2xl bg-secondary-subtle border border-secondary-muted">
+            <div class="flex items-center gap-3">
+              <div class="bg-surface text-primary p-3 rounded-2xl">
+                <lucide-icon [name]="LockIcon" />
+              </div>
+              <div class="space-y-1 text-sm">
+                <h6>Encrypted Data</h6>
+                <p class="text-secondary">
+                  End-to-end encryption for all financial transmissions.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-full">
+          <p-button
+            styleClass="!w-full"
+            label="Continue to bank"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            [loading]="linkedBank().progress === 'Processing'"
+            (onClick)="linked.emit()" />
+        </div>
+      </div>
+    } @else if (linkedBank().progress == 'Completed') {
+      @if (linkedBank()) {
+        <div class="flex  flex-col items-center  gap-10">
+          <div
+            class="p-6 bg-primary-subtle text-primary flex items-center rounded-full">
+            <lucide-icon
+              [name]="ShieldCheck"
+              size="48" />
+          </div>
+
+          <div class="grid grid-cols-1 gap-1">
+            <h4 class="text-center">Account Linked</h4>
+            <p class="text-secondary text-center max-w-sm">
+              Global Finance Bank has been successfully connected to your Nexa
+              wallet profile.
+            </p>
+          </div>
+
+          <div
+            class="p-5 rounded rounded-2xl bg-secondary-subtle border border-secondary-muted w-full">
+            <div class="flex items-center justify-center">
+              <div class="space-y-1 text-center">
+                <p class="text-secondary font-bold">New Account Linked</p>
+                <h5>{{ linkedBank().bank?.bankName }}</h5>
+                <p class="text-secondary">
+                  {{
+                    linkedBank().bank?.accountNumberLast4 | bankAccountNumber
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full">
+            <p-button
+              styleClass="!w-full"
+              label="Go to dashboard"
+              (onClick)="visible.set(false)" />
+          </div>
+        </div>
+      }
+    } @else if (linkedBank().progress == 'Error') {
+      <div class="flex flex-col items-center gap-10 !w-full ">
+        <div
+          class="p-6 bg-danger-subtle text-danger flex items-center rounded-full ">
+          <lucide-icon
+            [name]="CircleAlert"
+            size="48" />
+        </div>
+
+        <div class="grid grid-cols-1 gap-1">
+          <h6 class="text-center">{{ getErrorTitle() }}</h6>
+          <p class="text-secondary text-center max-w-sm">
+            {{ getErrorMessage() }}
+          </p>
+        </div>
+
+        <div class="w-full">
+          <p-button
+            variant="text"
+            severity="secondary"
+            styleClass="!w-full"
+            label="Cancel linking"
+            (onClick)="visible.set(false)" />
+        </div>
+      </div>
+    }
+  </ng-template>
+</p-dialog>

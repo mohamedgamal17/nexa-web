@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { loadStripe, SetupIntent, Stripe } from '@stripe/stripe-js';
 import { environemnt } from '../../../../environments/environemnt';
 import { from, map, mergeMap, Observable, tap, throwError } from 'rxjs';
+import { ErrorModel } from '../../../core/models/error-model.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class StripeService {
         .then(() => this.stripe.confirmUsBankAccountSetup(token))
         .then(result => {
           if (result.error) {
-            observer.error(result.error);
+            observer.error(<ErrorModel> {title : result.error.type , message : result.error.message});
           } else {
             observer.next(result.setupIntent);
             observer.complete();

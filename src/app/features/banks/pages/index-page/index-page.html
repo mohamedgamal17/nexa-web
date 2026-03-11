@@ -61,7 +61,10 @@
           <p-button
             icon="pi pi-plus"
             label="Connect new bank account"
-            styleClass="shadow shadow-lg " />
+            styleClass="shadow shadow-lg "  
+            (onClick)="bankLinkVisible.set(true)"
+            
+            />
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           @for (bank of bankResource.value()?.data; track $index) {
@@ -84,7 +87,9 @@
                 <p-button
                   icon="pi pi-plus"
                   label="Connect new bank account"
-                  styleClass="shadow shadow-lg " />
+                  styleClass="shadow shadow-lg " 
+                  (onClick)="bankLinkVisible.set(true)"
+                  />
               </div>
             </p-card>
           }
@@ -139,5 +144,6 @@
         </div>
       </div>
     </div>
+    <app-bank-modal [linkedBank]="linkedBankState()"  [(visible)]="bankLinkVisible" (linked)="connectToBank()"  />
   }
 </div>
