@@ -40,7 +40,6 @@ import { provideBanks } from './features/banks/banks.features';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
     provideHttpClient(
       withInterceptors([errorHandlerInterceptorFn, authHttpInterceptorFn]),
     ),
@@ -90,5 +89,6 @@ export const appConfig: ApplicationConfig = {
       [WALLET_CARD_FEATURE_KEY]: walletCardReducer,
     }),
     provideEffects([CustomerEffect, WalletEffects]),
+    provideRouter(routes)
   ],
 };
