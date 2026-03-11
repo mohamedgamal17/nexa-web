@@ -2,6 +2,7 @@ import { Component, inject, Inject } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   heroArrowUpRight,
+  heroBuildingLibrary,
   heroMinus,
   heroPlus,
   heroUser,
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
   templateUrl: './quick-actions.html',
   styleUrl: './quick-actions.scss',
   viewProviders: [
-    provideIcons({ heroArrowUpRight, heroPlus, heroMinus, heroUser }),
+    provideIcons({ heroArrowUpRight, heroPlus, heroMinus, heroUser , heroBuildingLibrary }),
   ],
 })
 export class QuickActions {

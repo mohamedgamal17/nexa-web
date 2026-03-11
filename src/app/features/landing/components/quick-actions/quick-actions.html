@@ -2,33 +2,21 @@
   <p class="text-secondary uppercase font-bold">Quick Actions</p>
   <div class="px-1 py-2.5">
     <div class="grid grid-cols-1 gap-5">
-      <app-quick-action-item
-        label="Transfer"
-        (clicked)="toggleP2PTransferModal()">
-        <ng-icon
-          class="!text-success !text-xl"
-          name="heroArrowUpRight" />
-      </app-quick-action-item>
-      <app-quick-action-item
-        label="deposit"
-        (clicked)="toggleBankTransferModal('deposit')">
-        <ng-icon
-          class="!text-success !text-xl"
-          name="heroPlus" />
-      </app-quick-action-item>
-      <app-quick-action-item
-        label="withdraw"
-        (clicked)="toggleBankTransferModal('withdraw')">
-        <ng-icon
-          class="!text-danger !text-xl"
-          name="heroMinus" />
-      </app-quick-action-item>
+
 
       <app-quick-action-item
         label=" Profile"
         (clicked)="navigateToUrl('/customer')">
         <i class="pi pi-user !text-xl !text-primary"></i>
       </app-quick-action-item>
+      <app-quick-action-item
+        label="Banks"
+        (clicked)="navigateToUrl('/banks')">
+        <ng-icon
+          class="!text-info !text-xl"
+          name="heroBuildingLibrary" />
+      </app-quick-action-item>
+
       <app-quick-action-item
         label=" Transfer history"
         (clicked)="navigateToUrl('/transfers')">
