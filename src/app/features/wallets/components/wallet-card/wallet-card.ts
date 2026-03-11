@@ -56,4 +56,10 @@ export class WalletCard {
       walletCardActions.toggleBankTransferModal({ modalType: 'withdraw' }),
     );
   }
+
+  showReciveFundsModal(){
+    this.store.dispatch(
+      walletCardActions.toggleReciveFundsModal()
+    )
+  }
 }

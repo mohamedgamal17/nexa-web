@@ -32,7 +32,8 @@
       [linking]="linkingBank()"
       (submitied)="createBankTransfer($event)"
       (linkBankAccount)="linkBankAccount()" />
-
+    
+      <app-recive-funds-modal [wallet]="activeWallet() " />
     <p-toast />
   }
 </div>

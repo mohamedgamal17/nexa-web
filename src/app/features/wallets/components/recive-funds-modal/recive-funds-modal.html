@@ -1,0 +1,58 @@
+<div class="flex justify-center">
+  <p-dialog
+    header="Header"
+    [modal]="true"
+    [breakpoints]="{ '1199px': '25vw', '575px': '90vw' }"
+    [style]="{ width: '25vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    maskStyleClass="backdrop-blur-xs"
+    [visible]="visible()"
+    styleClass="!border-0  !rounded-3xl">
+    <ng-template #headless>
+      <div class="rounded-lg w-full bg-surface overflow-hidden">
+        <div class="bg-primary text-primary-foreground px-8 py-5">
+          <div class="flex justify-between w-full">
+            <div class="grid grid-cols-1 gap-2">
+              <div class="flex items-center gap-1">
+                <div class="text-4xl">
+                  <lucide-icon [name]="Blocks" />
+                </div>
+                <h4>Recive Funds</h4>
+              </div>
+              <p class="text-primary-elevated text-sm">
+                Share your Main Wallet address to receive payments.
+              </p>
+            </div>
+            <div class="">
+              <p-button
+                icon="pi pi-times"
+                [rounded]="true"
+                [text]="true"
+                (onClick)="toggleReciveFundsModal()"
+                severity="secondary" />
+            </div>
+          </div>
+        </div>
+        <div class="px-8 py-8">
+          <h6 class="mb-3">Your wallet number</h6>
+          <div class="p-5 bg-secondary-muted rounded rounded-2xl">
+            @if (wallet()) {
+              <div class="flex items-center justify-between">
+                <p class="font-bold">{{ wallet()?.number | walletNumber }}</p>
+                <div>
+                  <p-button
+                    icon="pi pi-clone"
+                    [text]="true"
+                    varient="text"
+                    severity="secondary"
+                    (onClick)="copyWalletNumber()" />
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>
