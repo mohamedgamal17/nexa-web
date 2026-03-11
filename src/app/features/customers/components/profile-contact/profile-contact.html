@@ -16,7 +16,7 @@
         </div>
         @if (editEmail()) {
           <input pInputText id="email" formControlName="email" [placeholder]="'forms.customer.email.label' | translate" />
-          <app-input-error [fieldKey]="'forms.customer.email.label'" [control]="emailForm.get('email')!" />
+          <app-input-error [field]="'forms.customer.email.label' | translate" [control]="emailForm.get('email')!" />
           <p-button label="Save email address" size="small" styleClass="w-full mt-3" type="submit" [loading]="emailSubmiting()" />
         } @else {
           <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
@@ -30,7 +30,7 @@
     <form (submit)="handlePhoneSubmit($event)" [formGroup]="phoneForm">
       <div class="flex flex-col gap-1.5">
         <div class="flex items-center justify-between">
-          <label for="phone" class="uppercase text-secondary text-sm">{{ 'customer.phone.label' | translate }}</label>
+          <label for="phone" class="uppercase text-secondary text-sm">{{ 'forms.customer.phoneNumber.label' | translate }}</label>
           @if (editPhone()) {
             <div class="flex items-center gap-3">
               <p-button icon="pi pi-check" variant="text" severity="primary" type="sumbit" [loading]="phoneSubmiting()"></p-button>
@@ -41,9 +41,9 @@
           }
         </div>
         @if (editPhone()) {
-          <app-phone-input [label]="'customer.phoneNumber.label' | translate" [placeholder]="'customer.phoneNumber.placeHolder' | translate" formControlName="phoneNumber" />
+          <app-phone-input [label]="'forms.customer.phoneNumber.label' | translate" [placeholder]="'forms.customer.phoneNumber.placeHolder' | translate" formControlName="phoneNumber" />
 
-          <app-input-error [control]="phoneForm.get('phoneNumber')" [fieldKey]="'customer.phoneNumber.label'" />
+          <app-input-error [control]="phoneForm.get('phoneNumber')" [field]="'forms.customer.phoneNumber.label' | translate" />
           <p-button label="Save phone number" styleClass="w-full mt-3" type="sumbit" [loading]="phoneSubmiting()" />
         } @else {
           <div class="p-3 bg-secondary-subtle rounded-lg flex items-center gap-3">
