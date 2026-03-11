@@ -1,0 +1,143 @@
+<div
+  class="max-w-7xl mx-auto px-4 mt-8 lg:px-8 mb-8 min-h-screen flex flex-col">
+  @if (bankResource.isLoading()) {
+    <div class="grid grid-cols-1 sm:grid-cols-12 gap-8">
+      <div class="sm:col-span-8 grid grid-cols-1 gap-8">
+        <div class="flex items-center justify-between w-full">
+          <div class="grid grid-cols-1 gap-2">
+            <p-skeleton
+              width="8rem"
+              height="1rem" />
+            <p-skeleton
+              width="10rem"
+              height=".5rem" />
+          </div>
+          <p-skeleton
+            width="15rem"
+            height="3.5rem" />
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          @for (sk of bankSkeltonArray(); track $index) {
+            <app-bank-card-skeleton></app-bank-card-skeleton>
+          }
+        </div>
+      </div>
+
+      <div class="sm:col-span-4 grid grid-cols-1 gap-8">
+        <div>
+          <p-card>
+            <div class="grid grid-cols-1 gap-8">
+              <div class="flex items-center gap-3">
+                <p-skeleton
+                  width="2.5rem"
+                  height="2.5rem" />
+                <p-skeleton
+                  width="10rem"
+                  height="1rem" />
+              </div>
+              <p-skeleton
+                width="100%"
+                height="5rem" />
+
+              <p-skeleton
+                width="100%"
+                height="5rem" />
+            </div>
+            <h3></h3>
+          </p-card>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 sm:grid-cols-12 gap-8">
+      <div class="sm:col-span-8 grid grid-cols-1 gap-8">
+        <div class="flex justify-between w-full">
+          <div class="grid grid-cols-1">
+            <h3>My Bank Accounts</h3>
+            <p class="text-secondary">
+              Manage your linked financial institutions.
+            </p>
+          </div>
+          <p-button
+            icon="pi pi-plus"
+            label="Connect new bank account"
+            styleClass="shadow shadow-lg " />
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          @for (bank of bankResource.value()?.data; track $index) {
+            <app-bank-card [bank]="bank" />
+          } @empty {
+            <p-card class="col-span-2">
+              <div class="p-10 flex items-center justify-center gap-8 flex-col">
+                <div class="bg-secondary-subtle text-secondary p-6 flex items-center rounded-full">
+                  <lucide-icon
+                    size="48"
+                    [name]="Building2" />
+                </div>
+                <div class="space-y-1">
+                  <h4 class="text-center">No banks linked yet</h4>
+                  <p class="text-center max-w-xs">
+                    Link your first bank account to start transferring funds
+                    instantly.
+                  </p>
+                </div>
+                <p-button
+                  icon="pi pi-plus"
+                  label="Connect new bank account"
+                  styleClass="shadow shadow-lg " />
+              </div>
+            </p-card>
+          }
+        </div>
+      </div>
+      <div class="sm:col-span-4 grid grid-cols-1 gap-8">
+        <div>
+          <p-card>
+            <div class="grid grid-cols-1 gap-8">
+              <div class="flex items-center gap-3">
+                <div class="text-primary">
+                  <lucide-icon [name]="ShieldCheck" />
+                </div>
+                <p class="uppercase text-secondary font-bold">
+                  Security Guarantee
+                </p>
+              </div>
+              <p>
+                NexaWallet partners with industry-leading providers to ensure
+                your banking credentials are never seen or stored by us.
+              </p>
+
+              <div class="grid grid-cols-1 gap-5">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="p-3 bg-secondary-subtle flex items-center rounded-2xl text-primary">
+                    <lucide-icon [name]="ShieldCheck" />
+                  </div>
+                  <div>
+                    <h6>FCA Regulated</h6>
+                    <p class="text-secondary text-sm">
+                      Authorized and regulated for open banking.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div
+                    class="p-3 bg-secondary-subtle flex items-center rounded-2xl text-primary">
+                    <lucide-icon [name]="CircleAlert" />
+                  </div>
+                  <div>
+                    <h6>Fraud Protection</h6>
+                    <p class="text-secondary text-sm">
+                      Real-time monitoring for suspicious activity.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3></h3>
+          </p-card>
+        </div>
+      </div>
+    </div>
+  }
+</div>
