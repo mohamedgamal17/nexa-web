@@ -1,0 +1,229 @@
+{
+  "toast": {
+    "transferCopied": {
+      "message": "Transaction number copied!"
+    },
+    "walletCopied":{
+      "message":"Wallet number copied!"
+    },
+    "addressSaved": {
+      "summary": "Address saved.",
+      "message": "Your address has been saved successfully."
+    },
+    "emailSaved": {
+      "summary": "Email saved.",
+      "message": "Your email has been saved successfully"
+    },
+
+    "phoneSaved": {
+      "summary": "Phone saved.",
+      "message": "Your phone has been saved successfully."
+    },
+
+    "customerInfoSaved": {
+      "summary": "Info saved.",
+      "message": "Your info has been saved successfully."
+    },
+    "kycCompleted": {
+      "summary": "Kyc completed.",
+      "message": "Your have submited your kyc verification info the verification process in progress."
+    },
+
+    "transfer": {
+      "netowork": {
+        "completed": {
+          "summary": "P2P transfer completed",
+          "message": "Your p2p transfer to {wallet} completed successfully"
+        }
+      },
+      "bank": {
+        "deposit": {
+          "completed": {
+            "summary": "Deposit completed",
+            "message": "Your deposit with bank account : **** {{bankAccount}} . Completed successfully"
+          }
+        },
+
+        "withdraw": {
+          "completed": {
+            "summary": "Withdraw completed",
+            "message": "Your withdraw to bank account : **** {{bankAccount}} . completed successfully"
+          }
+        },
+
+        "linking": {
+          "completed": {
+            "summary": "Linking bank account success",
+            "message": "Your bank account has been linked to your account successfully."
+          }
+        }
+      }
+    }
+  },
+  "forms": {
+    "customer": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "phoneNumber": {
+        "label": "Phone",
+        "placeholder": "Enter your phone"
+      },
+      "profile": {
+        "firstName": {
+          "label": "First Name",
+          "placeholder": "Enter your first name"
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Enter your last name"
+        },
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Select your gender"
+        },
+        "birthDate": {
+          "label": "Birth date",
+          "placeholder": "Enter your birth date"
+        }
+      },
+
+      "address": {
+        "country": {
+          "label": "Country",
+          "placeholder": "Select your country"
+        },
+        "state": {
+          "label": "State",
+          "placeholder": "Select your state"
+        },
+        "city": {
+          "label": "City",
+          "placeholder": "Enter your city"
+        },
+        "streetLine": {
+          "label": "Steet line",
+          "placeholder": "Enter your street line"
+        },
+        "postalCode": {
+          "label": "Postal code",
+          "placeholder": "Enter your postal code"
+        },
+        "zipCode": {
+          "label": "Zip code",
+          "placeholder": "Enter your zip code"
+        }
+      }
+    },
+    "transfer": {
+      "bank": {
+        "label": "Bank",
+        "placeholder": "Select your bank account"
+      },
+      "fromWallet": {
+        "label": "From wallet",
+        "placeholder": "select your current wallet"
+      },
+      "receiverWallet": {
+        "label": "Reciver wallet",
+        "placeholder": "Select reciver wallet"
+      },
+      "amount": {
+        "label": "Amount",
+        "placeholder": "Enter money amount"
+      }
+    },
+    "onboarding": {
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Enter your phone"
+      },
+      "profile": {
+        "firstName": {
+          "label": "First Name",
+          "placeholder": "Enter your first name"
+        },
+        "lastName": {
+          "label": "Last Name",
+          "placeholder": "Enter your last name"
+        },
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Select your gender"
+        },
+        "birthDate": {
+          "label": "Birth date",
+          "placeholder": "Enter your birth date"
+        }
+      },
+
+      "address": {
+        "country": {
+          "label": "Country",
+          "placeholder": "Select your country"
+        },
+        "state": {
+          "label": "State",
+          "placeholder": "Select your state"
+        },
+        "city": {
+          "label": "City",
+          "placeholder": "Enter your city"
+        },
+        "streetLine": {
+          "label": "Steet line",
+          "placeholder": "Enter your street line"
+        },
+        "postalCode": {
+          "label": "Postal code",
+          "placeholder": "Enter your postal code"
+        },
+        "zipCode": {
+          "label": "Zip code",
+          "placeholder": "Enter your zip code"
+        }
+      }
+    }
+  },
+  "errors": {
+    "http": {
+      "connection": {
+        "title": "Connection Lost",
+        "message": "It looks like you're offline or your connection is unstable. Please check your network."
+      },
+      "server": {
+        "title": "Internal Server Error",
+        "message": "We're having trouble reaching our servers right now. Our team has been notified."
+      },
+      "notFound": {
+        "title": "Not Found",
+        "message": "The resource you're looking for doesn't exist or has been moved."
+      }
+    },
+    "validation": {
+      "required": "{{field}} is required.",
+      "email": "Please enter a valid email address.",
+      "minLength": "{{field}} must be at least {{requiredLength}} characters.",
+      "maxLength": "{{field}} cannot exceed {{requiredLength}} characters.",
+      "min": "{{field}} must be greater than {{min}}.",
+      "max": "{{field}} must be less than {{max}}.",
+      "pattern": "{field}} format is invalid.",
+      "phoneRequired": "Phone number is required.",
+      "phoneMinLength": "Phone number must be at least {{min}} digits.",
+      "phoneMaxLength": "Phone number must max length is {{max}} ",
+      "phoneInvalid": "Invalid phone number",
+      "invalidEnum": "Invalid enum type.",
+      "invalidDate": "Invalid date format.",
+      "invalidAge": "Please enter a valid age.",
+      "minAge": "Minumum age required is {{min}}.",
+      "invalidCityName": "Please enter a valid city name.",
+      "invalidPostalCode": "Please enter a valid postal code.",
+      "invalidZipCode": "Please enter a valid zip code"
+    }
+  }
+}

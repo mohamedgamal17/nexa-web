@@ -13,6 +13,7 @@ import { CustomerInfo } from '../../../customers/interfaces/customer-info.interf
 import { Address } from '../../../customers/interfaces/address.interface';
 import { FormError } from '../../../../shared/components/form-error/form-error';
 import { ErrorModel } from '../../../../core/models/error-model.interface';
+import { onboardingWizardTestId } from './onboarding-wziard-test-ids';
 
 @Component({
   selector: 'app-onboarding-wizard',
@@ -21,6 +22,9 @@ import { ErrorModel } from '../../../../core/models/error-model.interface';
   styleUrl: './onboarding-wizard.scss',
 })
 export class OnboardingWizard implements OnInit {
+
+  testIds = onboardingWizardTestId
+
   OnboardingStepState = OnboardingStepState;
 
   currentStepState: Signal<OnboardingStepState>;

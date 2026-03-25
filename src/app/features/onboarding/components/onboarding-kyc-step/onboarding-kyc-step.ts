@@ -4,6 +4,7 @@ import { Card } from "primeng/card";
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroShieldCheck } from '@ng-icons/heroicons/outline';
 import { Router } from '@angular/router';
+import { OnboardingKycStepTestIds } from './onboarding-kyc-step.test-ids';
 
 @Component({
   selector: 'app-onboarding-kyc-step',
@@ -14,12 +15,12 @@ import { Router } from '@angular/router';
 
 })
 export class OnboardingKycStep {
-
+  testIds = OnboardingKycStepTestIds
   loading = input(false)
   submited = output<void>()
 
   constructor(private router :Router){
-
+    console.log(router)
   }
   navigate() {
     this.router.navigateByUrl('/')
