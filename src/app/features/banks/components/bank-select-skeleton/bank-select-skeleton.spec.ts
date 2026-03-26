@@ -17,6 +17,7 @@ describe('BankSelectSkeleton', () => {
   });
 
   it('should create', () => {
+    fixture.componentRef.setInput('size', 3)
     expect(component).toBeTruthy();
   });
 });
