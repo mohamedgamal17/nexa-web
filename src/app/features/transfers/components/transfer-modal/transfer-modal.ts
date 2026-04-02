@@ -65,7 +65,6 @@ import {
   viewProviders: [provideIcons({ heroUser, heroCurrencyDollar })],
 })
 export class TransferModal implements OnInit {
-  private translateService = inject(TranslateService);
   private fb = inject(FormBuilder);
   private store = inject(Store);
 
@@ -117,10 +116,6 @@ export class TransferModal implements OnInit {
 
       this.submitied.emit(obj);
     }
-  }
-
-  log() {
-    console.log('touched');
   }
 
   search($event: string) {
