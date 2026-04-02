@@ -52,10 +52,7 @@ export class ProfileInfo implements OnInit {
 
   handleSubmit($event: SubmitEvent) {
     $event.preventDefault();
-          console.log("ph1")
-
     if (this.infoForm.valid) {
-      console.log("ph1")
       const newState: CustomerInfo = this.infoForm.value;
       const currentState = this.info();
 

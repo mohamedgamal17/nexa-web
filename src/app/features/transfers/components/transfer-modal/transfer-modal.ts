@@ -52,7 +52,6 @@ import {
     TranslateModule,
     SelectModule,
     AutoCompleteModule,
-    WalletNumberPipe,
     WalletSearch,
     InputNumberModule,
     InputGroupModule,
