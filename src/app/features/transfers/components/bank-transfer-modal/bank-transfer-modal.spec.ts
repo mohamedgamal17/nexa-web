@@ -9,7 +9,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 import { walletCardActions } from '../../../wallets/state/wallet.actions';
 
-describe('BankWithdrawlModal', () => {
+describe('BankTransferModal', () => {
   let component: BankTransferModal;
   let fixture: ComponentFixture<BankTransferModal>;
 
