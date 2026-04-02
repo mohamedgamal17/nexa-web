@@ -47,7 +47,6 @@ export class TransferList {
   }
 
   copyTransferNumber($event: { text: string }) {
-    console.log('c');
     this.clipboard.copy($event.text);
     this.messageService.add({
       detail: this.translateService.instant('toast.transferCopied.message'),
