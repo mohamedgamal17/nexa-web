@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
 import { vi } from 'vitest';
 
 const win = globalThis.window as any;
@@ -28,3 +29,8 @@ vi.mock('primeng/overlay', () => ({ Overlay: class {} }));
 vi.mock('primeng/dialog', () => ({ Dialog: class {} }));
 vi.mock('primeng/dropdown', () => ({ Dropdown: class {} }));
 vi.mock('primeng/select', () => ({ Select: class {} }));
+
+getTestBed().initTestEnvironment(
+  BrowserTestingModule,
+  platformBrowserTesting()
+)

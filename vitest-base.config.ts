@@ -8,6 +8,6 @@
     test: {
       globals: true,
       environment: 'jsdom', // VERY IMPORTANT
-      setupFiles: ['./src/test-setup.ts'],
+      setupFiles: ['src/test-setup.ts'],
     },
   });
