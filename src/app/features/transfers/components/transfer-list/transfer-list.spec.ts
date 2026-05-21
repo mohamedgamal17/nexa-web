@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransferList } from './transfer-list';
-import { ClipboardModule, Clipboard } from '@angular/cdk/clipboard';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 describe('TransferList', () => {
   let component: TransferList;
   let fixture: ComponentFixture<TransferList>;
   const mockedTranslateService = {
-    instant: vi.fn(),
+    instant: vi.fn((key: string) => key),
   };
   const mockedClipboard = {
     copy: vi.fn(),
@@ -18,19 +18,23 @@ describe('TransferList', () => {
     add: vi.fn(),
   };
 
-  const transfer = beforeEach(async () => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TransferList, ClipboardModule],
+      imports: [TransferList],
       providers: [
         { provide: TranslateService, useValue: mockedTranslateService },
         { provide: Clipboard, useValue: mockedClipboard },
-        { provide: MessageService, useValue: mockedMessageService },
       ],
-    }).compileComponents();
+    })
+      .overrideComponent(TransferList, {
+        set: {
+          providers: [{ provide: MessageService, useValue: mockedMessageService }],
+        },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(TransferList);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {
