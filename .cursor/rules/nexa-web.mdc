@@ -1,0 +1,236 @@
+---
+description: Nexa Web Angular project conventions — architecture, libraries, and coding style
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Nexa Web — Project Conventions
+
+Follow these rules for all work in this repository. Human-readable docs: `docs/AI_RULES.md` (master), `docs/PROJECT_STRUCTURE.md`, `docs/LIBRARIES_AND_CONSTRAINTS.md`.
+
+## Libraries
+
+Full reference: `docs/LIBRARIES_AND_CONSTRAINTS.md` and `docs/AI_RULES.md`. Prefer libraries already wired in the feature you touch; do not add new UI frameworks.
+
+| Category | Package | Use in nexa-web |
+|----------|---------|-----------------|
+| Framework | `@angular/*` ^21.2 | Standalone app; `bootstrapApplication`; `@angular/build:application` |
+| CDK | `@angular/cdk` | Available; use only if existing patterns do |
+| State | `@ngrx/store`, `@ngrx/effects` ^21 | **Only** `customers/` and `wallets/` `state/` |
+| Auth | `@auth0/auth0-angular` | Login, guards, HTTP token interceptor for `environemnt.apiUrl/*` |
+| UI | `primeng`, `primeicons`, `@primeuix/themes` | Primary components; theme via `appThemePreset` in `ng-prime.theme.ts` |
+| CSS | `tailwindcss`, `@tailwindcss/postcss`, `@tailwindcss/typography` | Global utilities in templates; entry `src/styles/styles.scss` |
+| i18n | `@ngx-translate/core`, `@ngx-translate/http-loader` | Runtime strings: `src/assets/i18n/en.json`; separate from `@angular/localize` polyfill |
+| Icons | `@ng-icons/core`, `@ng-icons/heroicons`, `@ng-icons/feather-icons`, `lucide-angular` | Import per component |
+| Forms / phone | `google-libphonenumber`, `libphonenumber-js` | `shared/components/phone-input` validator |
+| Forms / phone | `ngx-intl-tel-input` | In package.json; prefer custom `PhoneInput` unless extending tel UX |
+| Payments | `@stripe/stripe-js` | `features/banks/services/stripe.service.ts` |
+| KYC | ComplyCube (global CSS/JS in `angular.json`) | `features/onboarding/services/comply-cube.service.ts` |
+| Bootstrap | `ngx-bootstrap` | **Not referenced in `src/`** — do not introduce without explicit request |
+| RxJS | `rxjs` ~7.8 | Services, effects, guards |
+| Test (dev) | `vitest`, `@analogjs/vite-plugin-angular`, `@testing-library/angular`, `jsdom` | `ng test`; `vitest-base.config.ts`, `src/test-setup.ts` |
+
+## Constraints
+
+**TypeScript** (`tsconfig.json`): `strict: true`, `strictNullChecks`, `strictTemplates`; `strictPropertyInitialization: false`; `noImplicitOverride`, `noImplicitReturns`, `noFallthroughCasesInSwitch`; `target: ES2022`, `module: preserve`
+
+**Angular** (`angular.json`): prefix `app`; default style `scss`; production budgets — initial 500kB warn / 1MB error, component styles 4kB / 8kB; polyfill `@angular/localize/init` (build-time i18n, not ngx-translate)
+
+**Formatting** (`.prettierrc`, `.editorconfig`): 2 spaces, UTF-8, final newline, single quotes (TS); Prettier `printWidth: 80`, `trailingComma: all`, `singleAttributePerLine: true`, Angular HTML parser
+
+**Architecture:** standalone components only (no NgModules); feature-first under `src/app/features/`; NgRx only customers + wallets; wallets no routes (embed via containers); HTTP `environemnt.apiUrl` + `errorHandlerInterceptorFn` + `authHttpInterceptorFn`; Auth0 + `customerGuardFn` on PublicLayout routes; minimal diffs; preserve known typos unless asked
+
+**Do not add** (unless user requests): new state libs, NgModules, alternate CSS frameworks, fixing duplicate `provideHttpClient()` in `app.config.ts`
+
+## Folder structure (summary)
+
+See `docs/PROJECT_STRUCTURE.md` for the full tree. Quick map:
+
+```
+src/app/
+  features/{name}/     # auth, customers, wallets, onboarding, transfers, banks, landing
+  core/ shared/ layouts/ components/
+```
+
+## Project structure (detailed)
+
+### Repository root
+
+```
+nexa-web/
+├── angular.json, package.json, tsconfig*.json, vitest-base.config.ts
+├── .prettierrc, .editorconfig, .cursor/rules/nexa-web.mdc
+├── public/                    # static assets
+├── docs/PROJECT_STRUCTURE.md  # full structure reference
+└── src/
+    ├── main.ts                # bootstrapApplication(App, appConfig)
+    ├── test-setup.ts
+    ├── app/                   # application code
+    ├── assets/                # i18n, complycube css/js
+    ├── environments/          # environemnt.ts
+    ├── styles/                # Tailwind + theme partials
+    └── testing/               # dom-helpers, ng-prime-test utilities, mocks
+```
+
+### `src/app/` shell
+
+| Path | Purpose |
+|------|---------|
+| `app.ts` | Root: RouterOutlet, RoutingGlobalLoader, DataLoaderError |
+| `app.config.ts` | All provide* (HTTP, Auth0, PrimeNG, translate, NgRx, features) |
+| `app.routes.ts` | Wildcard `**` → NotFound only |
+| `ng-prime.theme.ts` | Lara + emerald preset |
+| `components/` | not-found, routing-global-loader |
+| `layouts/auth-layout/` | `/auth`, `/onboarding` |
+| `layouts/public-layout/` | `/`, `/customer`, `/transfers`, `/banks` (+ public-navbar) |
+
+### Core and shared
+
+```
+core/
+  constants/   countries.data, states.data, error.map
+  interceptors/ error-handler.interceptor
+  mappers/     http.mapper
+  models/      entity, paging, country, state, error-model, api-problem-details
+  services/    error.service, routing-loading.service
+
+shared/
+  components/  phone-input, form-error, input-error, alert-error, spinner,
+                 data-loader-error (+ connection, not-found, server-error)
+  validators/  cutom-validators, address-validators
+  utils/         phone-number.utils
+```
+
+### Features — routes (registered in app.config.ts)
+
+| Feature | Provider file | Route | Layout | Guards | Page |
+|---------|---------------|-------|--------|--------|------|
+| auth | auth.feature.ts | /auth | AuthLayout | none | LoginPage (eager) |
+| onboarding | onboarding.feature.ts | /onboarding | AuthLayout | auth | OnboardingPage (lazy) |
+| landing | landing.feature.ts | / | PublicLayout | auth + customer | DashboardPage (lazy) |
+| customers | customers.feature.ts | /customer | PublicLayout | auth + customer | ProfilePage (lazy) |
+| transfers | transfer.feature.ts | /transfers | PublicLayout | auth + customer | IndexPage (lazy) |
+| banks | banks.features.ts | /banks | PublicLayout | auth + customer | IndexPage (eager) |
+| wallets | *(none)* | — | — | — | Embedded in dashboard |
+
+`customerGuardFn` (customers/guards/) redirects to `/onboarding` if customer not in NgRx store.
+
+### Per-feature trees
+
+**auth:** pages/login-page; components/login-hero, card-login
+
+**onboarding:** pages/onboarding-page; components/onboarding-wizard, onboarding-email/phone/profile steps, onbaording-address-step (typo), onboarding-kyc-step; services/onboard-customer, comply-cube, onboarding-step-state
+
+**customers (NgRx):** pages/profile-page; components/profile-hero, profile-info, profile-contact, profile-address, profile-document; guards/customer-guard; state/customer.*; services/customer, kyc-reviews, kyc-token
+
+**landing:** pages/dashboard-page (composes wallets + transfers); components/quick-actions, quick-action-item
+
+**wallets (NgRx, no routes):** containers/wallet-container; components/wallet-card, wallet-list, wallet-list-item, wallet-list-item-skeleton, wallet-search, recive-funds-modal; state/wallet.* (two slices: wallets + wallet-card UI); pipes/wallet-number-pipe
+
+**transfers:** pages/index-page; container/recent-transfer-container (singular); components/transfer-list, transfer-list-item, transfer-details, transfer-modal, bank-transfer-modal; transfer.feature.ts (singular name)
+
+**banks:** pages/index-page; components/bank-card, bank-select, bank-modal, *-skeleton; pips/bank-account-number-pipe (typo: pips); banks.features.ts (plural)
+
+### Dashboard composition (landing)
+
+`dashboard-page.html` embeds:
+- `<app-wallet-container />` from wallets
+- `<app-quick-actions />` from landing
+- `<app-recent-transfer-container />` from transfers
+
+Wallets are not routable; home UX changes may require landing + wallets + transfers.
+
+### Naming quirks (preserve when adding nearby files)
+
+- `transfer.feature.ts` (not transfers)
+- `banks.features.ts` (plural features)
+- `pips/` not pipes/ (banks)
+- `onbaording-address-step/` (typo)
+- `container/` vs `containers/` (transfers vs wallets)
+- `recive-funds-modal`, `environemnt`, `CUSTOMER_KEY_FEAUTRE`
+
+### Structure rules
+
+1. New routed features: `{name}.feature.ts`, `{name}.routing.ts`, register in app.config.ts
+2. Wallets stay route-less; embed via containers in pages
+3. Cross-cutting UI → shared/; infra → core/; shells → layouts/
+4. NgRx state/ only under customers/ and wallets/
+5. Dashboard integrates wallet + recent transfers — check landing and both feature containers
+
+## Components
+
+1. **Standalone only** — `@Component({ imports: [...] })`, selector prefix `app-`, no NgModules
+2. **File naming** — no `.component.ts` suffix: `login-page.ts` + `.html`, `.scss`, `.spec.ts`
+3. **Class naming** — PascalCase matching file stem (`LoginPage`, `WalletCard`)
+4. **Prefer** `inject()`, `signal()`, `computed()`, `effect()`, `toSignal()`, `input()`, `output()`, `model()`
+5. **Templates** — `@if` / `@else` (not `*ngIf` in new code)
+6. **Styling** — Tailwind utilities in HTML; component rules in `styleUrl: './….scss'`
+7. **PrimeNG** — import modules per component (`ButtonModule`, `CardModule`, etc.)
+8. **i18n** — `TranslateModule` in imports; `| translate` in templates; `TranslateService.instant()` in TS
+9. Optional `*-test-ids.ts` for `data-testid` constants
+
+## NgRx (customers + wallets only)
+
+- **Actions:** `createActionGroup({ source: '[Entity]', events: { 'Human Name': props<...>() } })`
+- **Reducers:** `{entity}.reducer.ts` — `*_FEATURE_KEY`, `createReducer` + `on()`
+- **Effects:** `XEffects` class, `providedIn: 'root'`, `inject(Actions)` + services
+- **Selectors:** `select*` naming in `{entity}.selectors.ts`
+- Other features: signals + services (no NgRx)
+
+## Services & HTTP
+
+- `@Injectable({ providedIn: 'root' })`
+- Base URL: `environemnt.apiUrl + '/resource'` (keep typo `environemnt` as in codebase)
+- `Observable<T>` from `HttpClient`
+- Query params: `mapObjectToHttpParam` from `core/mappers/http.mapper.ts`
+- Errors: `error-handler.interceptor.ts` → `ErrorModel`; global UI via `ErrorService`
+
+## Routing
+
+- Root `app.routes.ts` is minimal; routes registered via feature `provideRouter()` in `app.config.ts`
+- Lazy pages: `loadComponent: () => import('...').then(m => m.PageName)`
+- Layouts: eager `AuthLayout` / `PublicLayout` as parent `component`
+- Guards: `authGuardFn` + `customerGuardFn` (redirects to `/onboarding` if no customer)
+- Loading: `RouterLoadingService` + `RoutingGlobalLoader` at app root
+
+| Path | Layout | Guards |
+|------|--------|--------|
+| `/auth` | AuthLayout | none |
+| `/onboarding` | AuthLayout | auth |
+| `/`, `/customer`, `/transfers`, `/banks` | PublicLayout | auth + customer |
+
+## App bootstrap (`app.config.ts`)
+
+- `provideHttpClient(withInterceptors([errorHandlerInterceptorFn, authHttpInterceptorFn]))`
+- Feature providers: `provideAuthFeature()`, `provideOnboardingFeature()`, `provideCustomers()`, etc.
+- `provideStore` + `provideEffects` for customer/wallet slices only
+
+## Testing
+
+- Colocated `*.spec.ts` beside source
+- `TestBed.configureTestingModule({ imports: [StandaloneComponent], providers: [mocks] })`
+- Vitest: `vi.fn()`, `vi.mock()`; RxJS `of` / `throwError` for service mocks
+- Utilities: `src/testing/` (dom-helpers, ng-prime-test.utilities, translate mocks)
+- Setup: `src/test-setup.ts` mocks PrimeNG overlays
+
+## Translations
+
+- Add keys to `src/assets/i18n/en.json`
+- Validation keys: `errors.validation.*` pattern in `core/constants/error.map.ts`
+
+## Do not change unless asked
+
+- `environemnt` typo (env file and imports)
+- `CUSTOMER_KEY_FEAUTRE` typo
+- `pips/` folder name in banks feature
+- Duplicate `provideHttpClient()` in `app.config.ts`
+- Mixed `constructor` vs `inject()` in existing files
+- Service names like `transfer-service.service.ts`
+
+## General principles
+
+1. Match feature-first structure for new domain code
+2. Minimal diffs; follow patterns in touched files
+3. NgRx only for customer/wallet state extensions
+4. Format with Prettier before finishing edits
