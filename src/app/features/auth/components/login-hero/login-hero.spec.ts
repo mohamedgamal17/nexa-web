@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoginHero } from './login-hero';
 
+// Presentational shell — no component class API beyond instantiation.
 describe('LoginHero', () => {
   let component: LoginHero;
   let fixture: ComponentFixture<LoginHero>;
@@ -13,7 +13,6 @@ describe('LoginHero', () => {
 
     fixture = TestBed.createComponent(LoginHero);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {

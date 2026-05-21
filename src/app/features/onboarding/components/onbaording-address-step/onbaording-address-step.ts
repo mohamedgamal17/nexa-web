@@ -1,4 +1,4 @@
-import { Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
+import { Component, computed, effect, Input, input, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormRecord, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InputMaskDirective } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { Address } from '../../../customers/interfaces/address.interface';
+import { OnboadringAddressStepTestIds } from './onboarding-address-step.test-ids';
 
 @Component({
   selector: 'app-onbaording-address-step',
@@ -21,6 +22,7 @@ import { Address } from '../../../customers/interfaces/address.interface';
 export class OnbaordingAddressStep implements OnInit {
   address = input<Address>();
 
+  @Input() address1 :Address
   loading = input(false);
 
   submited = output<{ address: Address }>();
@@ -30,6 +32,8 @@ export class OnbaordingAddressStep implements OnInit {
   selectedCountry = signal<string | null>(null);
 
   selectedState = signal<string | null>(null);
+
+  tids = OnboadringAddressStepTestIds
 
   filteredCountries = COUNTRIES.filter((x) => x.code == 'US');
 
@@ -62,16 +66,13 @@ export class OnbaordingAddressStep implements OnInit {
   }
 
   handleCountryChange(value: any) {
-    console.log(value);
     this.selectedCountry.set(value);
   }
 
   handleSubmit($event: SubmitEvent) {
     $event.preventDefault();
     this.addressForm.markAllAsTouched();
-    console.log('em');
     if (this.addressForm.valid) {
-      console.log('em');
       this.submited.emit({ address: this.addressForm.value });
     }
   }

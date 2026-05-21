@@ -9,8 +9,8 @@ import { TransferListItemSkeleton } from '../transfer-list-item-skeleton/transfe
 import { TransferDetails } from '../transfer-details/transfer-details';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
-import { ClipboardModule, Clipboard } from '@angular/cdk/clipboard';
 import { ToastModule } from 'primeng/toast';
+import { ClipboardModule, Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-transfer-list',
@@ -47,7 +47,6 @@ export class TransferList {
   }
 
   copyTransferNumber($event: { text: string }) {
-    console.log('c');
     this.clipboard.copy($event.text);
     this.messageService.add({
       detail: this.translateService.instant('toast.transferCopied.message'),

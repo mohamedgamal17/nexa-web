@@ -9,6 +9,7 @@ import { PhoneNumberValidators } from '../../../../shared/components/phone-input
 import { PhoneValueModel } from '../../../../shared/components/phone-input/models/phone-value-model.interface';
 import { COUNTRIES } from '../../../../core/constants/countries.data';
 import { parsePhoneNumber } from '../../../../shared/utils/phone-number.utils';
+import { OnboardingPhoneStepTestIds } from './onboarding-phone-step-test-ids';
 
 @Component({
   selector: 'app-onboarding-phone-step',
@@ -17,6 +18,9 @@ import { parsePhoneNumber } from '../../../../shared/utils/phone-number.utils';
   styleUrl: './onboarding-phone-step.scss',
 })
 export class OnboardingPhoneStep implements OnInit {
+
+  testIds = OnboardingPhoneStepTestIds
+
   phone = input<string>('');
 
   loading = input<boolean>(false);
@@ -30,6 +34,7 @@ export class OnboardingPhoneStep implements OnInit {
   phoneForm: FormGroup;
 
   submited = output<{ phone: PhoneValueModel }>();
+
   stepBack = output<void>();
 
   constructor(private fb: FormBuilder) {}

@@ -18,7 +18,7 @@ import { BankCard } from '../../components/bank-card/bank-card';
 import { BankModal } from '../../components/bank-modal/bank-modal';
 import { Bank } from '../../interfaces/bank.interface';
 import { BankingTokenService } from '../../services/banking-token.service';
-import { mergeMap } from 'rxjs';
+import { mergeMap, tap } from 'rxjs';
 import { StripeService } from '../../services/stripe.service';
 import { StripeError } from '@stripe/stripe-js';
 import { LinkedBankState } from '../../interfaces/linked-bank-state.interface';
@@ -88,12 +88,17 @@ export class IndexPage {
     this.linkedBankState.set({progress: 'Processing' });
     this.bankTokenService
       .create({})
+
       .pipe(
+        tap(v=> console.log("v" , v)),
         mergeMap(value => this.stripeService.collectBankAccount(value.token)),
         mergeMap(resp => this.bankTokenService.complete({ token: resp.id })),
       )
       .subscribe({
         next: value => {
+          console.log("ne")
+          console.log("next")
+          console.log(value)
           this.linkedBankState.set({ bank: value, progress: 'Completed' });
         },
         error: (err: ErrorModel | any) => {

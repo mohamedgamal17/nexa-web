@@ -3,14 +3,14 @@
     <h4>Let's get started</h4>
     <p>Tell us a bit about yourself to set up your account.</p>
   </div>
-  <form (submit)="handleSubmit($event)" [formGroup]="emailForm">
+  <form (submit)="handleSubmit($event)" [formGroup]="emailForm"   [attr.data-testid]="testIds.form">
     <div class="space-y-5">
       <div class="flex flex-col gap-2">
         <label for="email">Email</label>
-        <input class="block" pInputText id="email" aria-describedby="email-help" [placeholder]="'forms.onboarding.email.placeholder' | translate" formControlName="email" />
+        <input class="block" pInputText id="email" aria-describedby="email-help" [placeholder]="'forms.onboarding.email.placeholder' | translate" formControlName="email" [attr.data-testid]="testIds.emailInput"/>
         <app-input-error [control]="emailForm.get('email')" [field]="'forms.onboarding.email.label' | translate" />
       </div>
-      <p-button label="Continue" type="submit" size="large" styleClass="w-full" icon="pi pi-angle-right" iconPos="right" [loading]="loading()" />
+      <p-button label="Continue" type="submit" size="large" styleClass="w-full" icon="pi pi-angle-right" iconPos="right" [loading]="loading()" [attr.data-testid]="testIds.submitButton" />
     </div>
   </form>
 </div>

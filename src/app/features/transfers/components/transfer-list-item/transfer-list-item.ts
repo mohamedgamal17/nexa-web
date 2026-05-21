@@ -10,7 +10,6 @@ import { Transfer } from '../../interfaces/transfer.interface';
 import { TransferType } from '../../enums/transfer-type.enum';
 import { TransferStatus } from '../../enums/transfer-status.enum';
 import { TransferDirection } from '../../enums/transfer-direction.enum';
-
 import { BankAccountNumberPipe } from '../../../banks/pips/bank-account-number-pipe';
 import { CommonModule } from '@angular/common';
 import { WalletNumberPipe } from '../../../wallets/pipes/wallet-number-pipe';

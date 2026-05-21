@@ -148,10 +148,7 @@ export class BankTransferModal implements OnInit {
 
   handleSubmit($event: SubmitEvent) {
     $event.preventDefault();
-    console.log('valid');
-
     if (this.bankTansferForm.valid) {
-      console.log('valid');
       console.log(this.bankTansferForm.value);
       var ob = {
         ...this.bankTansferForm.value,

@@ -4,6 +4,12 @@ export function getCoutnryByCode(code: string) {
   return COUNTRIES.find((x) => x.code == code);
 }
 
+export function getRandomCountry(){
+  var randIndex = Math.floor(Math.random() * COUNTRIES.length)
+
+  return COUNTRIES[randIndex]
+}
+
 function isoToFlag(iso: string): string {
   return [...iso.toUpperCase()].map((c) => String.fromCodePoint(0x1f1e6 - 65 + c.charCodeAt(0))).join('');
 }

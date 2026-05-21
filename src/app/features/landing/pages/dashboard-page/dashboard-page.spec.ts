@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DashboardPage } from './dashboard-page';
 
 describe('DashboardPage', () => {
@@ -9,14 +8,21 @@ describe('DashboardPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DashboardPage],
-    }).compileComponents();
+    })
+      .overrideComponent(DashboardPage, {
+        set: { template: '', imports: [] },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(DashboardPage);
     component = fixture.componentInstance;
-    await fixture.whenStable();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should expose isWalletLoaded signal', () => {
+    expect(component.isWalletLoaded()).toBe(false);
   });
 });

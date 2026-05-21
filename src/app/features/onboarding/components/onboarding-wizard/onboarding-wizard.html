@@ -19,19 +19,19 @@
       }
       @switch (currentStepState()) {
         @case (OnboardingStepState.Email) {
-          <app-onboarding-email-step [email]="onboardCustomer()!.email" [loading]="isSubmiting()" (submited)="handleEmailSubmit($event)"></app-onboarding-email-step>
+          <app-onboarding-email-step [email]="onboardCustomer()?.email ?? '' " [loading]="isSubmiting()" (submited)="handleEmailSubmit($event)" [attr.data-testid]="testIds.emailStep"></app-onboarding-email-step>
         }
         @case (OnboardingStepState.Phone) {
-          <app-onboarding-phone-step [phone]="onboardCustomer()?.phoneNumber ?? ''" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Email)" (submited)="handlePhoneSubmit($event)"></app-onboarding-phone-step>
+          <app-onboarding-phone-step [phone]="onboardCustomer()?.phoneNumber ?? ''" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Email)" (submited)="handlePhoneSubmit($event)" [attr.data-testid]="testIds.phoneStep"></app-onboarding-phone-step>
         }
         @case (OnboardingStepState.Profile) {
-          <app-onboarding-profile-step [info]="onboardCustomer()!.info" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Phone)" (submited)="handleInfoSumbit($event)"></app-onboarding-profile-step>
+          <app-onboarding-profile-step [info]="onboardCustomer()?.info ?? null" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Phone)" (submited)="handleInfoSumbit($event)"[attr.data-testid]="testIds.profileStep"></app-onboarding-profile-step>
         }
         @case (OnboardingStepState.Address) {
-          <app-onbaording-address-step [address]="onboardCustomer()!.address" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Profile)" (submited)="handleAddressSubmit($event)"></app-onbaording-address-step>
+          <app-onbaording-address-step [address]="onboardCustomer()?.address" [loading]="isSubmiting()" (stepBack)="updateStepState(OnboardingStepState.Profile)" (submited)="handleAddressSubmit($event)" [attr.data-testid]="testIds.addressStep"></app-onbaording-address-step>
         }
         @case (OnboardingStepState.Completed) {
-          <app-onboarding-kyc-step [loading]="isSubmiting()" (submited)="handleKycSubmit()" (stepBack)="updateStepState(OnboardingStepState.Address)"></app-onboarding-kyc-step>
+          <app-onboarding-kyc-step [loading]="isSubmiting()" (submited)="handleKycSubmit()" (stepBack)="updateStepState(OnboardingStepState.Address)" [attr.data-testid]="testIds.addressStep"></app-onboarding-kyc-step>
         }
       }
     </div>

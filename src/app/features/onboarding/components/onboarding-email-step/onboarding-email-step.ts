@@ -6,6 +6,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 
 import { InputError } from '../../../../shared/components/input-error/Input-error';
 import { TranslateModule } from '@ngx-translate/core';
+import { OnboardEmailStepTestIds } from './onboarding-email-step-test-ids';
 @Component({
   selector: 'app-onboarding-email-step',
   imports: [InputTextModule, ButtonModule, CardModule, InputError, ReactiveFormsModule, TranslateModule],
@@ -15,9 +16,12 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class OnboardingEmailStep implements OnInit {
   email = input('');
+
   loading = input<boolean>(false);
 
   submited = output<{ email: string }>();
+
+  testIds = OnboardEmailStepTestIds
 
   emailForm: FormGroup;
 
@@ -31,6 +35,7 @@ export class OnboardingEmailStep implements OnInit {
   }
 
   handleSubmit($event: any) {
+        debugger;
     $event.preventDefault();
 
     if (!this.emailForm.valid) {

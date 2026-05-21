@@ -31,14 +31,12 @@
               },
               "src/assets"
             ],
-            
+
             "styles": [
               "src/assets/css/complycube.css",
               "src/styles/styles.scss"
             ],
-            "scripts": [
-              "src/assets/js/complycube.min.js"
-            ],
+            "scripts": ["src/assets/js/complycube.min.js"],
             "polyfills": ["@angular/localize/init"]
           },
           "configurations": {
@@ -78,7 +76,10 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+           "builder": "@angular/build:unit-test",
+          "options": {
+            "runnerConfig": "vitest-base.config.ts"
+          }
         }
       }
     }

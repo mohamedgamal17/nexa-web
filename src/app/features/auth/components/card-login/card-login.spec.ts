@@ -19,4 +19,12 @@ describe('CardLogin', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit login request while handle button click is called', ()=>{
+    const spyOnLoginRequested = vi.spyOn(component.loginRequested, 'emit')
+
+    component.handleButtonClick()
+    
+    expect(spyOnLoginRequested).toHaveBeenCalledOnce()
+  })
 });

@@ -49,8 +49,7 @@
                       class="w-full"
                       [wallets]="wallets()"
                       (walletNumberChange)="search($event)"
-                      formControlName="reciverWallet"
-                      (onTouch)="log()" />
+                      formControlName="reciverWallet" />
                     <app-input-error
                       [form]="transferForm"
                       [control]="transferForm.get('reciverWallet')!"

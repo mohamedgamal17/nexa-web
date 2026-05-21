@@ -10,6 +10,8 @@ import { SelectModule } from 'primeng/select';
 import { InputMaskModule } from 'primeng/inputmask';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CustomerInfo } from '../../../customers/interfaces/customer-info.interface';
+import { OnboardingKycStepTestIds } from '../onboarding-kyc-step/onboarding-kyc-step.test-ids';
+import { OnboardingProfileStepTestIds } from './onboarding-profile-step.test-ids';
 @Component({
   selector: 'app-onboarding-profile-step',
   imports: [ReactiveFormsModule, FormsModule, ButtonModule, InputTextModule, TranslateModule, InputError, SelectModule, InputMaskModule, DatePickerModule],
@@ -32,6 +34,8 @@ export class OnboardingProfileStep implements OnInit {
     { label: 'Male', value: Gender.Male },
     { label: 'Female', value: Gender.Female },
   ];
+
+  testIds = OnboardingProfileStepTestIds
 
   constructor(private fb: FormBuilder) {}
 

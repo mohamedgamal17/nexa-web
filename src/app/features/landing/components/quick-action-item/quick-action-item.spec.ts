@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { QuickActionItem } from './quick-action-item';
 
 describe('QuickActionItem', () => {
@@ -13,10 +12,14 @@ describe('QuickActionItem', () => {
 
     fixture = TestBed.createComponent(QuickActionItem);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.componentRef.setInput('label', 'Send money');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should expose label input', () => {
+    expect(component.label()).toBe('Send money');
   });
 });
