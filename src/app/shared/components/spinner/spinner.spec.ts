@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Spinner } from './spinner';
 
 describe('Spinner', () => {
@@ -13,10 +12,14 @@ describe('Spinner', () => {
 
     fixture = TestBed.createComponent(Spinner);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.componentRef.setInput('text', 'Loading');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should expose text input signal', () => {
+    expect(component.text()).toBe('Loading');
   });
 });

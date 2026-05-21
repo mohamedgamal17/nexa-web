@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FormError } from './form-error';
 
 describe('FormError', () => {
@@ -18,5 +17,9 @@ describe('FormError', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should return object keys from getObjectKeys', () => {
+    expect(component.getObjectKeys({ a: 1, b: 2 })).toEqual(['a', 'b']);
   });
 });
